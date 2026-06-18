@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Charis Missionary Church | Live Stream & Worship</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #111827;
+      line-height: 1.4;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* modern section background */
+    .welcome-section {
+      padding: 90px 0 100px;
+      background: linear-gradient(135deg, #fafcff 0%, #f0f4fa 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-section::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -15%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(34,106,214,0.03) 0%, rgba(34,106,214,0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .welcome-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 48px;
+      align-items: stretch;
+      position: relative;
+      z-index: 2;
+    }
+
+    .welcome-text {
+      flex: 1.3;
+      min-width: 280px;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(34, 106, 214, 0.12);
+      backdrop-filter: blur(2px);
+      padding: 8px 20px;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1a5bc3;
+      letter-spacing: -0.2px;
+      margin-bottom: 24px;
+    }
+
+    .welcome-text h2 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #0f2b4d, #1f5bc7);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 24px;
+    }
+
+    .welcome-text p {
+      font-size: 1.08rem;
+      line-height: 1.5;
+      color: #2c3e50;
+      margin-bottom: 32px;
+      max-width: 90%;
+    }
+
+    .stat-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .stat-item {
+      background: white;
+      border-radius: 20px;
+      padding: 18px 28px;
+      text-align: center;
+      box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      transition: transform 0.2s ease;
+      min-width: 120px;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 32px -12px rgba(0, 0, 0, 0.12);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1f5bc7;
+      margin-bottom: 6px;
+    }
+
+    .live-card {
+      flex: 0.9;
+      min-width: 300px;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 32px;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
+      padding: 32px 28px;
+      border: 1px solid rgba(34, 106, 214, 0.2);
+      background: linear-gradient(145deg, #ffffff, #fefefe);
+    }
+
+    .live-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #eef3ff;
+      padding: 12px 18px;
+      border-radius: 18px;
+      width: fit-content;
+      margin-bottom: 28px;
+      font-weight: 600;
+      color: #1f5bc7;
+    }
+
+    .pulse-dot {
+      width: 12px;
+      height: 12px;
+      background-color: #e74c3c;
+      border-radius: 50%;
+      animation: pulse-red 1.5s infinite;
+    }
+
+    @keyframes pulse-red {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.6);}
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(231, 76, 60, 0);}
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);}
+    }
+
+    .countdown-timer {
+      background: #0b1e32;
+      color: white;
+      font-family: 'Inter', monospace;
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-align: center;
+      padding: 20px 12px;
+      border-radius: 24px;
+      margin: 20px 0 12px;
+      background: linear-gradient(115deg, #0f2a44, #112f4b);
+    }
+
+    .modern-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #226ad6;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 24px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s ease;
+      width: 100%;
+    }
+
+    .modern-btn:hover {
+      background: #0f58c2;
+      transform: translateY(-2px);
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.9);
+      background: #1f2a3e;
+      backdrop-filter: blur(12px);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 500;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* CHANNEL LINKS SECTION - Professional Design */
+    .channel-section {
+      padding: 80px 0;
+      background: #f8fafd;
+      border-top: 1px solid #e9edf2;
+      border-bottom: 1px solid #e9edf2;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .section-header h2 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #0a2540;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: #4a5b6e;
+      font-size: 1.1rem;
+    }
+
+    .channel-cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+    }
+
+    .channel-card {
+      flex: 1;
+      min-width: 320px;
+      background: white;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border: 1px solid #eef2ff;
+      text-align: center;
+      padding: 40px 32px;
+    }
+
+    /* NEW BOUNCE ANIMATION - NO BLUR, PURE BOUNCE EFFECT */
+    @keyframes gentleBounce {
+      0% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-12px);
+      }
+      60% {
+        transform: translateY(-5px);
+      }
+      80% {
+        transform: translateY(-2px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    /* Applying bounce animation to both channel cards without blur */
+    .channel-card {
+      animation: gentleBounce 1.2s ease-out;
+    }
+
+    /* Optional: ensure no blur or filter side effects - explicit reset */
+    .channel-card, .channel-card * {
+      filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .channel-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 45px -16px rgba(0, 0, 0, 0.15);
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+    }
+
+    .channel-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 24px;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.4rem;
+    }
+
+    .youtube-bg {
+      background: #ff0000;
+      color: white;
+      box-shadow: 0 12px 20px -10px rgba(255, 0, 0, 0.3);
+    }
+
+    .facebook-bg {
+      background: #1877f2;
+      color: white;
+      box-shadow: 0 12px 20px -10px rgba(24, 119, 242, 0.3);
+    }
+
+    .channel-card h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .channel-desc {
+      color: #4a627a;
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .channel-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #f0f4fe;
+      color: #1f5bc7;
+      padding: 12px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.2s;
+      font-size: 1rem;
+    }
+
+    .channel-link-btn i {
+      font-size: 1.2rem;
+    }
+
+    .channel-link-btn:hover {
+      background: #226ad6;
+      color: white;
+      transform: scale(1.02);
+    }
+
+    .events-section {
+      padding: 80px 0;
+      background: white;
+    }
+
+    .events-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .event-card {
+      background: #ffffff;
+      flex: 1;
+      min-width: 260px;
+      border-radius: 28px;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 24px;
+      transition: all 0.25s ease;
+      border: 1px solid #eef2ff;
+    }
+
+    .event-card:hover {
+      transform: translateY(-6px);
+      border-color: #cdddff;
+    }
+
+    .event-date {
+      background: #226ad6;
+      width: 85px;
+      text-align: center;
+      padding: 14px 0;
+      border-radius: 28px;
+      color: white;
+      font-weight: 800;
+    }
+
+    .event-date .day {
+      font-size: 1.9rem;
+      line-height: 1;
+    }
+
+    .event-info h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .event-loc {
+      font-size: 0.85rem;
+      color: #5a6e88;
+      margin-top: 6px;
+    }
+
+    .event-loc i {
+      margin-right: 6px;
+      color: #226ad6;
+    }
+
+    @media (max-width: 900px) {
+      .container { padding: 0 24px; }
+      .welcome-text h2 { font-size: 2.4rem; }
+      .countdown-timer { font-size: 2rem; }
+      .channel-card { min-width: 280px; }
+      /* keep animation on mobile but slightly lighter */
+      .channel-card {
+        animation: gentleBounce 0.9s ease-out;
+      }
+    }
+
+    /* additional reset for any possible filter from other elements */
+    .channel-section, .channel-card, .channel-card * {
+      filter: none;
+      backdrop-filter: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="reminderToast" class="toast-msg">🔔 Reminder set</div>
+
+  <!-- WELCOME SECTION -->
+  <section class="welcome-section">
+    <div class="container">
+      <div class="welcome-grid">
+        <div class="welcome-text">
+          <span class="welcome-badge"><i class="fas fa-cross"></i> CHARIS MISSIONARY CHURCH PRETORIA (west)</span>
+          <h2>Where Faith Meets Purpose</h2>
+          <p>At Charis Missionary Church, we are more than a congregation he are a movement of hope. Join us as we worship, serve, and grow in the fullness of God’s love. Every Sunday, lives are transformed, families restored, and communities blessed.</p>
+          <div class="stat-cards">
+            <div class="stat-item"><div class="stat-number">1.2k+</div><div>Active Members</div></div>
+            <div class="stat-item"><div class="stat-number">34+</div><div>Outreaches</div></div>
+            <div class="stat-item"><div class="stat-number">8</div><div>Ministries</div></div>
+          </div>
+        </div>
+        <div class="live-card">
+          <div class="live-header">
+            <div class="pulse-dot"></div>
+            <span style="font-weight:700;">LIVE IN</span>
+            <strong id="liveInBadge" style="background:#226ad610; padding:2px 10px; border-radius:40px;">2 HOURS</strong>
+          </div>
+          <h3>Next Sunday Service:</h3>
+          <div class="countdown-timer" id="countdownTimer">-- : -- : --</div>
+          <br></br>
+          <p style="margin-top: 8px; font-size: 0.85rem; background: #eef3ff; padding: 6px 12px; border-radius: 40px; display: inline-block;"><i class="fas fa-clock"></i> Every Sunday 14:30 SAST</p>
+             <br></br>
+          <button id="remindMeBtn" class="modern-btn"><i class="far fa-bell"></i> Set Reminder</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANNEL LINKS SECTION (YouTube & Facebook official channels) -->
+  <section class="channel-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>📺 Join Our Online Sanctuary</h2>
+        <p>Connect with us via our official channels — worship anytime, anywhere</p>
+      </div>
+      <div class="channel-cards">
+        <!-- YouTube Channel Card -->
+        <div class="channel-card">
+          <div class="channel-icon youtube-bg">
+            <i class="fab fa-youtube"></i>
+          </div>
+          <h3>YouTube Channel</h3>
+          <div class="channel-desc">
+            Subscribe and hit the bell to never miss a live worship, sermon, or special program. Join thousands watching worldwide.
+          </div>
+          <a href="https://www.youtube.com/@CharisMissionaryChurch" target="_blank" rel="noopener noreferrer" class="channel-link-btn">
+            <i class="fab fa-youtube"></i> Visit YouTube Channel
+          </a>
+        </div>
+        <!-- Facebook Channel Card -->
+        <div class="channel-card">
+          <div class="channel-icon facebook-bg">
+            <i class="fab fa-facebook-f"></i>
+          </div>
+          <h3>Facebook Page</h3>
+          <div class="channel-desc">
+            Like and follow our page for live streams, prayer requests, daily devotionals, and community updates.
+          </div>
+          <a href="https://www.facebook.com/profile.php?id=100070020013721" target="_blank" rel="noopener noreferrer" class="channel-link-btn">
+            <i class="fab fa-facebook-f"></i> Visit Facebook Page
+          </a>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 40px;">
+        <p style="color: #5a6e88;"><i class="fas fa-play-circle"></i> Tune in every Sunday around 14:30 (SAST) for live worship experience</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function() {
+      // ========================
+      // COUNTDOWN: Every Sunday at 14:30 South African Time (SAST)
+      // SAST = UTC+2 (no DST). We'll compute target based on current UTC +2 offset.
+      // ========================
+      function getNextSundayServiceSAST() {
+        // Get current time in SAST (UTC+2)
+        const nowUTC = new Date();
+        // Convert to SAST by adding 2 hours offset (UTC+2)
+        const nowSAST = new Date(nowUTC.getTime() + (2 * 60 * 60 * 1000));
+        
+        // Extract day, hours, minutes in SAST timezone
+        const year = nowSAST.getUTCFullYear();
+        const month = nowSAST.getUTCMonth();
+        const date = nowSAST.getUTCDate();
+        const dayOfWeek = nowSAST.getUTCDay(); // 0 = Sunday, 1 = Monday ...
+        let targetSAST = new Date(Date.UTC(year, month, date, 0, 0, 0));
+        
+        // Set target to 14:30 SAST = 12:30 UTC (since SAST = UTC+2, 14:30 SAST = 12:30 UTC)
+        // targetUTC will be set to 12:30 UTC on the target day
+        let daysUntilSunday = (0 - dayOfWeek + 7) % 7;
+        if (daysUntilSunday === 0) {
+          // Today is Sunday. If current SAST time is already past or equal to 14:30, go to next Sunday
+          const currentHourSAST = nowSAST.getUTCHours();
+          const currentMinSAST = nowSAST.getUTCMinutes();
+          const currentTotalMinutes = currentHourSAST * 60 + currentMinSAST;
+          if (currentTotalMinutes >= (14 * 60 + 30)) {
+            daysUntilSunday = 7;
+          }
+        }
+        
+        // Create UTC date for the target Sunday at 12:30 UTC (which corresponds to 14:30 SAST)
+        const targetUTC = new Date(Date.UTC(year, month, date + daysUntilSunday, 12, 30, 0, 0));
+        return targetUTC;
+      }
+      
+      let targetDate = getNextSundayServiceSAST();
+      const timerElement = document.getElementById('countdownTimer');
+      const liveInBadge = document.getElementById('liveInBadge');
+      let countdownInterval;
+      
+      function formatTwoDigits(num) {
+        return num.toString().padStart(2, '0');
+      }
+      
+      function updateCountdown() {
+        const nowUTC = new Date();
+        const diffMs = targetDate - nowUTC;
+        
+        if (diffMs <= 0) {
+          if (timerElement) timerElement.innerHTML = "🎉 LIVE NOW 🎉";
+          if (liveInBadge) liveInBadge.textContent = "NOW LIVE";
+          clearInterval(countdownInterval);
+          // restart countdown for next Sunday after 30 seconds (avoid flickering)
+          setTimeout(() => {
+            targetDate = getNextSundayServiceSAST();
+            if (countdownInterval) clearInterval(countdownInterval);
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
+          }, 5000);
+          return;
+        }
+        
+        const totalSeconds = Math.floor(diffMs / 1000);
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        
+        if (timerElement) timerElement.innerHTML = `${formatTwoDigits(hours)}:${formatTwoDigits(minutes)}:${formatTwoDigits(seconds)}`;
+        
+        if (liveInBadge) {
+          if (hours === 0 && minutes <= 30) liveInBadge.textContent = minutes <= 1 ? `${minutes} MINUTE` : `${minutes} MINUTES`;
+          else if (hours === 0 && minutes > 30) liveInBadge.textContent = `${minutes} MINUTES`;
+          else if (hours === 1) liveInBadge.textContent = `1 HOUR`;
+          else if (hours > 1) liveInBadge.textContent = `${hours} HOURS`;
+          else liveInBadge.textContent = "SOON";
+        }
+      }
+      
+      function initCountdown() {
+        targetDate = getNextSundayServiceSAST();
+        if (countdownInterval) clearInterval(countdownInterval);
+        updateCountdown();
+        countdownInterval = setInterval(updateCountdown, 1000);
+      }
+      initCountdown();
+      
+      // Recalculate every hour to handle week rollover properly
+      setInterval(() => {
+        const newTarget = getNextSundayServiceSAST();
+        if (Math.abs(newTarget.getTime() - targetDate.getTime()) > 60000) {
+          targetDate = newTarget;
+          updateCountdown();
+        }
+      }, 3600000);
+      
+      // ========== REMINDER BUTTON with notification & localStorage ==========
+      const remindBtn = document.getElementById('remindMeBtn');
+      const toast = document.getElementById('reminderToast');
+      
+      function showToastMessage(msg) {
+        if (toast) {
+          toast.textContent = msg;
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+      }
+      
+      remindBtn.addEventListener('click', () => {
+        const reminderKey = 'charis_sunday_reminder_active';
+        if (localStorage.getItem(reminderKey) === 'active') {
+          showToastMessage("⏰ Reminder already active for this week!");
+          return;
+        }
+        
+        // Set persistent reminder
+        localStorage.setItem(reminderKey, 'active');
+        
+        // Request notification permission if needed
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('Charis Missionary Church', { body: 'Reminder set for next Sunday service at 14:30 SAST!', icon: 'https://cdn-icons-png.flaticon.com/512/869/869316.png' });
+        } else if ('Notification' in window && Notification.permission !== 'denied') {
+          Notification.requestPermission().then(perm => {
+            if (perm === 'granted') {
+              new Notification('Charis Church', { body: 'We will remind you before service. Stay blessed!' });
+            }
+          });
+        }
+        
+        showToastMessage("✅ Reminder saved! We'll alert you 15 minutes before the next service.");
+        
+        // Schedule 15-minutes-before alert based on current targetDate
+        const now = new Date();
+        const timeToService = targetDate - now;
+        const fifteenMinutesMs = 15 * 60 * 1000;
+        
+        if (timeToService > fifteenMinutesMs) {
+          const reminderTime = setTimeout(() => {
+            const stillActive = localStorage.getItem(reminderKey) === 'active';
+            if (stillActive) {
+              showToastMessage("🔔 Service starts in 15 minutes! Join us online or in person.");
+              if ('Notification' in window && Notification.permission === 'granted') {
+                new Notification('Charis Missionary Church', { body: 'Live worship begins in 15 minutes! Tune in via YouTube or Facebook.' });
+              }
+              localStorage.removeItem(reminderKey);
+            }
+          }, timeToService - fifteenMinutesMs);
+          
+          // Store timeout id if we ever need cleanup, but fine for UX
+          window._reminderTimeout = reminderTime;
+        } else if (timeToService > 0 && timeToService <= fifteenMinutesMs) {
+          showToastMessage("🔔 Service is starting soon! Join the live stream.");
+          if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('Charis Church', { body: 'Sunday service is about to begin! Click to join.' });
+          }
+          localStorage.removeItem(reminderKey);
+        }
+      });
+      
+      // Optional: clean reminder key after Sunday service passes
+      setInterval(() => {
+        const now = new Date();
+        if (now > targetDate && localStorage.getItem('charis_sunday_reminder_active') === 'active') {
+          localStorage.removeItem('charis_sunday_reminder_active');
+        }
+      }, 60000);
+      
+      // Set additional metadata to display event info clarity
+      const updateLocationInfo = () => {
+        const locSpans = document.querySelectorAll('.event-loc');
+        locSpans.forEach(span => {
+          if (span.innerHTML.indexOf('fa-') === -1 && span.innerText) {
+            // already styled, but safe
+          }
+        });
+      };
+      updateLocationInfo();
+      
+      // Footer note: make sure channel links are dummy but editable. For production, church can replace URLs.
+      // But we provide explicit "https://www.youtube.com/@CharisMissionaryChurch" and "https://www.facebook.com/CharisMissionaryChurch" as examples.
+      console.log("Countdown configured to Sundays 14:30 SAST | Channels ready");
+    })();
+  </script>
+  <div style="background: #f8fafd; text-align: center; padding: 28px 20px; border-top: 1px solid #e2e8f0;">
+    <div class="container">
+      <p style="color: #5a6e88; font-size: 0.85rem;">© 2026 Charis Missionary Church. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

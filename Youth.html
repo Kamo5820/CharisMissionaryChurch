@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ignite Youth | Charis Missionary Church – Next Gen Faith in Action</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0B1121;
+            --primary-dark: #020617;
+            --primary-soft: #2563EB;
+            --secondary: #F59E0B;
+            --accent: #EC4899;
+            --light: #FFFFFF;
+            --dark: #0F172A;
+            --gray: #475569;
+            --gray-light: #F8FAFC;
+            --gray-border: #E2E8F0;
+            --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            --radius-xl: 32px;
+            --radius-2xl: 48px;
+            --radius-full: 9999px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section - Youth Dynamic Energy */
+        .hero-youth {
+            background: linear-gradient(125deg, rgba(2, 6, 23, 0.85), rgba(37, 99, 235, 0.78)), url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format');
+            background-size: cover;
+            background-position: center 30%;
+            padding: 160px 0 140px;
+            color: white;
+            position: relative;
+            isolation: isolate;
+        }
+        .hero-youth::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: linear-gradient(to top, var(--light), transparent);
+            pointer-events: none;
+        }
+        .hero-youth h1 {
+            font-size: 4.8rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #FFFFFF, #FBBF24);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: rgba(245, 158, 11, 0.25);
+            backdrop-filter: blur(8px);
+            padding: 8px 28px;
+            border-radius: 60px;
+            margin-bottom: 28px;
+            display: inline-block;
+        }
+        .youth-verse {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 20px 30px;
+            display: inline-block;
+            margin-top: 40px;
+            border: 1px solid rgba(245,158,11,0.4);
+            font-weight: 500;
+        }
+
+        /* Section titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-soft), var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Core Values Grid - Youth style */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        .value-card {
+            background: var(--light);
+            padding: 36px 28px;
+            border-radius: 36px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--gray-border);
+            text-align: center;
+            cursor: pointer;
+        }
+        .value-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 40px -12px rgba(37, 99, 235, 0.25);
+            border-color: var(--primary-soft);
+        }
+        .value-icon i {
+            font-size: 3rem;
+            background: linear-gradient(145deg, var(--primary-soft), var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        /* Worship & Events Section - Modern */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 40px 0;
+        }
+        .event-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-border);
+        }
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .event-img {
+            height: 200px;
+            background: linear-gradient(135deg, #1E293B, #0F172A);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        .event-content {
+            padding: 28px;
+        }
+        .event-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+        }
+        .event-badge {
+            background: var(--secondary);
+            color: #0F172A;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 16px;
+            font-size: 0.8rem;
+        }
+
+        /* Leadership - Youth leaders section (Toggle style) */
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 68px;
+            margin-top: 40px;
+        }
+        .leader-card {
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border-radius: 28px;
+            outline: 2px solid transparent;
+        }
+        .leader-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 30px -12px rgba(37, 99, 235, 0.4);
+            outline-color: var(--secondary);
+        }
+        .leader-img {
+            height: 320px;
+            overflow: hidden;
+        }
+        .leader-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .leader-card:hover .leader-img img {
+            transform: scale(1.05);
+        }
+        .leader-info {
+            padding: 28px 24px;
+            text-align: center;
+        }
+        .leader-info h3 {
+            font-size: 1.7rem;
+            margin-bottom: 6px;
+        }
+        .leader-title {
+            color: var(--primary-soft);
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+        .leader-bio {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.4s ease;
+            background: #FEF3C7;
+            border-radius: 24px;
+            margin-top: 0;
+            padding: 0 12px;
+        }
+        .leader-card.active-bio .leader-bio {
+            max-height: 280px;
+            opacity: 1;
+            margin-top: 18px;
+            padding: 14px 16px;
+        }
+        .bio-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-soft);
+            font-weight: 600;
+            margin-top: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .bio-toggle:hover {
+            color: var(--secondary);
+            gap: 12px;
+        }
+
+        /* Stats / Impact Section */
+        .stats-section {
+            background: linear-gradient(110deg, #0F172A, #1E293B);
+            border-radius: 64px;
+            padding: 70px 40px;
+            margin: 60px 0;
+            color: white;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            text-align: center;
+            gap: 40px;
+        }
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        /* Gallery Callout */
+        .gallery-preview {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        .gallery-item {
+            width: 160px;
+            height: 160px;
+            background: #CBD5E1;
+            border-radius: 28px;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s;
+            box-shadow: var(--shadow-sm);
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: var(--primary-dark);
+            padding: 70px 0 40px;
+            color: #D1D5DB;
+        }
+        .footer-modern {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 48px;
+        }
+        .social-links a {
+            background: rgba(255, 255, 255, 0.08);
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            margin-right: 12px;
+            color: white;
+            transition: 0.2s;
+        }
+        .social-links a:hover {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            transform: translateY(-4px);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--primary-soft);
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+            z-index: 99;
+            box-shadow: var(--shadow-md);
+        }
+        .back-to-top.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        @keyframes bounceGlowIcon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); text-shadow: 0 0 8px var(--primary-soft); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Youth Ministry Hero Section -->
+<section class="hero-youth">
+    <div class="container" style="text-align: center;">
+        <span class="hero-subtitle"><i class="fas fa-fire-flame-curved"></i> IGNITE · WORSHIP · IMPACT</span>
+        <h1>Ignite Youth Ministry<br>Charis Missionary Church</h1>
+        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">A movement of passionate young people chasing God's presence, breaking barriers, and shaping the future. Bold faith. Real community. Radical love.</p>
+        <div class="youth-verse">
+            <i class="fas fa-heart" style="margin-right: 10px; color: #F59E0B;"></i> 1 Timothy 4:12 — “Don’t let anyone look down on you because you are young, but set an example for the believers.”
+        </div>
+        <br><br>
+    </div>
+</section>
+
+<!-- Pillars of Youth Ministry -->
+<section style="padding: 40px 0 20px;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Movement's Core</h2>
+            <p>Living out faith with boldness, purpose, and passion.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card"><div class="value-icon"><i class="fas fa-fire"></i></div><h3>Radical Worship</h3><p>Unfiltered praise, live worship nights, and prophetic adoration.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-users"></i></div><h3>Authentic Fellowship</h3><p>Small groups that become family. No masks, just real growth.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-bullhorn"></i></div><h3>Kingdom Outreach</h3><p>School drives, street evangelism & community transformation projects.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-laptop-code"></i></div><h3>Next-Gen Leadership</h3><p>Training youth to lead, preach, and shape culture for Christ.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Youth Events Section (Modern, dynamic) -->
+<div class="container">
+    <div class="section-title">
+        <h2>🔥 What's Happening Now</h2>
+        <p>Experience the energy — events designed to ignite your spirit.</p>
+    </div>
+    <div class="events-grid">
+        <div class="event-card">
+            <div class="event-img"><i class="fas fa-music"></i></div>
+            <div class="event-content"><span class="event-badge">Every Friday</span><h3>Ignite Nights</h3><p>Live worship, spoken word, and prayer encounters. 6PM @ Church Hall.</p><i class="fas fa-calendar-alt" style="color: var(--primary-soft); margin-top: 12px; display: inline-block;"></i> 7:00 PM - 9:30 PM</div>
+        </div>
+        <div class="event-card">
+            <div class="event-img"><i class="fas fa-hands-praying"></i></div>
+            <div class="event-content"><span class="event-badge">Monthly</span><h3>Encounter Retreat</h3><p>Overnight worship & prophetic sessions. Deepen your intimacy with God.</p><i class="fas fa-location-dot"></i> Next: June 27-28</div>
+        </div>
+        <div class="event-card">
+            <div class="event-img"><i class="fas fa-chalkboard-user"></i></div>
+            <div class="event-content"><span class="event-badge">Leadership Track</span><h3>Youth Discipleship</h3><p>Equipping young leaders to preach, evangelize & serve. Starts bi-weekly.</p><i class="fas fa-user-graduate"></i> Mentorship by Pastoral Team</div>
+        </div>
+    </div>
+</div>
+<br><br>
+
+]
+
+<!-- What We Believe (Youth Edition) -->
+<section style="padding: 20px 0 50px;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Youth Declaration</h2>
+            <p>Confession of faith that fuels our movement.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 32px;">
+            <div style="background: white; border-radius: 32px; padding: 28px; box-shadow: var(--shadow-sm);"><i class="fas fa-cross" style="font-size: 2rem; color: var(--primary-soft);"></i><h3 style="margin: 16px 0;">Jesus Over Everything</h3><p>We prioritize Christ in music, relationships, and decisions — no compromise.</p></div>
+            <div style="background: white; border-radius: 32px; padding: 28px; box-shadow: var(--shadow-sm);"><i class="fas fa-dove" style="font-size: 2rem; color: var(--primary-soft);"></i><h3 style="margin: 16px 0;">Empowered by the Spirit</h3><p>We pursue the Holy Spirit’s gifts: prophecy, healing, boldness, and love.</p></div>
+            <div style="background: white; border-radius: 32px; padding: 28px; box-shadow: var(--shadow-sm);"><i class="fas fa-hand-peace"></i><h3 style="margin: 16px 0;">Radical Generosity</h3><p>Time, talent, and treasure given to see the Kingdom advance.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery (Modern mosaic feel) -->
+<div class="container" style="text-align: center; margin-top: 20px;">
+    <div class="section-title"><h2>Moments That Define Us</h2><p>Worship, outreach, fellowship in action.</p></div>
+    <div class="gallery-preview">
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format');"></div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format');"></div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2070&auto=format');"></div>
+        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=2070&auto=format');"></div>
+    </div>
+</div>
+<br><br>
+
+<!-- Footer with Youth references -->
+<footer>
+    <div class="container">
+        <div class="footer-modern">
+            <div><h4 style="color: white; font-size: 1.6rem; margin-bottom: 20px;">Ignite Youth</h4><p>Charis Missionary Church — Raising a burning generation for Jesus.</p><div class="social-links" style="margin-top: 24px;"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-tiktok"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
+            <div><h4 style="color: white; margin-bottom: 20px;">Quick Access</h4><ul style="list-style: none;"><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right" style="font-size: 0.7rem; margin-right: 8px;"></i> Ignite Nights</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Youth Camp 2025</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Discipleship Track</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Volunteer Signup</li></ul></div>
+            <div><h4 style="color: white; margin-bottom: 20px;">Connect</h4><p><i class="fas fa-phone-alt"></i> +27 (0)63 619 4901</p><p><i class="fas fa-envelope"></i> youth@charismissionary.org</p><p><i class="fas fa-map-marker-alt"></i> Danville Clinic Hall, Pretoria West</p><p><i class="fas fa-clock"></i> Youth Service: Sundays 12PM | Fridays 6PM</p></div>
+        </div>
+        <div class="copyright" style="text-align:center; margin-top: 64px; border-top: 1px solid rgba(255,255,200,0.15); padding-top: 36px;">&copy; 2025 Charis Missionary Church Youth Ministry — IGNITE THE GENERATION | All rights reserved.</div>
+    </div>
+</footer>
+<a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+<script>
+    // Back to top logic
+    const backBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 500) backBtn.classList.add('active');
+        else backBtn.classList.remove('active');
+    });
+    backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    // Advanced Bio Toggle for Leadership Cards (youth leaders)
+    const toggleBtns = document.querySelectorAll('.bio-toggle');
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const targetId = this.getAttribute('data-target');
+            const card = document.getElementById(targetId);
+            if(card) {
+                card.classList.toggle('active-bio');
+                const icon = this.querySelector('i');
+                if(card.classList.contains('active-bio')) {
+                    icon.classList.remove('fa-chevron-circle-down');
+                    icon.classList.add('fa-chevron-circle-up');
+                    this.innerHTML = '<i class="fas fa-chevron-circle-up"></i> Show less';
+                } else {
+                    icon.classList.remove('fa-chevron-circle-up');
+                    icon.classList.add('fa-chevron-circle-down');
+                    this.innerHTML = '<i class="fas fa-chevron-circle-down"></i> Read Bio';
+                }
+            }
+        });
+    });
+
+    // Intersection Observer for fade-up animation
+    const fadeElements = document.querySelectorAll('.value-card, .events-grid, .leadership-grid, .stats-section, .gallery-preview');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+            }
+        });
+    }, {threshold: 0.1});
+    fadeElements.forEach(el => {
+        if(el.style) {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(25px)";
+            el.style.transition = "opacity 0.7s ease, transform 0.5s ease";
+            observer.observe(el);
+        }
+    });
+
+    // Counter function for stats
+    function startCounters() {
+        const counters = document.querySelectorAll('.counter');
+        const statsSection = document.querySelector('.stats-section');
+        if(!statsSection) return;
+        const observerStats = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    counters.forEach(counter => {
+                        const updateCount = () => {
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            let current = parseInt(counter.innerText);
+                            const increment = target / 50;
+                            if(current < target) {
+                                current = Math.ceil(current + increment);
+                                counter.innerText = current;
+                                setTimeout(updateCount, 20);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        if(counter.innerText === '0') updateCount();
+                    });
+                    observerStats.unobserve(entry.target);
+                }
+            });
+        }, {threshold: 0.5});
+        observerStats.observe(statsSection);
+    }
+
+    window.addEventListener('load', () => {
+        fadeElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if(rect.top < window.innerHeight - 100) {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+            }
+        });
+        startCounters();
+    });
+
+    // Hover animations for icons
+    const valueIcons = document.querySelectorAll('.value-icon i');
+    valueIcons.forEach(icon => {
+        const parentCard = icon.closest('.value-card');
+        if(parentCard) {
+            parentCard.addEventListener('mouseenter', () => {
+                icon.style.animation = 'bounceGlowIcon 0.5s ease';
+                setTimeout(() => icon.style.animation = '', 500);
+            });
+        }
+    });
+</script>
+</body>
+</html>

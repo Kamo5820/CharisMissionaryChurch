@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Exodus of Wisdom | 200 Levels | Badges & Hints</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Cormorant+Garamond:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-gold: #c9a03d;
+            --primary-dark: #7a2e19;
+            --desert-sand: #fbf5e8;
+            --scroll-brown: #ecd9b4;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 20% 30%, #1a2a1f, #0f1a0c), url('https://images.pexels.com/photos/3058219/pexels-photo-3058219.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover fixed;
+            background-blend-mode: overlay;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .game-container {
+            width: 100%;
+            max-width: 1400px;
+            height: 92vh;
+            min-height: 700px;
+            background: rgba(255, 252, 240, 0.98);
+            border-radius: 56px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Top Bar with Badges */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 28px;
+            background: rgba(30, 20, 12, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e3b87c;
+        }
+        .badge-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            max-width: 60%;
+            padding: 8px 0;
+            scrollbar-width: thin;
+        }
+        .badge-slot {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #3a2a1e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3rem;
+            transition: all 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+            border: 2px solid #6a4e2a;
+        }
+        .badge-slot.earned {
+            background: linear-gradient(135deg, #f3b33d, #d48f2b);
+            border-color: gold;
+            box-shadow: 0 0 15px rgba(255,215,0,0.5);
+            animation: badgeGlow 0.6s ease-out;
+        }
+        @keyframes badgeGlow {
+            0% { transform: scale(0.2) rotate(-180deg); opacity: 0; }
+            60% { transform: scale(1.2) rotate(8deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .badge-slot.locked {
+            background: #2a241e;
+            filter: grayscale(0.6);
+            opacity: 0.5;
+        }
+        .badge-number {
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 1px 2px black;
+        }
+        .hint-section {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: #2b2a1fcc;
+            padding: 8px 18px;
+            border-radius: 50px;
+        }
+        .hint-btn {
+            background: #d4a13e;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .hint-btn.disabled { background: #6b5a3a; cursor: not-allowed; opacity: 0.6; }
+        .timer-text { color: #ffd966; font-size: 0.8rem; font-weight: 600; }
+        /* Game Screens */
+        .game-screen { display: none; height: calc(100% - 85px); padding: 24px 32px; overflow-y: auto; }
+        .game-screen.active { display: block; }
+        /* Header stats */
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            background: #e9dbc5cc;
+            border-radius: 50px;
+            padding: 12px 24px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .question-card {
+            background: #fef7e9;
+            border-radius: 48px;
+            padding: 32px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        .options-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; margin: 28px 0; }
+        .option-btn {
+            background: white; border: 2px solid #e7cf9c; border-radius: 60px; padding: 14px 20px; cursor: pointer;
+            transition: 0.2s; font-weight: 500;
+        }
+        .option-btn.correct { background: #2c7840; color: white; }
+        .option-btn.incorrect { background: #b3413b; color: white; text-decoration: line-through; }
+        .next-btn { background: #2e7d32; border: none; padding: 14px 40px; border-radius: 50px; color: white; font-weight: bold; cursor: pointer; }
+        /* LEVELS OVERLAY WITH SLIDER/SCROLLER */
+        .levels-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(14px); z-index: 3000; display: flex; align-items: center; justify-content: center;
+            visibility: hidden; opacity: 0; transition: 0.25s;
+        }
+        .levels-overlay.active { visibility: visible; opacity: 1; }
+        .levels-panel {
+            background: #fff5e6; width: 90%; max-width: 1200px; max-height: 85vh; border-radius: 56px;
+            padding: 24px; overflow: hidden; display: flex; flex-direction: column;
+        }
+        .levels-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+            flex-wrap: wrap; gap: 12px;
+        }
+        .view-toggle {
+            display: flex; gap: 12px;
+        }
+        .view-btn {
+            background: #c9a03d; border: none; padding: 8px 20px; border-radius: 40px; font-weight: bold; cursor: pointer;
+        }
+        .levels-viewport {
+            overflow-y: auto; flex: 1; padding: 10px;
+        }
+        /* SLIDER VIEW (horizontal carousel) */
+        .slider-view {
+            display: flex; overflow-x: auto; gap: 20px; padding: 20px 10px; scroll-behavior: smooth;
+        }
+        .slider-view .level-tile { min-width: 100px; flex-shrink: 0; }
+        /* SCROLLER VIEW (grid layout) */
+        .scroller-view {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(95px, 105px)); gap: 18px;
+            justify-content: center;
+        }
+        .level-tile {
+            background: linear-gradient(145deg, #f1e5cd, #e5d2b0); border-radius: 28px; text-align: center;
+            padding: 18px 5px; font-weight: bold; font-size: 1.4rem; cursor: pointer; transition: 0.2s;
+            border: 1px solid #dbbc7c; position: relative;
+        }
+        .level-tile.locked { background: #9c8c6e; filter: grayscale(0.5); cursor: not-allowed; opacity: 0.7; }
+        .level-tile.unlocked:hover { transform: translateY(-5px); background: #f7e1aa; }
+        .level-tile.completed { border: 3px solid #f1c40f; }
+        .nav-arrows { display: flex; gap: 20px; justify-content: center; margin-top: 15px; }
+        .arrow-btn { background: #c9a03d; border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 1.8rem; cursor: pointer; }
+        .result-actions { display: flex; gap: 20px; justify-content: center; margin-top: 28px; }
+        @media (max-width: 700px) {
+            .options-grid { grid-template-columns: 1fr; }
+            .top-bar { flex-direction: column; gap: 12px; }
+            .badge-container { max-width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <div class="top-bar">
+        <div class="badge-container" id="badgeContainer"></div>
+        <div class="hint-section">
+            <button class="hint-btn" id="hintButton"><i class="fas fa-lightbulb"></i> Hint <span id="hintCount">5</span></button>
+            <div class="timer-text" id="hintTimer">Ready</div>
+        </div>
+    </div>
+
+    <!-- HOME SCREEN -->
+    <div id="homeScreen" class="game-screen active">
+        <div style="text-align:center; margin-top: 10%;">
+            <i class="fas fa-scroll" style="font-size: 70px; color:#b47c2e;"></i>
+            <h1 style="font-family: 'Cormorant Garamond'; font-size: 3rem;">EXODUS OF WISDOM</h1>
+            <p>200 Levels · Badges every 5 stages · Divine Hints (5 per day)</p>
+            <div style="margin-top: 40px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button id="homeStartBtn" class="next-btn" style="background:#c9a03d;">Begin Journey</button>
+                <button id="homeLevelsBtn" class="next-btn" style="background:#7a5a3a;">Levels Map</button>
+                <button id="homeSettingsBtn" class="next-btn">Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="gameScreen" class="game-screen">
+        <div class="stats-row">
+            <div><i class="fas fa-layer-group"></i> Level <span id="gameLevel">1</span></div>
+            <div><i class="fas fa-star"></i> Score <span id="gameScore">0</span></div>
+            <div><i class="fas fa-fire"></i> Streak <span id="gameStreak">0</span></div>
+            <div><i class="fas fa-check-circle"></i> Progress <span id="qProgress">0</span>/10</div>
+        </div>
+        <div class="question-card">
+            <div id="questionText" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 20px;"></div>
+            <div id="optionsContainer" class="options-grid"></div>
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <button id="exitGameBtn" style="background:#7f5539; border:none; padding:12px 28px; border-radius: 50px; color:white;">Exit</button>
+                <button id="submitBtn" class="next-btn" disabled>Submit Answer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEVEL COMPLETE SCREEN -->
+    <div id="completeScreen" class="game-screen">
+        <div style="text-align:center; margin-top: 15%;"><i class="fas fa-crown" style="font-size: 70px; color:#f4b942;"></i>
+            <h1 id="completeTitle">Level Complete!</h1>
+            <div id="completePercent" style="font-size: 3rem; font-weight:800;">0%</div>
+            <p id="completeMsg"></p>
+            <div class="result-actions">
+                <button id="nextLevelBtn" class="next-btn">Next Level</button>
+                <button id="retryLevelBtn" style="background:#b87c3a;">Retry</button>
+                <button id="completeHomeBtn">Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SETTINGS SCREEN -->
+    <div id="settingsScreen" class="game-screen">
+        <button id="backHomeBtn" style="background:#7f5539; padding:10px 25px; border-radius:40px; margin-bottom:20px;">← Back</button>
+        <h2>Difficulty</h2>
+        <div id="diffOptions" style="display:flex; gap:15px; margin:20px 0;"></div>
+        <button id="resetProgressBtn" style="background:#a94442; padding:12px 24px; border-radius:40px;">Reset All Progress</button>
+        <div id="settingsMsg" style="margin-top:20px;"></div>
+    </div>
+
+    <!-- LEVELS OVERLAY with SLIDER/SCROLLER -->
+    <div id="levelsOverlay" class="levels-overlay">
+        <div class="levels-panel">
+            <div class="levels-header">
+                <h2><i class="fas fa-map"></i> 200 Sacred Levels</h2>
+                <div class="view-toggle">
+                    <button class="view-btn" id="sliderViewBtn"><i class="fas fa-arrows-alt-h"></i> Slider</button>
+                    <button class="view-btn" id="scrollerViewBtn"><i class="fas fa-th-large"></i> Grid</button>
+                </div>
+                <button id="closeLevelsBtn" style="background:#b97f3a; padding:6px 20px; border-radius:40px;">Close</button>
+            </div>
+            <div class="levels-viewport" id="levelsViewport"></div>
+            <div class="nav-arrows" id="navArrows" style="display: none;">
+                <button class="arrow-btn" id="prevArrow"><i class="fas fa-chevron-left"></i></button>
+                <button class="arrow-btn" id="nextArrow"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // CONSTANTS
+    const TOTAL_LEVELS = 200;
+    const BADGE_MILESTONES = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180, 185, 190, 195, 200];
+    
+    // GAME STATE
+    let game = {
+        difficulty: "easy",
+        currentLevel: 1,
+        currentQIndex: 1,
+        questions: [],
+        selectedOpt: null,
+        answered: false,
+        streak: 0,
+        correctInLevel: 0,
+        totalScore: 0,
+        completedLevels: new Set(), // levels passed (>=70%)
+        badgesEarned: new Set(),
+        hintsRemaining: 5,
+        hintResetDate: null,
+        lastHintUsed: null
+    };
+
+    // Load hint daily data
+    function loadHintSystem() {
+        const saved = localStorage.getItem("bibleHintData");
+        if(saved) {
+            const data = JSON.parse(saved);
+            const today = new Date().toDateString();
+            if(data.date === today) {
+                game.hintsRemaining = data.hintsRemaining;
+            } else {
+                game.hintsRemaining = 5;
+                game.hintResetDate = today;
+                saveHintData();
+            }
+        } else {
+            game.hintsRemaining = 5;
+            saveHintData();
+        }
+        updateHintUI();
+    }
+    function saveHintData() {
+        localStorage.setItem("bibleHintData", JSON.stringify({
+            hintsRemaining: game.hintsRemaining,
+            date: new Date().toDateString()
+        }));
+    }
+    function updateHintUI() {
+        document.getElementById("hintCount").innerText = game.hintsRemaining;
+        const btn = document.getElementById("hintButton");
+        if(game.hintsRemaining <= 0) {
+            btn.classList.add("disabled");
+            document.getElementById("hintTimer").innerHTML = "⏳ Next day";
+        } else {
+            btn.classList.remove("disabled");
+            document.getElementById("hintTimer").innerHTML = "✨ " + game.hintsRemaining + " left";
+        }
+    }
+
+    // Badge management
+    function updateBadges() {
+        const container = document.getElementById("badgeContainer");
+        container.innerHTML = "";
+        for(let i = 0; i < BADGE_MILESTONES.length; i++) {
+            const milestone = BADGE_MILESTONES[i];
+            const earned = game.completedLevels.has(milestone);
+            const slot = document.createElement("div");
+            slot.className = `badge-slot ${earned ? 'earned' : 'locked'}`;
+            slot.innerHTML = `<span class="badge-number">${milestone}</span>`;
+            if(earned) slot.title = `Stage ${milestone} Conquered!`;
+            else slot.title = `Complete level ${milestone} to earn badge`;
+            container.appendChild(slot);
+        }
+        // check for new badge animation on each milestone completion
+        for(let m of BADGE_MILESTONES) {
+            if(game.completedLevels.has(m) && !game.badgesEarned.has(m)) {
+                game.badgesEarned.add(m);
+                animateBadgeFly(m);
+            }
+        }
+    }
+    function animateBadgeFly(milestone) {
+        const badgeElements = document.querySelectorAll(".badge-slot");
+        for(let el of badgeElements) {
+            if(el.innerText.includes(milestone.toString())) {
+                el.classList.add("earned");
+                el.style.animation = "none";
+                el.offsetHeight;
+                el.style.animation = "badgeGlow 0.6s ease-out";
+            }
+        }
+    }
+
+    // Generate unique questions per level (scaling difficulty)
+    function generateLevelQuestions(level, diff) {
+        let questions = [];
+        const baseDifficulty = diff === "easy" ? 0.4 : diff === "medium" ? 0.7 : 1.0;
+        const levelFactor = level / TOTAL_LEVELS;
+        for(let i=1; i<=10; i++) {
+            let seed = (level * 73 + i * 131) % 47;
+            let bank = [];
+            if(diff === "easy") {
+                bank = [
+                    { text: `🌿 Who built the ark? (Lv${level})`, opts: ["Noah", "Moses", "Abraham", "David"], correct:0 },
+                    { text: `🌊 Sea Moses parted?`, opts: ["Red Sea", "Jordan", "Mediterranean", "Galilee"], correct:0 },
+                    { text: `👑 First king of Israel?`, opts: ["Saul", "David", "Solomon", "Samuel"], correct:0 },
+                    { text: `🏙️ Jesus' birthplace?`, opts: ["Bethlehem", "Nazareth", "Jerusalem", "Capernaum"], correct:0 },
+                    { text: `🐟 Loaves to feed 5000?`, opts: ["5", "7", "3", "12"], correct:0 },
+                    { text: `✝️ Mount of 10 Commandments?`, opts: ["Sinai", "Zion", "Carmel", "Nebo"], correct:0 },
+                    { text: `📖 Who betrayed Jesus?`, opts: ["Judas", "Peter", "John", "James"], correct:0 },
+                    { text: `🕊️ Prophet taken to heaven?`, opts: ["Elijah", "Elisha", "Enoch", "Isaiah"], correct:0 },
+                    { text: `🐏 Abraham's son of promise?`, opts: ["Isaac", "Ishmael", "Jacob", "Esau"], correct:0 },
+                    { text: `🏛️ City of Jericho fell after?`, opts: ["7 days", "40 days", "3 days", "1 year"], correct:0 }
+                ];
+            } else if(diff === "medium") {
+                bank = [
+                    { text: `🏺 Paul shipwrecked at? (Lv${level})`, opts: ["Malta", "Crete", "Cyprus", "Sicily"], correct:0 },
+                    { text: `🗡️ Valley where David fought Goliath?`, opts: ["Elah", "Jezreel", "Kidron", "Hinnom"], correct:0 },
+                    { text: `📜 Qumran caves scrolls found?`, opts: ["Dead Sea Scrolls", "Copper Scroll", "Maccabees", "Torah"], correct:0 },
+                    { text: `⛰️ Mount of Transfiguration?`, opts: ["Tabor", "Hermon", "Olivet", "Zion"], correct:0 },
+                    { text: `🕎 Hanukkah celebrates?`, opts: ["Maccabean Revolt", "Exodus", "Purim", "Tabernacles"], correct:0 },
+                    { text: `🐪 John the Baptist wore?`, opts: ["Camel hair", "Linen", "Silk", "Wool"], correct:0 },
+                    { text: `🏛️ Caesarea Philippi where Peter's confession?`, opts: ["Panias", "Tyre", "Sidon", "Damascus"], correct:0 },
+                    { text: `📖 Who wrote majority of Psalms?`, opts: ["David", "Solomon", "Asaph", "Moses"], correct:0 },
+                    { text: `🌄 Mount where Elijah challenged Baal?`, opts: ["Carmel", "Sinai", "Tabor", "Gerizim"], correct:0 },
+                    { text: `⚓ Jonah fled from?`, opts: ["Joppa", "Tarshish", "Nineveh", "Jerusalem"], correct:0 }
+                ];
+            } else {
+                bank = [
+                    { text: `🔯 (HARD Lv${level}) Ketef Hinnom contains?`, opts: ["Priestly Blessing", "Shema", "Decalogue", "Psalm 23"], correct:0 },
+                    { text: `🏛️ Herod's Temple扩建 started when?`, opts: ["19 BC", "37 BC", "70 AD", "10 AD"], correct:0 },
+                    { text: `📜 Tel Dan Stele mentions?`, opts: ["House of David", "Israel", "Moab", "Assyria"], correct:0 },
+                    { text: `🕯️ Menorah was in Temple's?`, opts: ["Holy Place", "Holy of Holies", "Court", "Porch"], correct:0 },
+                    { text: `🗺️ Via Maris connects?`, opts: ["Egypt to Damascus", "Jericho to Jerusalem", "Galilee to Samaria", "Joppa to Rome"], correct:0 },
+                    { text: `🏔️ Mount Gerizim vs Ebal location?`, opts: ["Shechem", "Shiloh", "Gilgal", "Bethel"], correct:0 },
+                    { text: `📖 Masada last stronghold of which revolt?`, opts: ["Jewish Revolt", "Bar Kokhba", "Maccabean", "Zealots"], correct:0 },
+                    { text: `⚔️ Arch of Titus depicts?`, opts: ["Temple Menorah", "Ark", "Tablets", "Golden Calf"], correct:0 },
+                    { text: `🐫 Ancient Petra connected to?`, opts: ["Edom", "Moab", "Ammon", "Midian"], correct:0 },
+                    { text: `✡️ Urim and Thummim used by?`, opts: ["High Priest", "King", "Prophet", "Judge"], correct:0 }
+                ];
+            }
+            let q = bank[(seed + i) % bank.length];
+            questions.push({ text: q.text, options: [...q.opts], correctIdx: q.correct });
+        }
+        return questions;
+    }
+
+    function initLevel() {
+        game.questions = generateLevelQuestions(game.currentLevel, game.difficulty);
+        game.currentQIndex = 1;
+        game.correctInLevel = 0;
+        game.streak = 0;
+        game.selectedOpt = null;
+        game.answered = false;
+        updateGameUI();
+        renderCurrentQuestion();
+    }
+
+    function updateGameUI() {
+        document.getElementById("gameLevel").innerText = game.currentLevel;
+        document.getElementById("gameScore").innerText = game.totalScore;
+        document.getElementById("gameStreak").innerText = game.streak;
+        document.getElementById("qProgress").innerText = `${game.correctInLevel}/10`;
+    }
+
+    function renderCurrentQuestion() {
+        if(!game.questions.length) return;
+        const q = game.questions[game.currentQIndex-1];
+        document.getElementById("questionText").innerHTML = `<i class="fas fa-map-pin"></i> ${q.text}`;
+        const container = document.getElementById("optionsContainer");
+        container.innerHTML = "";
+        q.options.forEach((opt, idx) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerHTML = `${String.fromCharCode(65+idx)}. ${opt}`;
+            btn.onclick = () => selectAnswer(idx);
+            container.appendChild(btn);
+        });
+        document.getElementById("submitBtn").disabled = true;
+        game.selectedOpt = null;
+        game.answered = false;
+    }
+
+    function selectAnswer(idx) {
+        if(game.answered) return;
+        document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("correct","incorrect"));
+        game.selectedOpt = idx;
+        document.getElementById("submitBtn").disabled = false;
+    }
+
+    function useHint() {
+        if(game.hintsRemaining <= 0) {
+            alert("No hints left today! Come back tomorrow for new hints.");
+            return;
+        }
+        if(game.answered) { alert("Already answered this question!"); return; }
+        const currentQ = game.questions[game.currentQIndex-1];
+        const correctIdx = currentQ.correctIdx;
+        const options = document.querySelectorAll(".option-btn");
+        if(options[correctIdx]) {
+            options[correctIdx].style.background = "#f3cd81";
+            options[correctIdx].style.border = "3px solid #d49b3a";
+            setTimeout(() => { if(options[correctIdx]) options[correctIdx].style.background = ""; }, 2000);
+        }
+        game.hintsRemaining--;
+        saveHintData();
+        updateHintUI();
+    }
+
+    function submitAnswer() {
+        if(game.selectedOpt === null || game.answered) return;
+        const q = game.questions[game.currentQIndex-1];
+        const isCorrect = (game.selectedOpt === q.correctIdx);
+        const btns = document.querySelectorAll(".option-btn");
+        btns.forEach((btn,i) => {
+            if(i === q.correctIdx) btn.classList.add("correct");
+            if(i === game.selectedOpt && !isCorrect) btn.classList.add("incorrect");
+            btn.style.pointerEvents = "none";
+        });
+        if(isCorrect) {
+            let points = 10 + (game.streak>=3 ? 5:0);
+            game.totalScore += points;
+            game.streak++;
+            game.correctInLevel++;
+            triggerConfetti();
+        } else {
+            game.streak = 0;
+        }
+        game.answered = true;
+        updateGameUI();
+        document.getElementById("submitBtn").disabled = true;
+        saveGame();
+        setTimeout(() => {
+            if(game.currentQIndex < 10) {
+                game.currentQIndex++;
+                renderCurrentQuestion();
+                updateGameUI();
+            } else {
+                finishLevel();
+            }
+        }, 1000);
+    }
+
+    function finishLevel() {
+        let percent = (game.correctInLevel/10)*100;
+        let passed = percent >= 70;
+        if(passed) {
+            game.completedLevels.add(game.currentLevel);
+            updateBadges();
+            saveGame();
+        }
+        document.getElementById("completePercent").innerHTML = Math.floor(percent)+"%";
+        if(passed) {
+            document.getElementById("completeTitle").innerHTML = "🏆 VICTORY! Level Passed! 🏆";
+            document.getElementById("completeMsg").innerHTML = `You conquered level ${game.currentLevel} on ${game.difficulty.toUpperCase()}. +${Math.floor(percent)} mastery.`;
+            document.getElementById("nextLevelBtn").style.display = "inline-block";
+        } else {
+            document.getElementById("completeTitle").innerHTML = "❌ Not Enough";
+            document.getElementById("completeMsg").innerHTML = `${game.correctInLevel}/10 correct. Need 70% to pass.`;
+            document.getElementById("nextLevelBtn").style.display = "none";
+        }
+        showScreen("completeScreen");
+    }
+
+    function nextLevel() {
+        if(game.currentLevel < TOTAL_LEVELS && game.completedLevels.has(game.currentLevel)) {
+            game.currentLevel++;
+            initLevel();
+            showScreen("gameScreen");
+        } else if(game.currentLevel === TOTAL_LEVELS && game.completedLevels.has(TOTAL_LEVELS)) {
+            alert("🏆 GRAND MASTER! All 200 levels completed! 🏆");
+            showScreen("homeScreen");
+        } else alert("Complete current level with 70%+ to advance.");
+    }
+    function retryLevel() { initLevel(); showScreen("gameScreen"); }
+    function triggerConfetti() { for(let i=0;i<40;i++){ let c=document.createElement("div"); c.style.position="fixed"; c.style.left=Math.random()*100+"%"; c.style.top="-10px"; c.style.width="8px"; c.style.height="12px"; c.style.background=`hsl(${Math.random()*360},80%,60%)`; c.style.pointerEvents="none"; c.style.zIndex=9999; document.body.appendChild(c); setTimeout(()=>c.remove(),1500); } }
+    
+    function saveGame() { localStorage.setItem("bible200Game", JSON.stringify({ totalScore: game.totalScore, completed: Array.from(game.completedLevels), difficulty: game.difficulty, currentLevel: game.currentLevel, badgesEarned: Array.from(game.badgesEarned) })); }
+    function loadGame() {
+        let d = localStorage.getItem("bible200Game");
+        if(d) {
+            let p = JSON.parse(d);
+            game.totalScore = p.totalScore || 0;
+            game.completedLevels = new Set(p.completed || []);
+            game.difficulty = p.difficulty || "easy";
+            game.currentLevel = p.currentLevel || 1;
+            if(game.currentLevel > TOTAL_LEVELS) game.currentLevel = TOTAL_LEVELS;
+            game.badgesEarned = new Set(p.badgesEarned || []);
+            updateBadges();
+        }
+    }
+
+    // LEVELS VIEW: Slider & Scroller dynamic
+    let currentView = "scroller"; // slider or scroller
+    let sliderIndex = 0;
+    function renderLevelsView() {
+        const viewport = document.getElementById("levelsViewport");
+        if(!viewport) return;
+        if(currentView === "slider") {
+            viewport.innerHTML = `<div class="slider-view" id="sliderContainer"></div>`;
+            const container = document.getElementById("sliderContainer");
+            for(let l=1; l<=TOTAL_LEVELS; l++) {
+                let unlocked = (l===1) || game.completedLevels.has(l-1);
+                let completed = game.completedLevels.has(l);
+                let tile = document.createElement("div");
+                tile.className = `level-tile ${unlocked ? "unlocked" : "locked"} ${completed ? "completed" : ""}`;
+                tile.innerHTML = unlocked ? `<div style="font-size:1.8rem;">${l}</div>${completed?'<i class="fas fa-check-circle"></i>':''}` : `<i class="fas fa-lock"></i><div>${l}</div>`;
+                if(unlocked) tile.onclick = () => { game.currentLevel = l; initLevel(); closeOverlay(); showScreen("gameScreen"); saveGame(); };
+                else tile.onclick = () => alert(`Complete level ${l-1} with 70%+ to unlock.`);
+                container.appendChild(tile);
+            }
+            document.getElementById("navArrows").style.display = "flex";
+            const sliderDiv = document.getElementById("sliderContainer");
+            const scroll = (dir) => { sliderDiv.scrollBy({ left: dir * 280, behavior: "smooth" }); };
+            document.getElementById("prevArrow").onclick = () => scroll(-1);
+            document.getElementById("nextArrow").onclick = () => scroll(1);
+        } else {
+            viewport.innerHTML = `<div class="scroller-view" id="scrollerGrid"></div>`;
+            const grid = document.getElementById("scrollerGrid");
+            for(let l=1; l<=TOTAL_LEVELS; l++) {
+                let unlocked = (l===1) || game.completedLevels.has(l-1);
+                let completed = game.completedLevels.has(l);
+                let tile = document.createElement("div");
+                tile.className = `level-tile ${unlocked ? "unlocked" : "locked"} ${completed ? "completed" : ""}`;
+                tile.innerHTML = unlocked ? `<div>${l}</div>${completed?'<i class="fas fa-crown"></i>':''}` : `<i class="fas fa-lock"></i><div>${l}</div>`;
+                if(unlocked) tile.onclick = () => { game.currentLevel = l; initLevel(); closeOverlay(); showScreen("gameScreen"); saveGame(); };
+                else tile.onclick = () => alert(`Complete level ${l-1} first.`);
+                grid.appendChild(tile);
+            }
+            document.getElementById("navArrows").style.display = "none";
+        }
+    }
+    function openOverlay() { renderLevelsView(); document.getElementById("levelsOverlay").classList.add("active"); }
+    function closeOverlay() { document.getElementById("levelsOverlay").classList.remove("active"); }
+    function showScreen(id) { document.querySelectorAll(".game-screen").forEach(s => s.classList.remove("active")); document.getElementById(id).classList.add("active"); }
+
+    // Settings
+    function buildSettings() {
+        const diffDiv = document.getElementById("diffOptions");
+        diffDiv.innerHTML = "";
+        ["easy","medium","hard"].forEach(d => {
+            let btn = document.createElement("button");
+            btn.innerText = d.toUpperCase();
+            btn.style.padding = "10px 25px"; btn.style.borderRadius = "40px"; btn.style.cursor = "pointer";
+            if(game.difficulty === d) btn.style.background = "#c9a03d";
+            btn.onclick = () => { if(confirm("Change difficulty? Progress for this difficulty will reset.")) { game.difficulty = d; game.completedLevels.clear(); game.currentLevel = 1; game.totalScore = 0; game.badgesEarned.clear(); initLevel(); saveGame(); updateBadges(); buildSettings(); alert("Difficulty changed!"); } };
+            diffDiv.appendChild(btn);
+        });
+        document.getElementById("resetProgressBtn").onclick = () => { if(confirm("RESET all progress?")) { localStorage.clear(); location.reload(); } };
+    }
+
+    // Event Listeners
+    document.getElementById("homeStartBtn").onclick = () => { initLevel(); showScreen("gameScreen"); };
+    document.getElementById("homeLevelsBtn").onclick = openOverlay;
+    document.getElementById("homeSettingsBtn").onclick = () => { buildSettings(); showScreen("settingsScreen"); };
+    document.getElementById("closeLevelsBtn").onclick = closeOverlay;
+    document.getElementById("sliderViewBtn").onclick = () => { currentView = "slider"; renderLevelsView(); };
+    document.getElementById("scrollerViewBtn").onclick = () => { currentView = "scroller"; renderLevelsView(); };
+    document.getElementById("exitGameBtn").onclick = () => showScreen("homeScreen");
+    document.getElementById("submitBtn").onclick = submitAnswer;
+    document.getElementById("nextLevelBtn").onclick = nextLevel;
+    document.getElementById("retryLevelBtn").onclick = retryLevel;
+    document.getElementById("completeHomeBtn").onclick = () => showScreen("homeScreen");
+    document.getElementById("backHomeBtn").onclick = () => showScreen("homeScreen");
+    document.getElementById("hintButton").onclick = useHint;
+
+    loadGame();
+    loadHintSystem();
+    updateBadges();
+    initLevel();
+    showScreen("homeScreen");
+</script>
+</body>
+</html>

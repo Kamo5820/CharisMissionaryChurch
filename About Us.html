@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>About Us | Charis Missionary Church – Our Story & Leadership</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #000000;
+            --primary-dark: #000000;
+            --primary-soft: #000000;
+            --secondary: #ffffff;
+            --secondary-dark: #D97706;
+            --accent: #EC4899;
+            --light: #FFFFFF;
+            --dark: #111827;
+            --gray: #4B5563;
+            --gray-light: #F9FAFB;
+            --gray-border: #E5E7EB;
+            --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 12px 24px -8px rgb(0 0 0 / 0.12);
+            --shadow-lg: 0 20px 35px -12px rgba(0, 0, 0, 0.15);
+            --radius-xl: 32px;
+            --radius-2xl: 48px;
+            --radius-full: 9999px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero Section - About Page Legacy + Modern */
+        .hero-about {
+            background: radial-gradient(ellipse at 70% 30%, rgba(0, 0, 0, 0.65), rgba(17, 10, 34, 0.95)), url('https://images.unsplash.com/photo-1542921292-0b7f0c202de1?q=80&w=2000&auto=format');
+            background-size: cover;
+            background-position: center 30%;
+            padding: 160px 0 120px;
+            color: white;
+            position: relative;
+            isolation: isolate;
+        }
+        .hero-about::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, var(--light), transparent);
+            pointer-events: none;
+        }
+        .hero-about h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #FFFFFF, var(--secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--secondary);
+            display: inline-block;
+            background: rgba(251, 191, 36, 0.15);
+            backdrop-filter: blur(8px);
+            padding: 8px 24px;
+            border-radius: 60px;
+            margin-bottom: 28px;
+        }
+        .verse-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(12px);
+            border-radius: 48px;
+            padding: 20px 28px;
+            display: inline-block;
+            margin-top: 40px;
+            border: 1px solid rgba(255,255,210,0.2);
+        }
+
+        /* Section titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* Core Values Grid - identical to pillars but refined */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        .value-card {
+            background: var(--light);
+            padding: 36px 28px;
+            border-radius: 36px;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid var(--gray-border);
+            text-align: center;
+            cursor: pointer;
+        }
+        .value-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 35px -12px rgba(0,0,0,0.2);
+            border-color: var(--primary-soft);
+        }
+        .value-icon i {
+            font-size: 3rem;
+            background: linear-gradient(145deg, var(--primary-soft), var(--primary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+        .value-card:hover .value-icon i {
+            animation: bounceGlowIcon 0.5s ease forwards;
+        }
+        @keyframes bounceGlowIcon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); text-shadow: 0 0 6px var(--primary-soft); }
+            100% { transform: scale(1); }
+        }
+
+        /* Story & Timeline advanced */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            background: var(--gray-light);
+            border-radius: 56px;
+            padding: 48px;
+            margin: 60px 0;
+        }
+        .story-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+            border-left: 3px solid var(--secondary);
+            padding-left: 24px;
+            transition: all 0.3s;
+        }
+        .timeline-item:hover {
+            transform: translateX(10px);
+            border-left-color: var(--primary-soft);
+        }
+        .timeline-year {
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: var(--primary);
+            min-width: 80px;
+        }
+
+        /* Leadership team cards with hover bio reveal (advanced) */
+       .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 68px;
+    margin-top: 40px;
+}
+
+.leader-card {
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    position: relative;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-radius: 16px;
+}
+
+.leader-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 20px 30px -12px rgba(25, 0, 255, 0.492), 0 8px 15px -8px rgba(2, 135, 224, 0.486);
+    outline-color: #000000;
+    border-radius: 16px;
+}
+
+.leader-img {
+    height: 580px;
+    overflow: hidden;
+}
+
+.leader-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.leader-card:hover .leader-img img {
+    transform: scale(1.05);
+}
+
+.leader-info {
+    padding: 28px 24px;
+    text-align: center;
+}
+
+.leader-info h3 {
+    font-size: 1.7rem;
+    margin-bottom: 6px;
+}
+
+.leader-title {
+    color: var(--primary-soft);
+    font-weight: 600;
+    margin-bottom: 14px;
+    letter-spacing: -0.2px;
+}
+
+.leader-bio {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.2s;
+    background: #fef9e6;
+    border-radius: 24px;
+    margin-top: 0;
+    padding: 0 12px;
+}
+
+.leader-card.active-bio .leader-bio {
+    max-height: 330px;
+    opacity: 1;
+    margin-top: 18px;
+    padding: 14px 16px;
+}
+
+.bio-toggle {
+    background: none;
+    border: none;
+    color: var(--primary-soft);
+    font-weight: 600;
+    margin-top: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.bio-toggle:hover {
+    color: var(--secondary-dark);
+    gap: 12px;
+}
+        
+
+        /* Footer same style */
+        footer {
+            background: var(--primary-dark);
+            padding: 70px 0 40px;
+            color: #D1D5DB;
+        }
+        .footer-modern {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 48px;
+        }
+        .social-links a {
+            background: rgba(255, 255, 255, 0.08);
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            margin-right: 12px;
+            color: white;
+            transition: 0.2s;
+        }
+        .social-links a:hover {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            transform: translateY(-4px);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--primary);
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+            z-index: 99;
+            box-shadow: var(--shadow-md);
+        }
+        .back-to-top.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px) scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<!-- About Us Hero -->
+<section class="hero-about" style="background: linear-gradient(rgba(0, 60, 255, 0.382), rgba(255, 14, 159, 0.541)), url('Banner\ 6.JPG'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container" style="text-align: center;">
+        <span class="hero-subtitle"><i class="fas fa-place-of-worship"></i> Our Legacy · Faith · Family</span>
+        <h1>About Charis Missionary<br>Church Pretoria West</h1>
+        <p>Rooted in grace, empowered by the Holy Spirit — a church built on apostolic vision, compassion, and devotion to God's purpose.</p>
+        <div class="verse-card">
+            <i class="fas fa-cross" style="margin-right: 12px; color: var(--secondary);"></i> 1 Corinthians 3:11 — “For no one can lay any foundation other than the one already laid, which is Jesus Christ.”
+        </div>
+       <br></br>
+       <br></br>
+       <br></br>
+    </div>
+</section>
+<br></br>
+
+<!-- Core Values + Mission (identical to pillars, advanced) -->
+<section style="padding: 20px 0 40px;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Pillars of Faith</h2>
+            <p>The spiritual bedrock shaping our identity, worship, and service.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card"><div class="value-icon"><i class="fas fa-bible"></i></div><h3>Biblical Foundation</h3><p>Scripture as the ultimate authority, transforming minds and hearts.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-praying-hands"></i></div><h3>Intimate Worship</h3><p>Seeking God's presence with passion, prayer and praise.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-hands-helping"></i></div><h3>Compassionate Outreach</h3><p>Feeding the hungry, clothing the poor, loving the forgotten.</p></div>
+            <div class="value-card"><div class="value-icon"><i class="fas fa-chalkboard-user"></i></div><h3>Generational Discipleship</h3><p>Equipping youth, adults, and families for Kingdom impact.</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- APOSTLE & LEADERSHIP SECTION (advanced bio toggle) -->
+<div class="container" id="leadership">
+    <div class="section-title">
+        <h2>Shepherds & Leadership Team</h2>
+        <p>Guided by the Holy Spirit, serving with integrity and love.</p>
+    </div>
+    <div class="leadership-grid">
+        <!-- Apostle Card with Bio Toggle (advanced) -->
+        <div class="leader-card" id="leaderApostle">
+            <div class="leader-img"><img src="Banner 1.JPG" alt="Apostle Rendani Khorommbi" onerror="this.src='https://placehold.co/600x400?text=Apostle+Photo'"></div>
+            <div class="leader-info">
+                <h3>Apostle Rendani Khorommbi</h3>
+                <div class="leader-title">Founding Apostle · Lead Pastor</div>
+                <button class="bio-toggle" data-target="leaderApostle"><i class="fas fa-chevron-circle-down"></i> Read Bio</button>
+                <div class="leader-bio">Apostle Rendani Khorommbi carries a mandate for restoration and breakthrough. With a heart for counselling and deliverance, he has led thousands to Christ and pioneered multiple outreaches across Pretoria. His teaching emphasizes God’s unconditional grace and the power of the Holy Spirit.</div>
+            </div>
+        </div>
+<!-- Pastor Khase Takalani (Associate Pastor under Apostle Khorommbi) -->
+<div class="leader-card" id="leaderPst">
+    <div class="leader-img"><img src="Takalani.JPG" alt="Pastor Khase Takalani"></div>
+    <div class="leader-info">
+        <h3>Pastor Khase Takalani</h3>
+        <div class="leader-title">Associate Pastor · Under Apostle Khorommbi</div>
+        <button class="bio-toggle" data-target="leaderPst"><i class="fas fa-chevron-circle-down"></i> Read Bio</button>
+        <div class="leader-bio">Pastor Khase Takalani serves under the covering of Apostle Rendani Khorommbi with dedication and humility. He assists in shepherding the congregation, leading worship sessions, and guiding new believers in their faith journey. His heart for discipleship and his commitment to the vision of Charis Missionary Church make him a vital part of the pastoral team.</div>
+    </div>
+</div>
+
+<!-- Elder Ntate Sithole (Church Elder) -->
+<div class="leader-card" id="leaderDeac">
+    <div class="leader-img"><img src="Sithole.JPG" alt="Elder Ntate Sithole"></div>
+    <div class="leader-info">
+        <h3>Pastor Ntate Sithole (Elder)</h3>
+   <div class="leader-title">Associate Pastor · Under Apostle Khorommbi</div>
+        <button class="bio-toggle" data-target="leaderDeac"><i class="fas fa-chevron-circle-down"></i> Read Bio</button>
+        <div class="leader-bio">Pastor Ntate Sithole serves as a respected elder of Charis Missionary Church Pretoria West. He provides spiritual counsel, maintains church governance alongside Apostle Khorommbi, and oversees all community outreach initiatives. With a heart for the poor and marginalized, he coordinates food distribution, skills development programs, and local missions that demonstrate God's love in practical ways.</div>
+    </div>
+</div>
+    </div>
+</div>
+<br></br>
+<br></br>
+<!-- What We Believe (expanded belief section) -->
+<section style="padding: 20px 0 30px;">
+    <div class="container">
+        <div class="section-title">
+            <h2>What We Believe</h2>
+            <p>Statement of faith rooted in scripture and apostolic tradition.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 32px;">
+            <div style="background: white; border-radius: 32px; padding: 28px; box-shadow: var(--shadow-sm);"><i class="fas fa-cross" style="font-size: 2rem; color: var(--primary-soft);"></i><h3 style="margin: 16px 0;">The Trinity</h3><p>We believe in one God: Father, Son, and Holy Spirit — co-equal and eternal.</p></div>
+            <div style="background: white; border-radius: 32px; padding: 28px; box-shadow: var(--shadow-sm);"><i class="fas fa-bible" style="font-size: 2rem; color: var(--primary-soft);"></i><h3 style="margin: 16px 0;">Salvation by Grace</h3><p>Saved by faith through grace, not works; Jesus' sacrifice redeems all who believe.</p></div>
+            <div style="background: white; border-radius: 32px; padding: 28px; box-shadow: var(--shadow-sm);"><i class="fas fa-dove" style="font-size: 2rem; color: var(--primary-soft);"></i><h3 style="margin: 16px 0;">Holy Spirit Power</h3><p>Baptism in the Spirit, gifts of the Spirit, and sanctification for believers.</p></div>
+        </div>
+    </div>
+</section>
+<br></br>
+
+<!-- Footer identical to homepage (but about page consistent) -->
+<footer>
+    <div class="container">
+        <div class="footer-modern">
+            <div><h4 style="color: white; font-size: 1.6rem; margin-bottom: 20px;">Charis Missionary</h4><p>Pretoria West: A house of grace, a people of purpose.</p><div class="social-links" style="margin-top: 24px;"><a href="https://www.facebook.com/p/Charis-Missionary-Church-Pretoria-100070020013721/"><i class="fab fa-facebook-f"></i></a><a href=""><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-tiktok"></i></a></div></div>
+            <div><h4 style="color: white; margin-bottom: 20px;">Quick Access</h4><ul style="list-style: none;"><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right" style="font-size: 0.7rem; margin-right: 8px;"></i> Our Beliefs</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Leadership Team</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Counseling Ministry</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Times: Sun 12PM</li></ul></div>
+            <div><h4 style="color: white; margin-bottom: 20px;">Connect</h4><p><i class="fas fa-phone-alt"></i> +27 (0)63 619 4901</p><p><i class="fas fa-envelope"></i> pretoriawest@charismissionary.org</p><p><i class="fas fa-map-marker-alt"></i> Danville Clinic Hall, Pretoria West</p></div>
+        </div>
+        <div class="copyright" style="text-align:center; margin-top: 64px; border-top: 1px solid rgba(255,255,200,0.15); padding-top: 36px;">&copy; 2025 Charis Missionary Church Pretoria West | Founded 1989 | About Us — Grace & Truth</div>
+    </div>
+</footer>
+<a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+
+<script>
+    // Back to top
+    const backBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 500) backBtn.classList.add('active');
+        else backBtn.classList.remove('active');
+    });
+    backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    // Advanced Bio Toggle for Leadership Cards with plus/minus icon change
+    const toggleBtns = document.querySelectorAll('.bio-toggle');
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const targetId = this.getAttribute('data-target');
+            const card = document.getElementById(targetId);
+            if(card) {
+                card.classList.toggle('active-bio');
+                const icon = this.querySelector('i');
+                if(card.classList.contains('active-bio')) {
+                    icon.classList.remove('fa-chevron-circle-down');
+                    icon.classList.add('fa-chevron-circle-up');
+                    this.innerHTML = '<i class="fas fa-chevron-circle-up"></i> Show less';
+                } else {
+                    icon.classList.remove('fa-chevron-circle-up');
+                    icon.classList.add('fa-chevron-circle-down');
+                    this.innerHTML = '<i class="fas fa-chevron-circle-down"></i> Read Bio';
+                }
+            }
+        });
+    });
+
+    // Intersection Observer for fade-up animation on cards & values
+    const fadeElements = document.querySelectorAll('.value-card, .story-grid, .leadership-grid, .stats-section, .cta-banner, section .container > div');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+            }
+        });
+    }, {threshold: 0.1});
+    fadeElements.forEach(el => {
+        if(el.style) {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(20px)";
+            el.style.transition = "opacity 0.7s ease, transform 0.5s ease";
+            observer.observe(el);
+        }
+    });
+    window.addEventListener('load', () => {
+        fadeElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if(rect.top < window.innerHeight - 100) {
+                el.style.opacity = "1";
+                el.style.transform = "translateY(0)";
+            }
+        });
+        // start counters when stats visible
+        startCounters();
+    });
+
+    // Advanced Stats Counter function (increments numbers)
+    function startCounters() {
+        const counters = document.querySelectorAll('.counter');
+        const statsSection = document.querySelector('.stats-section');
+        if(!statsSection) return;
+        const observerStats = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    counters.forEach(counter => {
+                        const updateCount = () => {
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            let current = parseInt(counter.innerText);
+                            const increment = target / 45;
+                            if(current < target) {
+                                current = Math.ceil(current + increment);
+                                counter.innerText = current;
+                                setTimeout(updateCount, 25);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        if(counter.innerText === '0') updateCount();
+                    });
+                    observerStats.unobserve(entry.target);
+                }
+            });
+        }, {threshold: 0.5});
+        observerStats.observe(statsSection);
+    }
+    // hover animation for value icons
+    const valueIcons = document.querySelectorAll('.value-icon i');
+    valueIcons.forEach(icon => {
+        const parentCard = icon.closest('.value-card');
+        if(parentCard) {
+            parentCard.addEventListener('mouseenter', () => {
+                icon.style.animation = 'bounceGlowIcon 0.5s ease';
+                setTimeout(() => icon.style.animation = '', 500);
+            });
+        }
+    });
+    // make sure counters show properly if already visible on load
+    setTimeout(() => {
+        if(document.querySelector('.stats-section')) startCounters();
+    }, 300);
+</script>
+</body>
+</html>

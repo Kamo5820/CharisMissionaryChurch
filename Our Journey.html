@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Morphing Slider | Encrypted Media Gallery | Charis Missionary Church</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        :root {
+            --bg-dark: #000000;
+            --card-bg: #0f1219;
+            --accent: #000000;
+            --accent-glow: 0 0 15px rgb(255, 0, 0);
+            --text-light: #f0f2f5;
+            --text-dim: #8e9aaf;
+            --border: #1e2430;
+            --transition-smooth: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Toast Notification */
+        .toast-notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(14px);
+            border-left: 5px solid var(--accent);
+            padding: 14px 24px;
+            border-radius: 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10000;
+            transform: translateX(120%);
+            transition: transform 0.25s ease-out;
+            pointer-events: none;
+        }
+        .toast-notification.show { transform: translateX(0%); }
+        .toast-notification i { color: var(--accent); }
+
+        /* Encryption overlay */
+        .encryption-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .gallery-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .gallery-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: rgb(0, 38, 255);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Folder Strip */
+        .folder-strip {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 2.5rem;
+        }
+        .folder-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .folder-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            box-shadow: 0 0 12px rgba(255,59,92,0.4);
+        }
+        .folder-btn:hover:not(.active) {
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* ========== MORPHING CAROUSEL (SLIDER) ========== */
+        .carousel-section {
+            margin-bottom: 3rem;
+        }
+        .carousel-container {
+            position: relative;
+            border-radius: 32px;
+            overflow: hidden;
+            background: var(--card-bg);
+            box-shadow: 0 25px 40px -15px rgba(255, 255, 255, 0.6);
+        }
+        .carousel-slide-area {
+            position: relative;
+            width: 100%;
+            height: 550px;
+            overflow: hidden;
+            background: #000;
+        }
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+        .carousel-slide {
+            flex: 0 0 100%;
+            height: 100%;
+            position: relative;
+            transition: filter 0.4s ease;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        /* motion blur effect when sliding */
+        .carousel-track.blur-transition {
+            filter: blur(8px);
+            transition: filter 0.25s ease, transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        /* navigation arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            font-size: 1.4rem;
+        }
+        .carousel-arrow:hover {
+            background: var(--accent);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 0 15px var(--accent);
+        }
+        .arrow-left { left: 20px; }
+        .arrow-right { right: 20px; }
+
+        /* ===== MORPHING DOTS (INFINITE GLOW + SHAPE MORPH) ===== */
+        .morphing-dots {
+            position: absolute;
+            bottom: 25px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            z-index: 25;
+        }
+        .morph-dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+            position: relative;
+        }
+        .morph-dot.active {
+            width: 12px;
+            background: var(--accent);
+            box-shadow: 0 0 18px var(--accent), 0 0 8px rgb(255, 255, 255);
+            border-radius: 20px;
+            transform: scale(1.05);
+        }
+        /* infinite glow pulse for active dot */
+        .morph-dot.active::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 10px;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.956) 0%, rgba(255, 255, 255, 0.94) 80%);
+            opacity: 0.2;
+            animation: pulseGlow 1.5s infinite;
+            pointer-events: none;
+        }
+        @keyframes pulseGlow {
+            0% { opacity: 0.3; transform: scale(0.9);}
+            100% { opacity: 0.9; transform: scale(1.4);}
+        }
+        /* inactive dots style */
+        .morph-dot:not(.active):hover {
+            background: rgba(255,255,255,0.9);
+            transform: scale(1.2);
+        }
+
+        /* Image counter & folder label */
+        .slide-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            z-index: 20;
+            font-weight: 500;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Video section hidden by default, we show only carousel but we add video toggle? but requirement focus on picture slider */
+        .videos-section { display: none; }
+
+        /* Lightbox (zoom & fullscreen) but we already have slider, but optional extra click on slide */
+        .modern-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.96);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(12px);
+        }
+        .modern-lightbox.active { display: flex; }
+        .lb-container { max-width: 92vw; max-height: 90vh; position: relative; }
+        .lb-image { max-width: 90vw; max-height: 85vh; object-fit: contain; cursor: zoom-in; transition: transform 0.2s; }
+        .lb-close {
+            position: absolute; top: -40px; right: 0; background: none; border: none;
+            color: white; font-size: 2rem; cursor: pointer;
+        }
+        .lb-nav {
+            position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between;
+            transform: translateY(-50%); padding: 0 1rem;
+        }
+        .lb-nav button {
+            background: rgba(0,0,0,0.6); border: none; width: 48px; height: 48px;
+            border-radius: 60px; color: white; font-size: 1.4rem; cursor: pointer;
+        }
+        .lb-controls {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(0,0,0,0.6); border-radius: 60px; padding: 8px 18px; display: flex; gap: 16px;
+        }
+        .ctrl-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
+        .zoom-level { color: white; font-size: 0.8rem; min-width: 45px; text-align: center; }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-slide-area { height: 380px; }
+            .carousel-arrow { width: 42px; height: 42px; font-size: 1rem; }
+            .morph-dot.active { width: 28px; }
+        }
+    </style>
+</head>
+<body>
+<div class="encryption-bg"></div>
+<div id="toastMsg" class="toast-notification"><i class="fas fa-shield-haltered"></i> <span id="toastText">⛔ Screenshot blocked</span></div>
+
+<div class="gallery-container">
+    <div class="gallery-header">
+        <h1></i>Gallery</h1>
+    </div>
+<br></br>
+    <div class="folder-strip" id="folderStrip">
+        <div class="folder-btn" data-folder="followers"><i class="fas fa-calendar-alt"></i> Followers · 18</div>
+        <div class="folder-btn" data-folder="worship"><i class="fas fa-hands-praying"></i> Worship Team · 36</div>
+        <div class="folder-btn" data-folder="heritage"><i class="fas fa-landmark"></i> Heritage · 10</div>
+    
+    </div>
+
+    <!-- MAIN CAROUSEL SLIDER -->
+    <div class="carousel-section">
+        <div class="carousel-container">
+            <div class="carousel-slide-area" id="carouselArea">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- dynamic slides injected -->
+                </div>
+                <button class="carousel-arrow arrow-left" id="prevSlideBtn"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-arrow arrow-right" id="nextSlideBtn"><i class="fas fa-chevron-right"></i></button>
+                <div class="slide-info" id="slideInfo">1 / 20 · Followers</div>
+                <div class="morphing-dots" id="morphingDots"></div>
+            </div>
+        </div>
+    </div>
+
+ 
+</div>
+
+<!-- Lightbox for optional fullscreen zoom -->
+<div class="modern-lightbox" id="imageLightbox">
+    <button class="lb-close" id="lbCloseBtn">&times;</button>
+    <div class="lb-container">
+        <div class="lb-nav">
+            <button id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+            <button id="lbNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <img class="lb-image" id="lbImage" alt="full view">
+        <div class="lb-controls">
+            <button class="ctrl-btn" id="zoomInBtn"><i class="fas fa-search-plus"></i></button>
+            <button class="ctrl-btn" id="zoomOutBtn"><i class="fas fa-search-minus"></i></button>
+            <button class="ctrl-btn" id="resetZoomBtn"><i class="fas fa-undo-alt"></i></button>
+            <div class="zoom-level" id="zoomPercent">100%</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ========== USER EXACT IMAGE PATHS ==========
+    const IMAGE_CONFIG = {
+        followers: [
+            "images/Followers/1.JPG","images/Followers/2.JPG","images/Followers/3.JPG","images/Followers/4.JPG","images/Followers/5.JPG",
+            "images/Followers/6.JPG","images/Followers/7.JPG","images/Followers/8.JPG","images/Followers/9.JPG","images/Followers/10.JPG",
+            "images/Followers/11.JPG","images/Followers/12.JPG","images/Followers/13.JPG","images/Followers/14.JPG","images/Followers/15.JPG",
+            "images/Followers/16.JPG","images/Followers/17.JPG","images/Followers/18.JPG"
+        ],
+        worship: [
+            "images/Worship Team/1.JPG","images/Worship Team/2.JPG","images/Worship Team/3.JPG","images/Worship Team/4.JPG","images/Worship Team/5.JPG",
+            "images/Worship Team/6.JPG","images/Worship Team/7.JPG","images/Worship Team/8.JPG","images/Worship Team/9.JPG","images/Worship Team/10.JPG",
+            "images/Worship Team/11.JPG","images/Worship Team/12.JPG","images/Worship Team/13.JPG","images/Worship Team/14.JPG","images/Worship Team/15.JPG",
+            "images/Worship Team/16.JPG","images/Worship Team/17.JPG","images/Worship Team/18.JPG","images/Worship Team/19.JPG","images/Worship Team/20.JPG",
+            "images/Worship Team/21.JPG","images/Worship Team/22.JPG","images/Worship Team/23.JPG","images/Worship Team/24.JPG","images/Worship Team/25.JPG",
+            "images/Worship Team/26.JPG","images/Worship Team/27.JPG","images/Worship Team/28.JPG","images/Worship Team/29.JPG","images/Worship Team/30.JPG",
+            "images/Worship Team/31.JPG","images/Worship Team/32.JPG","images/Worship Team/33.JPG","images/Worship Team/34.JPG","images/Worship Team/35.JPG","images/Worship Team/36.JPG"
+        ],
+        heritage: [
+            "images/Heritage Edition/1.JPG","images/Heritage Edition/2.JPG","images/Heritage Edition/3.JPG","images/Heritage Edition/4.JPG","images/Heritage Edition/5.JPG",
+            "images/Heritage Edition/6.JPG","images/Heritage Edition/7.JPG","images/Heritage Edition/8.JPG","images/Heritage Edition/9.JPG","images/Heritage Edition/10.JPG"
+        ],
+      
+    };
+
+    let currentFolder = "followers";
+    let currentImages = [...IMAGE_CONFIG.followers];
+    let currentIndex = 0;
+    let isTransitioning = false;
+
+    // DOM elements
+    const track = document.getElementById("carouselTrack");
+    const dotsContainer = document.getElementById("morphingDots");
+    const slideInfoSpan = document.getElementById("slideInfo");
+    const prevBtn = document.getElementById("prevSlideBtn");
+    const nextBtn = document.getElementById("nextSlideBtn");
+
+    // Helper: Toast
+    function showToast(msg) {
+        const toast = document.getElementById("toastMsg");
+        const span = document.getElementById("toastText");
+        span.innerText = msg || "⛔ Action blocked";
+        toast.classList.remove("show");
+        setTimeout(() => toast.classList.add("show"), 10);
+        setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+
+    // Advanced screenshot protection + block snipping tool
+    function initProtection() {
+        window.addEventListener("contextmenu", (e) => { e.preventDefault(); showToast("🖱️ Right-click disabled"); return false; });
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "PrintScreen" || e.code === "PrintScreen") { e.preventDefault(); showToast("📸 Screenshot blocked!"); return false; }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "S") { e.preventDefault(); showToast("⛔ Snipping tool disabled"); return false; }
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) { e.preventDefault(); showToast("✖️ Copying media not allowed"); return false; }
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I"))) { e.preventDefault(); showToast("🔒 DevTools restricted"); return false; }
+        });
+        window.addEventListener("blur", () => showToast("⚠️ Screenshot attempt detected"));
+        setInterval(() => { document.querySelectorAll('img').forEach(i => i.setAttribute('draggable', 'false')); }, 300);
+        new MutationObserver(() => document.querySelectorAll('img').forEach(i => i.setAttribute('draggable', 'false')))
+            .observe(document.body, { childList: true, subtree: true });
+    }
+
+    // Build slider (with motion blur effect)
+    function buildSlider() {
+        if (!track) return;
+        track.innerHTML = "";
+        currentImages.forEach((src, idx) => {
+            const slide = document.createElement("div");
+            slide.className = "carousel-slide";
+            const img = document.createElement("img");
+            img.src = src;
+            img.alt = `Slide ${idx+1}`;
+            img.onerror = function() { this.src = "https://placehold.co/800x600/1a1a2e/ff3b5c?text=Missing+Image"; };
+            slide.appendChild(img);
+            // click to open lightbox zoom
+            slide.addEventListener("click", (e) => { e.stopPropagation(); openLightboxForCurrent(); });
+            track.appendChild(slide);
+        });
+        updateSlideTransform(false);
+        updateDots();
+        updateInfo();
+    }
+
+    function updateSlideTransform(applyBlur = false) {
+        if (!track) return;
+        if (applyBlur) {
+            track.classList.add("blur-transition");
+            setTimeout(() => { track.classList.remove("blur-transition"); }, 250);
+        }
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    function morphDotsActive() {
+        const dots = document.querySelectorAll(".morph-dot");
+        dots.forEach((dot, i) => {
+            if (i === currentIndex) dot.classList.add("active");
+            else dot.classList.remove("active");
+        });
+    }
+
+    function updateDots() {
+        dotsContainer.innerHTML = "";
+        currentImages.forEach((_, idx) => {
+            const dot = document.createElement("div");
+            dot.classList.add("morph-dot");
+            if (idx === currentIndex) dot.classList.add("active");
+            dot.addEventListener("click", () => {
+                if (isTransitioning) return;
+                if (idx !== currentIndex) {
+                    currentIndex = idx;
+                    updateSlideTransform(true);
+                    morphDotsActive();
+                    updateInfo();
+                    setTimeout(() => { isTransitioning = false; }, 300);
+                }
+            });
+            dotsContainer.appendChild(dot);
+        });
+    }
+
+    function updateInfo() {
+        const folderNice = currentFolder === "followers" ? "Followers" : currentFolder === "worship" ? "Worship Team" : currentFolder === "heritage" ? "Heritage Edition" : "Community";
+        slideInfoSpan.innerText = `${currentIndex+1} / ${currentImages.length} · ${folderNice}`;
+    }
+
+    // FIXED: Arrows properly wrap around (first -> last, last -> first)
+    // Using modulo arithmetic ensures smooth infinite loop navigation
+    function nextSlide() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        // Move to next image with wrap-around: when at last, go to first
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        updateSlideTransform(true);
+        morphDotsActive();
+        updateInfo();
+        setTimeout(() => { isTransitioning = false; }, 300);
+    }
+
+    function prevSlide() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        // Move to previous image with wrap-around: when at first, go to last
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        updateSlideTransform(true);
+        morphDotsActive();
+        updateInfo();
+        setTimeout(() => { isTransitioning = false; }, 300);
+    }
+
+    // Lightbox: opens current image in fullscreen with zoom + nav sync
+    let lightboxZoom = 1;
+    function openLightboxForCurrent() {
+        const lb = document.getElementById("imageLightbox");
+        const lbImg = document.getElementById("lbImage");
+        lbImg.src = currentImages[currentIndex];
+        lbImg.style.transform = "scale(1)";
+        lightboxZoom = 1;
+        document.getElementById("zoomPercent").innerText = "100%";
+        lb.classList.add("active");
+        document.body.style.overflow = "hidden";
+        // sync navigation in lightbox
+        window.currentLightboxIndex = currentIndex;
+        window.lightboxImages = currentImages;
+    }
+    function closeLightbox() {
+        document.getElementById("imageLightbox").classList.remove("active");
+        document.body.style.overflow = "auto";
+    }
+    function lightboxNavigate(delta) {
+        if (!window.lightboxImages) return;
+        let newIdx = (window.currentLightboxIndex + delta + window.lightboxImages.length) % window.lightboxImages.length;
+        window.currentLightboxIndex = newIdx;
+        const lbImg = document.getElementById("lbImage");
+        lbImg.src = window.lightboxImages[newIdx];
+        lightboxZoom = 1;
+        lbImg.style.transform = "scale(1)";
+        document.getElementById("zoomPercent").innerText = "100%";
+        // also sync main carousel index
+        if (currentImages === window.lightboxImages) {
+            if (currentIndex !== newIdx) {
+                currentIndex = newIdx;
+                updateSlideTransform(false);
+                morphDotsActive();
+                updateInfo();
+            }
+        }
+    }
+    function zoomLightbox(inc) {
+        let newZoom = lightboxZoom + inc;
+        if (newZoom >= 0.5 && newZoom <= 3) {
+            lightboxZoom = newZoom;
+            document.getElementById("lbImage").style.transform = `scale(${lightboxZoom})`;
+            document.getElementById("zoomPercent").innerText = `${Math.round(lightboxZoom*100)}%`;
+        }
+    }
+    function resetZoomLightbox() { lightboxZoom = 1; document.getElementById("lbImage").style.transform = "scale(1)"; document.getElementById("zoomPercent").innerText = "100%"; }
+
+    // switch folders
+    function switchFolder(folderKey) {
+        if (!IMAGE_CONFIG[folderKey]) return;
+        currentFolder = folderKey;
+        currentImages = [...IMAGE_CONFIG[folderKey]];
+        currentIndex = 0;
+        buildSlider();
+        // also set lightbox images reference
+        window.lightboxImages = currentImages;
+        window.currentLightboxIndex = 0;
+        isTransitioning = false;
+    }
+
+    function setupFolderEvents() {
+        document.querySelectorAll(".folder-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".folder-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                const folder = btn.getAttribute("data-folder");
+                if (folder) switchFolder(folder);
+            });
+        });
+    }
+
+    // bind carousel arrows
+    function bindArrows() {
+        prevBtn.addEventListener("click", prevSlide);
+        nextBtn.addEventListener("click", nextSlide);
+        // keyboard arrows with proper wrap-around
+        window.addEventListener("keydown", (e) => {
+            if (document.getElementById("imageLightbox").classList.contains("active")) {
+                if (e.key === "ArrowLeft") { lightboxNavigate(-1); e.preventDefault(); }
+                else if (e.key === "ArrowRight") { lightboxNavigate(1); e.preventDefault(); }
+                else if (e.key === "Escape") closeLightbox();
+                return;
+            }
+            if (e.key === "ArrowLeft") { prevSlide(); e.preventDefault(); }
+            if (e.key === "ArrowRight") { nextSlide(); e.preventDefault(); }
+        });
+    }
+
+    function bindLightboxEvents() {
+        const lb = document.getElementById("imageLightbox");
+        document.getElementById("lbCloseBtn").onclick = closeLightbox;
+        document.getElementById("lbPrev").onclick = () => lightboxNavigate(-1);
+        document.getElementById("lbNext").onclick = () => lightboxNavigate(1);
+        document.getElementById("zoomInBtn").onclick = () => zoomLightbox(0.2);
+        document.getElementById("zoomOutBtn").onclick = () => zoomLightbox(-0.2);
+        document.getElementById("resetZoomBtn").onclick = resetZoomLightbox;
+        lb.addEventListener("click", (e) => { if (e.target === lb) closeLightbox(); });
+    }
+
+    // Preload for smoother blur effect
+    function init() {
+        initProtection();
+        bindArrows();
+        bindLightboxEvents();
+        setupFolderEvents();
+        switchFolder("followers");
+        // set default active button
+        document.querySelector(".folder-btn[data-folder='followers']").classList.add("active");
+        window.lightboxImages = currentImages;
+        window.currentLightboxIndex = 0;
+        // additional image drag guard
+        setInterval(() => {
+            document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
+        }, 500);
+    }
+
+    init();
+</script>
+</body>
+</html>

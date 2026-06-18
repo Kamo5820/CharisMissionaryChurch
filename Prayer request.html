@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Charis Prayer Wall | Sacred Portal (ZAR)</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0b081a;
+      --bg-surface: #13102b;
+      --card-bg: rgba(22, 18, 48, 0.85);
+      --glass-border: rgba(139, 92, 246, 0.25);
+      --primary: #8b5cf6;
+      --primary-glow: #a78bfa;
+      --secondary: #f59e0b;
+      --accent-pink: #ec4899;
+      --text-gold: #fde047;
+      --text-light: #e2e8f0;
+      --text-dim: #94a3b8;
+      --success-emerald: #10b981;
+      --shadow-neon: 0 0 15px rgba(139, 92, 246, 0.3);
+      --border-radius-xl: 32px;
+      --border-radius-2xl: 48px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 10% 20%, #0f0c29, #1a1025, #0b081a);
+      color: var(--text-light);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* animated bg orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139,92,246,0.3) 0%, rgba(236,72,153,0.1) 100%);
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .orb-1 { width: 60vw; height: 60vw; top: -20vh; right: -10vw; }
+    .orb-2 { width: 50vw; height: 50vw; bottom: -15vh; left: -20vw; background: radial-gradient(circle, rgba(245,158,11,0.2), rgba(139,92,246,0.05)); }
+
+    /* main container */
+    .main-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* header */
+    .glow-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .chip {
+      display: inline-flex;
+      background: rgba(139, 92, 246, 0.2);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
+      border-radius: 60px;
+      padding: 6px 18px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: var(--primary-glow);
+      margin-bottom: 1rem;
+    }
+    .glow-header h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #c084fc, #f0abfc);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .glow-header p {
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* card grid layout - totally revamped */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    /* glass card design */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-2xl);
+      padding: 2rem;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+    }
+    .glass-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 50px -15px rgba(139, 92, 246, 0.4);
+      border-color: rgba(139, 92, 246, 0.6);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+      border-bottom: 1px dashed rgba(139, 92, 246, 0.3);
+      padding-bottom: 1rem;
+    }
+    .card-header i {
+      font-size: 2rem;
+      color: var(--primary);
+      background: rgba(139, 92, 246, 0.2);
+      padding: 12px;
+      border-radius: 24px;
+    }
+    .card-header h2 {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.3px;
+    }
+
+    /* modern form fields */
+    .input-frost {
+      width: 100%;
+      background: rgba(15, 12, 35, 0.7);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-radius: 28px;
+      padding: 14px 20px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: white;
+      transition: all 0.2s;
+      outline: none;
+    }
+    .input-frost:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+      background: rgba(22, 18, 48, 0.9);
+    }
+    .input-frost:hover {
+      border-color: var(--primary-glow);
+    }
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: block;
+      color: var(--text-dim);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    select {
+      cursor: pointer;
+    }
+    textarea {
+      resize: vertical;
+    }
+    .custom-area {
+      background: rgba(0,0,0,0.3);
+      border-radius: 28px;
+      margin-top: 12px;
+      animation: fadeSlide 0.3s ease;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-8px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .word-count-badge {
+      text-align: right;
+      font-size: 0.7rem;
+      margin-top: 6px;
+      color: var(--text-dim);
+    }
+    .btn-primary {
+      background: linear-gradient(95deg, #8b5cf6, #6d28d9);
+      border: none;
+      border-radius: 60px;
+      padding: 15px 24px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 12px;
+    }
+    .btn-primary:hover {
+      transform: scale(1.02);
+      background: linear-gradient(95deg, #9b6eff, #7c3aed);
+      box-shadow: 0 0 18px rgba(139, 92, 246, 0.6);
+    }
+    .feedback-msg {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 0.85rem;
+      padding: 10px;
+      border-radius: 40px;
+      background: rgba(0,0,0,0.4);
+    }
+
+    /* time slot premium design */
+    .slot-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .slot-item {
+      background: rgba(30, 27, 58, 0.7);
+      border-radius: 100px;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      transition: all 0.2s;
+    }
+    .slot-item:hover {
+      background: rgba(45, 38, 85, 0.9);
+      transform: translateX(6px);
+      border-color: var(--primary);
+    }
+    .slot-item.selected {
+      background: linear-gradient(115deg, #2d2366, #1e1a45);
+      border-color: var(--primary);
+      box-shadow: 0 5px 15px rgba(139,92,246,0.3);
+    }
+    .slot-time {
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slot-price {
+      font-weight: 800;
+      color: #fbbf24;
+      font-size: 1.1rem;
+    }
+    .price-hero {
+      background: rgba(0,0,0,0.5);
+      border-radius: 48px;
+      padding: 20px;
+      text-align: center;
+      margin: 20px 0;
+      border: 1px dashed var(--primary);
+    }
+    .amount-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #facc15;
+    }
+    .offering-note-modern {
+      background: rgba(245, 158, 11, 0.1);
+      border-radius: 28px;
+      padding: 18px;
+      margin: 20px 0;
+      border-left: 4px solid #f59e0b;
+      font-size: 0.85rem;
+    }
+    .payment-btn {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 60px;
+      padding: 16px;
+      font-weight: 700;
+      width: 100%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .payment-btn:hover {
+      background: #1e293b;
+      transform: translateY(-3px);
+      border-color: #8b5cf6;
+    }
+    .testimonial-card {
+      background: rgba(0,0,0,0.4);
+      border-radius: 36px;
+      padding: 24px;
+      margin-top: 24px;
+      font-style: normal;
+      backdrop-filter: blur(4px);
+    }
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 24px;
+      gap: 12px;
+    }
+    .stat-block {
+      flex: 1;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 28px;
+      padding: 12px;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .glow-header h1 { font-size: 2rem; }
+    }
+    hr {
+      border-color: rgba(139,92,246,0.3);
+      margin: 12px 0;
+    }
+    .small-footer {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 3rem;
+    }
+    i.fa, i.far, i.fas {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="main-container">
+  <div class="glow-header">
+    <div class="chip"><i class="fas fa-dove"></i> SACRED INTERCESSION · ZAR MINISTRY</div>
+    <h1>Charis Prayer Wall</h1>
+    <p>Present your requests · Partner with prophetic time slots · South African Rand</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- LEFT CARD: PRAYER REQUEST (all original functions intact) -->
+    <div class="glass-card">
+      <div class="card-header">
+        <i class="fas fa-praying-hands"></i>
+        <h2>Submit Prayer Request</h2>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-user-astronaut"></i> Full name *</label>
+        <input type="text" id="prayerName" class="input-frost" placeholder="e.g., Amahle Ndlovu">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-phone-alt"></i> Phone (optional)</label>
+        <input type="tel" id="prayerPhone" class="input-frost" placeholder="+27 ...">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-envelope"></i> Email address *</label>
+        <input type="email" id="prayerEmail" class="input-frost" placeholder="hello@example.com">
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-tag"></i> Prayer category</label>
+        <select id="prayerCategory" class="input-frost">
+          <option value="Healing">🕊️ Healing & Health</option>
+          <option value="Family">🏠 Family & Relationships</option>
+          <option value="Financial Breakthrough">💰 Financial Breakthrough</option>
+          <option value="Spiritual Growth">🔥 Spiritual Growth</option>
+          <option value="Custom">✍️ Custom (write your own)</option>
+        </select>
+      </div>
+
+      <div id="customRequestContainer" style="display: none;">
+        <div class="custom-area" style="padding: 12px;">
+          <label><i class="fas fa-pen-fancy"></i> Your prayer request (max 50 words)</label>
+          <textarea id="customPrayerText" rows="3" class="input-frost" placeholder="Type your specific prayer request..."></textarea>
+          <div class="word-count-badge" id="wordCountDisplay">0 / 50 words</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="submitPrayerBtn"><i class="fas fa-paper-plane"></i> Send prayer request →</button>
+      <div id="prayerFeedback" class="feedback-msg" style="display: none;"></div>
+
+      <div class="stats-row">
+        <div class="stat-block"><span style="font-weight:800;font-size:1.4rem;" id="fakeCounter">372</span><br>Prayers today</div>
+        <div class="stat-block"><span style="font-weight:800;font-size:1.4rem;">24/7</span><br>Intercession</div>
+        <div class="stat-block"><span style="font-weight:800;font-size:1.4rem;">SA+</span><br>Nationwide</div>
+      </div>
+      <div class="small-footer" style="margin-top: 16px;"><i class="fas fa-shield-alt"></i> Encrypted & confidential · Email confirmation sent</div>
+    </div>
+
+    <!-- RIGHT CARD: OFFERING & TIME SLOTS (ZAR) ALL FUNCTIONS INTACT -->
+    <div class="glass-card">
+      <div class="card-header">
+        <i class="fas fa-hand-holding-heart"></i>
+        <h2>Offering & Prayer Vigil <span style="font-size:0.7rem; background:rgba(255,215,0,0.2); padding:4px 12px; border-radius:40px;">ZAR Currency</span></h2>
+      </div>
+      <p style="margin-bottom: 12px;">Select a dedicated time slot. Your seed offering fuels 24/7 prayer coverage across South Africa.</p>
+      
+      <div class="price-hero">
+        <div style="font-size:0.8rem;">FAITH OFFERING (RAND)</div>
+        <div class="amount-number">R <span id="amountValue">120.00</span></div>
+      </div>
+
+      <div class="slot-grid" id="slotOptionsContainer">
+        <!-- rendered by js -->
+      </div>
+
+      <div class="offering-note-modern">
+        <i class="fas fa-hourglass-half"></i> <strong>Prophetic alignment:</strong> Each slot unlocks specific grace — morning breakthrough, midday power, evening restoration, midnight warfare. Your offering in Rands sanctifies the intercession.
+      </div>
+
+      <button id="paymentGatewayBtn" class="payment-btn"><i class="fas fa-donate"></i> Donate & Reserve Slot (ZAR) →</button>
+      <div id="paymentStatusMsg" style="margin-top: 14px; font-size: 0.8rem; text-align: center;"></div>
+
+      <div class="testimonial-card" id="dynamicTestimonial">
+        <i class="fas fa-quote-right" style="color: #c084fc; opacity:0.8;"></i>
+        <p style="margin: 10px 0; font-style:italic;">“After the midnight slot, my family received a financial miracle in rands. God is faithful!”</p>
+        <strong>- Kgomotso M.</strong> <span style="font-size:0.7rem;">Johannesburg</span>
+      </div>
+    </div>
+  </div>
+  <div class="small-footer"><i class="fas fa-globe-africa"></i> Charis South Africa · All transactions & prayers are handled with integrity. Powered by intercessors.</div>
+</div>
+
+<script>
+// ============================================================
+// EMAILJS - SAME CONFIG (FULL FUNCTIONALITY PRESERVED)
+// ============================================================
+const EMAILJS_PUBLIC_KEY = "MSiG_n3G0WXuOFNAp";
+const EMAILJS_SERVICE_ID = "service_d8wpw29";
+const EMAILJS_TEMPLATE_ID = "template_sk17a3p";
+
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+console.log("✅ EmailJS active (Charis modern redesign)");
+
+// DOM references left
+const nameInput = document.getElementById('prayerName');
+const phoneInput = document.getElementById('prayerPhone');
+const emailInput = document.getElementById('prayerEmail');
+const categorySelect = document.getElementById('prayerCategory');
+const customContainer = document.getElementById('customRequestContainer');
+const customTextarea = document.getElementById('customPrayerText');
+const wordCountSpan = document.getElementById('wordCountDisplay');
+const submitBtn = document.getElementById('submitPrayerBtn');
+const feedbackDiv = document.getElementById('prayerFeedback');
+
+// Right panel ZAR variables
+const amountSpan = document.getElementById('amountValue');
+let currentSelectedSlotId = "slot_morning";
+let currentAmount = 120.00;
+
+// TIME SLOTS DATA (ZAR)
+const timeSlots = [
+  { id: "slot_morning", label: "🌅 Morning Breakthrough (6:00 - 9:00 SAST)", price: 120.00, desc: "Dawn favor" },
+  { id: "slot_afternoon", label: "☀️ Noon Fire (12:00 - 15:00)", price: 180.00, desc: "Financial alignment" },
+  { id: "slot_evening", label: "🌙 Evening Glory (18:00 - 21:00)", price: 250.00, desc: "Family restoration" },
+  { id: "slot_midnight", label: "⭐ Midnight Watch (00:00 - 03:00)", price: 350.00, desc: "Strategic warfare" }
+];
+
+function formatZAR(amt) { return amt.toFixed(2); }
+
+function renderSlots() {
+  const container = document.getElementById('slotOptionsContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  timeSlots.forEach(slot => {
+    const slotDiv = document.createElement('div');
+    slotDiv.className = `slot-item ${currentSelectedSlotId === slot.id ? 'selected' : ''}`;
+    slotDiv.setAttribute('data-id', slot.id);
+    slotDiv.innerHTML = `
+      <div class="slot-time"><i class="fas fa-hourglass-start"></i> ${slot.label}</div>
+      <div class="slot-price">R ${slot.price.toFixed(2)}</div>
+    `;
+    slotDiv.addEventListener('click', () => {
+      document.querySelectorAll('.slot-item').forEach(el => el.classList.remove('selected'));
+      slotDiv.classList.add('selected');
+      currentSelectedSlotId = slot.id;
+      currentAmount = slot.price;
+      amountSpan.innerText = formatZAR(currentAmount);
+    });
+    container.appendChild(slotDiv);
+  });
+}
+
+function setDefaultAmount() {
+  const def = timeSlots.find(s => s.id === currentSelectedSlotId);
+  if(def) currentAmount = def.price;
+  amountSpan.innerText = formatZAR(currentAmount);
+}
+renderSlots();
+setDefaultAmount();
+
+// Word count functionality (exactly same)
+function countWords(str) { return str.trim() === "" ? 0 : str.trim().split(/\s+/).length; }
+function updateWordCount() {
+  const text = customTextarea.value;
+  const words = countWords(text);
+  wordCountSpan.innerText = `${words} / 50 words`;
+  if (words > 50) {
+    wordCountSpan.style.color = "#f87171";
+    const truncated = text.trim().split(/\s+/).slice(0, 50).join(' ');
+    customTextarea.value = truncated;
+    updateWordCount();
+  } else {
+    wordCountSpan.style.color = "var(--text-dim)";
+  }
+}
+function toggleCustomContainer() {
+  if (categorySelect.value === "Custom") {
+    customContainer.style.display = "block";
+  } else {
+    customContainer.style.display = "none";
+    customTextarea.value = "";
+    updateWordCount();
+  }
+}
+categorySelect.addEventListener('change', toggleCustomContainer);
+customTextarea.addEventListener('input', updateWordCount);
+toggleCustomContainer();
+updateWordCount();
+
+function showFeedback(message, isError = false) {
+  feedbackDiv.style.display = "block";
+  feedbackDiv.innerHTML = `<i class="fas ${isError ? 'fa-circle-exclamation' : 'fa-check-circle'}"></i> ${message}`;
+  feedbackDiv.style.background = isError ? "rgba(220,38,38,0.2)" : "rgba(16,185,129,0.2)";
+  feedbackDiv.style.color = isError ? "#fecaca" : "#a7f3d0";
+  setTimeout(() => { if(feedbackDiv) feedbackDiv.style.display = "none"; }, 6000);
+}
+
+async function sendPrayerToGmail(userName, userPhone, userEmail, category, prayerMsgText, offeringAmount, timeSlotLabel) {
+  if (!userName.trim()) throw new Error("Full name is required.");
+  if (!userEmail.trim() || !userEmail.includes('@')) throw new Error("Valid email required.");
+  if (category === "Custom" && (!prayerMsgText || prayerMsgText.trim() === "")) throw new Error("Write your custom prayer request.");
+  
+  const formattedMessage = `🕯️ CHARIS PRAYER WALL (Modern Portal)\n\nName: ${userName}\nEmail: ${userEmail}\nPhone: ${userPhone || "—"}\nCategory: ${category}\n\n🙏 Prayer Request:\n${prayerMsgText}\n\n💸 Seed Offering (ZAR): R ${offeringAmount.toFixed(2)}\n⏰ Time Slot: ${timeSlotLabel}\n---\nSubmitted from redesigned interface. Prayer team will respond.`;
+  const currentTime = new Date().toLocaleString('en-ZA', { dateStyle: 'full', timeStyle: 'medium' });
+  const templateParams = {
+    from_name: userName,
+    prayer_category: category,
+    name: userName,
+    time: currentTime,
+    message: formattedMessage
+  };
+  return await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+}
+
+submitBtn.addEventListener('click', async () => {
+  const name = nameInput.value.trim();
+  const phone = phoneInput.value.trim();
+  const email = emailInput.value.trim();
+  const category = categorySelect.value;
+  let customMsg = "";
+  if (category === "Custom") {
+    customMsg = customTextarea.value.trim();
+    if (countWords(customMsg) > 50) { showFeedback("⚠️ Prayer must be under 50 words.", true); return; }
+    if (!customMsg) { showFeedback("✍️ Please write your prayer request.", true); return; }
+  }
+  const finalMsg = category === "Custom" ? customMsg : `Prayer need regarding ${category} — Lord intervene.`;
+  const selectedSlot = timeSlots.find(s => s.id === currentSelectedSlotId) || timeSlots[0];
+  const slotLabel = selectedSlot.label;
+  const offeringAmount = currentAmount;
+  
+  submitBtn.disabled = true;
+  const originalText = submitBtn.innerHTML;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Submitting prayer...';
+  try {
+    await sendPrayerToGmail(name, phone, email, category, finalMsg, offeringAmount, slotLabel);
+    showFeedback("✅ Prayer request sent! Our intercessors will stand with you. God bless.", false);
+    nameInput.value = "";
+    phoneInput.value = "";
+    emailInput.value = "";
+    categorySelect.value = "Healing";
+    customTextarea.value = "";
+    toggleCustomContainer();
+    updateWordCount();
+    const fake = document.getElementById('fakeCounter');
+    if(fake) {
+      let curr = parseInt(fake.innerText) || 372;
+      fake.innerText = curr + 1;
+    }
+  } catch (err) {
+    console.error(err);
+    showFeedback(`❌ ${err.message || "EmailJS error. Check service/template IDs."}`, true);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalText;
+  }
+});
+
+// PAYMENT GATEWAY (ZAR simulation)
+const paymentBtn = document.getElementById('paymentGatewayBtn');
+const paymentStatusMsgDiv = document.getElementById('paymentStatusMsg');
+
+paymentBtn.addEventListener('click', () => {
+  const selectedSlot = timeSlots.find(s => s.id === currentSelectedSlotId) || timeSlots[0];
+  const slotName = selectedSlot.label;
+  const payAmount = currentAmount;
+  paymentBtn.disabled = true;
+  paymentBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Processing ZAR Payment...';
+  paymentStatusMsgDiv.innerHTML = '';
+  setTimeout(() => {
+    const txRef = 'ZAR-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+    paymentStatusMsgDiv.innerHTML = `<i class="fas fa-check-circle" style="color:#10b981;"></i> ✅ Offering of R ${payAmount.toFixed(2)} ZAR received! (Slot: ${slotName}) Reference: ${txRef}. Prayer coverage confirmed.`;
+    paymentStatusMsgDiv.style.background = "rgba(16,185,129,0.15)";
+    paymentStatusMsgDiv.style.padding = "10px";
+    paymentStatusMsgDiv.style.borderRadius = "60px";
+    setTimeout(() => {
+      paymentBtn.disabled = false;
+      paymentBtn.innerHTML = '<i class="fas fa-donate"></i> Donate & Reserve Slot (ZAR) →';
+    }, 2000);
+  }, 1500);
+});
+
+// Testimonial rotator (modern quotes)
+const testimonialsModern = [
+  { quote: "Morning breakthrough slot shifted my business. I received a contract worth R150k within a week.", author: "Lerato M.", city: "Cape Town" },
+  { quote: "After submitting prayer for my son, he was healed. The prayer team is anointed.", author: "Pastor Sipho D.", city: "Durban" },
+  { quote: "The midnight vigil gave me supernatural peace. God came through for my family.", author: "Naledi K.", city: "Pretoria" },
+  { quote: "Partnering with R250 unlocked a financial door I never expected. Charis is genuine.", author: "Thabo R.", city: "Soweto" }
+];
+let idx = 0;
+const testimonialEl = document.getElementById('dynamicTestimonial');
+function rotateTesti() {
+  if(!testimonialEl) return;
+  const t = testimonialsModern[idx % testimonialsModern.length];
+  testimonialEl.innerHTML = `<i class="fas fa-quote-right" style="color: #c084fc; opacity:0.8;"></i>
+    <p style="margin: 10px 0; font-style:italic;">“${t.quote}”</p>
+    <strong>- ${t.author}</strong> <span style="font-size:0.7rem;">${t.city}</span>`;
+  idx++;
+}
+rotateTesti();
+setInterval(rotateTesti, 6500);
+
+// ensure default slot highlighting
+setTimeout(() => {
+  document.querySelectorAll('.slot-item').forEach(el => {
+    if(el.getAttribute('data-id') === currentSelectedSlotId) el.classList.add('selected');
+  });
+}, 50);
+</script>
+</body>
+</html>
