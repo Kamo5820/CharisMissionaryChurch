@@ -59,7 +59,7 @@ Option B — VS Code Live Server extension, or just double-click `index.html`.
 
 ## Deployment
 
-This is a static site, so it can be hosted on any static host (GitHub Pages, Netlify, Vercel, or a traditional web host). The production domain is `charismissionary.org` and SEO files are already in place:
+This is a static site, so it can be hosted on any static host. The SEO files are already in place:
 
 - `robots.txt` — blocks indexing of `pages/admin.html`, points to the sitemap
 - `sitemap.xml` — lists all public pages for search engines
