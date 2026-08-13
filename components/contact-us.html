@@ -1,0 +1,808 @@
+<style>
+.contact-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.contact-hero {
+  background: linear-gradient(135deg, #1a2744 0%, #0f1a30 100%);
+  padding: 160px 0 80px;
+  text-align: center;
+  color: white;
+}
+
+.contact-hero__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 60px;
+  padding: 6px 18px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #818cf8;
+  margin-bottom: 1rem;
+}
+
+.contact-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.contact-hero h1 span {
+  color: #818cf8;
+}
+
+.contact-hero p {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 560px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.7;
+}
+
+.contact-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.contact-breadcrumb a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-breadcrumb a:hover {
+  color: #ffffff;
+}
+
+.contact-breadcrumb span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ============ INFO CARDS ============ */
+.contact-cards {
+  padding: 80px 0;
+  background: #ffffff;
+}
+
+.contact-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.contact-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.contact-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--gray-border);
+  transform: translateY(-3px);
+}
+
+.contact-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  transition: background 0.3s;
+}
+
+.contact-card:nth-child(1) .contact-card__icon {
+  background: rgba(34, 106, 214, 0.1);
+  color: var(--primary);
+}
+.contact-card:nth-child(1):hover .contact-card__icon {
+  background: rgba(34, 106, 214, 0.18);
+}
+.contact-card:nth-child(2) .contact-card__icon {
+  background: rgba(200, 146, 62, 0.1);
+  color: var(--gold);
+}
+.contact-card:nth-child(2):hover .contact-card__icon {
+  background: rgba(200, 146, 62, 0.18);
+}
+.contact-card:nth-child(3) .contact-card__icon {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+.contact-card:nth-child(3):hover .contact-card__icon {
+  background: rgba(16, 185, 129, 0.18);
+}
+.contact-card:nth-child(4) .contact-card__icon {
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+.contact-card:nth-child(4):hover .contact-card__icon {
+  background: rgba(139, 92, 246, 0.18);
+}
+
+.contact-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.contact-card__desc {
+  font-size: 0.82rem;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+
+.contact-card a,
+.contact-card__value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-card a:hover {
+  color: var(--primary-dark);
+}
+
+.contact-card__value {
+  color: var(--dark);
+}
+
+/* ============ MAP + FORM ============ */
+.contact-form-section {
+  padding: 80px 0;
+  background: var(--light);
+}
+
+.contact-form-section__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.contact-map {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  min-height: 480px;
+  background: var(--gray-light);
+}
+
+.contact-map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  border: 0;
+  display: block;
+}
+
+.contact-form-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 40px;
+}
+
+.contact-form-card h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 4px;
+  letter-spacing: -0.01em;
+}
+
+.contact-form-card__sub {
+  font-size: 0.88rem;
+  color: var(--gray);
+  margin-bottom: 28px;
+}
+
+.contact-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: var(--dark);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(34, 106, 214, 0.1);
+  background: #ffffff;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--gray);
+  opacity: 0.6;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.contact-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b6560' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.contact-form__btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 25px -5px rgba(34, 106, 214, 0.3);
+}
+
+.contact-form__btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px -6px rgba(34, 106, 214, 0.4);
+}
+
+.contact-form__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ============ SOCIAL ============ */
+.contact-social {
+  padding: 80px 0;
+  background: #ffffff;
+  text-align: center;
+}
+
+.contact-social h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 8px;
+  letter-spacing: -0.01em;
+}
+
+.contact-social p {
+  font-size: 0.9rem;
+  color: var(--gray);
+  max-width: 500px;
+  margin: 0 auto 32px;
+}
+
+.contact-social__links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.contact-social__link {
+  width: 56px;
+  height: 56px;
+  background: var(--light);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--gray);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contact-social__link:hover {
+  transform: scale(1.1);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.contact-social__link--facebook { color: #1877f2; }
+.contact-social__link--facebook:hover { background: #1877f2; color: #ffffff; box-shadow: 0 8px 20px rgba(24, 119, 242, 0.25); }
+
+.contact-social__link--tiktok { color: #000000; }
+.contact-social__link--tiktok:hover { background: #000000; color: #ffffff; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); }
+
+.contact-social__link--instagram { color: #e1306c; }
+.contact-social__link--instagram:hover { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: #ffffff; box-shadow: 0 8px 20px rgba(253, 29, 29, 0.25); }
+
+.contact-social__link--youtube { color: #ff0000; }
+.contact-social__link--youtube:hover { background: #ff0000; color: #ffffff; box-shadow: 0 8px 20px rgba(255, 0, 0, 0.25); }
+
+.contact-social__link--whatsapp { color: #25d366; }
+.contact-social__link--whatsapp:hover { background: #25d366; color: #ffffff; box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25); }
+
+/* ============ NEWSLETTER ============ */
+.contact-newsletter {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #1a2744 0%, #0f1a30 100%);
+  text-align: center;
+}
+
+.contact-newsletter__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 60px;
+  padding: 6px 18px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #818cf8;
+  margin-bottom: 1rem;
+}
+
+.contact-newsletter h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin-bottom: 10px;
+}
+
+.contact-newsletter p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.45);
+  max-width: 500px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
+}
+
+.contact-newsletter__form {
+  display: flex;
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.contact-newsletter__form input {
+  flex: 1;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.contact-newsletter__form input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.contact-newsletter__form input:focus {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.contact-newsletter__form button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s;
+  box-shadow: 0 10px 25px -5px rgba(34, 106, 214, 0.3);
+}
+
+.contact-newsletter__form button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.contact-newsletter__disclaimer {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.25);
+  margin-top: 16px;
+}
+
+/* ============ TOAST ============ */
+.contact-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  padding: 14px 22px;
+  border-radius: 12px;
+  background: var(--dark);
+  color: white;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.contact-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.contact-toast i {
+  color: #10b981;
+  font-size: 1.1rem;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .contact-cards__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .contact-form-section__grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-map {
+    min-height: 360px;
+  }
+  .contact-map iframe {
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-cards__grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-form-card {
+    padding: 24px;
+  }
+  .contact-form .form-row {
+    grid-template-columns: 1fr;
+  }
+  .contact-newsletter__form {
+    flex-direction: column;
+  }
+  .contact-hero {
+    padding: 100px 0 60px;
+  }
+  .contact-social__links {
+    gap: 12px;
+  }
+  .contact-social__link {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+  }
+}
+</style>
+
+<!-- ==================== CONTACT US SECTION ==================== -->
+<section class="contact-section" id="{{sectionId}}">
+
+  <!-- Toast -->
+  <div id="contactToast-{{sectionId}}" class="contact-toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="contactToastMsg-{{sectionId}}">Message sent successfully!</span>
+  </div>
+
+  <!-- Hero -->
+  <div class="contact-hero reveal">
+    <div class="container">
+      <span class="contact-hero__label">
+        <i class="fas fa-envelope"></i>
+        Get in Touch
+      </span>
+      <h1>Contact <span>Us</span></h1>
+      <p>{{heroDescription}}</p>
+      <div class="contact-breadcrumb">
+        <a href="{{homeUrl}}">Home</a>
+        <i class="fas fa-chevron-right" style="font-size: 0.65rem;"></i>
+        <span>Contact Us</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Cards -->
+  <div class="contact-cards">
+    <div class="contact-cards__grid">
+      <div class="contact-card reveal reveal-delay-1">
+        <div class="contact-card__icon"><i class="fas fa-phone"></i></div>
+        <h3>Prayer line</h3>
+        <p class="contact-card__desc">weekly from 9am to 6pm</p>
+        <a href="tel:{{phoneNumber}}">{{phoneDisplay}}</a>
+      </div>
+      <div class="contact-card reveal reveal-delay-1">
+        <div class="contact-card__icon"><i class="fas fa-envelope"></i></div>
+        <h3>General Inquiries</h3>
+        <p class="contact-card__desc">We reply within 24 hours</p>
+        <a href="mailto:{{generalEmail}}">{{generalEmail}}</a>
+      </div>
+      <div class="contact-card reveal reveal-delay-1">
+        <div class="contact-card__icon"><i class="fas fa-headset"></i></div>
+        <h3>Technical Support</h3>
+        <p class="contact-card__desc">Dedicated help desk</p>
+        <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>
+      </div>
+      <div class="contact-card reveal reveal-delay-1">
+        <div class="contact-card__icon"><i class="fas fa-location-dot"></i></div>
+        <h3>Location</h3>
+        <p class="contact-card__desc">Visit us anytime</p>
+        <p class="contact-card__value">{{officeAddress}}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map + Form -->
+  <div class="contact-form-section">
+    <div class="contact-form-section__grid">
+      <div class="contact-map reveal" id="contactMap">
+        <iframe
+          src="{{mapSrc}}"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+      <div class="contact-form-card reveal reveal-delay-1">
+        <h2>Send Us a Message</h2>
+        <p class="contact-form-card__sub">Fill out the form below and we'll get back to you shortly.</p>
+
+        <form class="contact-form" id="contactForm-{{sectionId}}">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName-{{sectionId}}">First Name</label>
+              <input type="text" id="firstName-{{sectionId}}" required placeholder="John">
+            </div>
+            <div class="form-group">
+              <label for="lastName-{{sectionId}}">Last Name</label>
+              <input type="text" id="lastName-{{sectionId}}" required placeholder="Doe">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email-{{sectionId}}">Email Address</label>
+            <input type="email" id="email-{{sectionId}}" required placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label for="subject-{{sectionId}}">Subject</label>
+            <select id="subject-{{sectionId}}" required>
+              <option value="" disabled selected>Select a topic</option>
+              <option>Prayer request</option>
+              <option>Visitors programme</option>
+              <option>Partnership</option>
+              <option>Counselling</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-{{sectionId}}">Message</label>
+            <textarea id="message-{{sectionId}}" required rows="4" placeholder="Tell us how we can help..."></textarea>
+          </div>
+          <button type="submit" class="contact-form__btn">
+            <i class="fas fa-paper-plane"></i>
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Media -->
+  <div class="contact-social">
+    <div class="container">
+      <div class="reveal">
+        <h2>Follow Us on Social Media</h2>
+        <p>Stay connected with the latest updates, insights, and behind-the-scenes content.</p>
+      </div>
+      <div class="contact-social__links reveal reveal-delay-1">
+        <a href="{{facebookUrl}}" target="_blank" rel="noopener" class="contact-social__link contact-social__link--facebook" aria-label="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="{{tiktokUrl}}" target="_blank" rel="noopener" class="contact-social__link contact-social__link--tiktok" aria-label="TikTok">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="{{instagramUrl}}" target="_blank" rel="noopener" class="contact-social__link contact-social__link--instagram" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="{{youtubeUrl}}" target="_blank" rel="noopener" class="contact-social__link contact-social__link--youtube" aria-label="YouTube">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="{{whatsappUrl}}" target="_blank" rel="noopener" class="contact-social__link contact-social__link--whatsapp" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="contact-newsletter">
+    <div class="container">
+      <div class="reveal">
+        <span class="contact-newsletter__label">
+          <i class="fas fa-star"></i>
+          Newsletter
+        </span>
+        <h2>Subscribe to Our Newsletter</h2>
+        <p>Get the latest news, articles, and resources delivered straight to your inbox every week.</p>
+      </div>
+      <form class="contact-newsletter__form reveal reveal-delay-1" id="newsletterForm-{{sectionId}}">
+        <input type="email" id="newsletterEmail-{{sectionId}}" required placeholder="Enter your email address">
+        <button type="submit">
+          <i class="fas fa-arrow-right"></i>
+          Subscribe
+        </button>
+      </form>
+      <p class="contact-newsletter__disclaimer">No spam, ever. Unsubscribe at any time.</p>
+    </div>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var sectionId = '{{sectionId}}';
+  var toastEl = document.getElementById('contactToast-' + sectionId);
+  var toastMsg = document.getElementById('contactToastMsg-' + sectionId);
+
+  function showToast(msg) {
+    toastMsg.textContent = msg;
+    toastEl.classList.add('show');
+    setTimeout(function() { toastEl.classList.remove('show'); }, 3500);
+  }
+
+  var includeEl = document.querySelector('[data-include="components/contact-us.html"]');
+  var serviceId = includeEl ? includeEl.dataset.emailjsServiceId : '';
+  var templateId = includeEl ? includeEl.dataset.emailjsTemplateId : '';
+  var publicKey = includeEl ? includeEl.dataset.emailjsPublicKey : '';
+
+  if (publicKey && typeof emailjs !== 'undefined') {
+    emailjs.init({ publicKey: publicKey });
+  }
+
+  function sendEmail(formData) {
+    if (serviceId && templateId && typeof emailjs !== 'undefined') {
+      return emailjs.send(serviceId, templateId, formData);
+    }
+    return new Promise(function(resolve) {
+      setTimeout(resolve, 1500);
+    });
+  }
+
+  // Contact form
+  var contactForm = document.getElementById('contactForm-' + sectionId);
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = this.querySelector('button[type="submit"]');
+      var orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      btn.disabled = true;
+
+      var params = {
+        from_name: document.getElementById('firstName-' + sectionId).value + ' ' + document.getElementById('lastName-' + sectionId).value,
+        from_email: document.getElementById('email-' + sectionId).value,
+        subject: document.getElementById('subject-' + sectionId).value,
+        message: document.getElementById('message-' + sectionId).value,
+        to_email: 'khorombi2@yahoo.com'
+      };
+
+      sendEmail(params).then(function() {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        contactForm.reset();
+        showToast('Message sent successfully! We\'ll reply within 24 hours.');
+      }).catch(function() {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        showToast('Failed to send. Please try again or call us directly.');
+      });
+    });
+  }
+
+  // Newsletter form
+  var newsletterForm = document.getElementById('newsletterForm-' + sectionId);
+  if (newsletterForm) {
+    newsletterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = this.querySelector('button[type="submit"]');
+      var orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+      btn.disabled = true;
+
+      var params = {
+        from_name: document.getElementById('newsletterEmail-' + sectionId).value,
+        from_email: document.getElementById('newsletterEmail-' + sectionId).value,
+        subject: 'Newsletter Subscription',
+        message: 'New newsletter subscription from ' + document.getElementById('newsletterEmail-' + sectionId).value,
+        to_email: 'khorombi2@yahoo.com'
+      };
+
+      sendEmail(params).then(function() {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        newsletterForm.reset();
+        showToast('Successfully subscribed! Check your inbox for confirmation.');
+      }).catch(function() {
+        btn.innerHTML = orig;
+        btn.disabled = false;
+        showToast('Failed to subscribe. Please try again.');
+      });
+    });
+  }
+})();
+</script>

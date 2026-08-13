@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Morphing Slider | Encrypted Media Gallery | Charis Missionary Church</title>
+    <title>Photo Gallery | Charis Missionary Church</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <meta name="description" content="Browse the photo gallery of Charis Missionary Church. See moments from our journey of faith, worship, and community.">
+    <meta property="og:title" content="Photo Gallery | Charis Missionary Church">
+    <meta property="og:description" content="Browse the photo gallery of Charis Missionary Church. See moments from our journey of faith, worship, and community.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
@@ -16,14 +23,17 @@
         }
 
         :root {
-            --bg-dark: #000000;
-            --card-bg: #0f1219;
-            --accent: #000000;
-            --accent-glow: 0 0 15px rgb(255, 0, 0);
-            --text-light: #f0f2f5;
-            --text-dim: #8e9aaf;
-            --border: #1e2430;
-            --transition-smooth: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --bg-dark: #f5f3f0;
+            --card-bg: #ffffff;
+            --accent: #226ad6;
+            --text-light: #2c2a28;
+            --text-dim: #6b6560;
+            --border: #e5e0db;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 8px 25px rgba(0,0,0,0.08);
+            --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
+            --radius: 14px;
+            --gap: 14px;
         }
 
         body {
@@ -33,7 +43,6 @@
             overflow-x: hidden;
         }
 
-        /* Toast Notification */
         .toast-notification {
             position: fixed;
             top: 30px;
@@ -57,578 +66,571 @@
         .toast-notification.show { transform: translateX(0%); }
         .toast-notification i { color: var(--accent); }
 
-        /* Encryption overlay */
         .encryption-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 8px);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 2px, transparent 2px, transparent 8px);
             pointer-events: none;
             z-index: 1;
         }
 
         .gallery-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 1.5rem 5rem;
+            padding: 2.5rem 1.5rem 5rem;
             position: relative;
             z-index: 2;
         }
 
         .gallery-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
         .gallery-header h1 {
             font-size: 2.8rem;
             font-weight: 800;
-            background: rgb(0, 38, 255);
+            background: #226ad6;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            letter-spacing: -0.02em;
+        }
+        .gallery-header p {
+            color: var(--text-dim);
+            font-size: 1.05rem;
+            margin-top: 0.5rem;
         }
 
-        /* Folder Strip */
-        .folder-strip {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 2.5rem;
-        }
-        .folder-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 12px 28px;
-            border-radius: 60px;
-            font-weight: 600;
-            color: var(--text-dim);
-            cursor: pointer;
-            transition: var(--transition-smooth);
+        .gallery-bar {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding: 0 4px;
         }
-        .folder-btn.active {
+        .gallery-bar .count {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+        .gallery-bar .count span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 4px;
+        }
+        .view-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            border-radius: 9px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .view-btn.active {
             background: var(--accent);
-            border-color: var(--accent);
             color: white;
-            box-shadow: 0 0 12px rgba(255,59,92,0.4);
         }
-        .folder-btn:hover:not(.active) {
-            border-color: var(--accent);
-            color: white;
+        .view-btn:hover:not(.active) {
+            color: var(--text-light);
+            background: #f0eeeb;
         }
 
-        /* ========== MORPHING CAROUSEL (SLIDER) ========== */
-        .carousel-section {
-            margin-bottom: 3rem;
+        /* ============ MASONRY GRID ============ */
+        .photo-grid {
+            columns: 4;
+            column-gap: var(--gap);
         }
-        .carousel-container {
+        .photo-grid.cols-3 { columns: 3; }
+        .photo-grid.cols-2 { columns: 2; }
+
+        .photo-card {
+            break-inside: avoid;
+            margin-bottom: var(--gap);
             position: relative;
-            border-radius: 32px;
+            border-radius: var(--radius);
             overflow: hidden;
-            background: var(--card-bg);
-            box-shadow: 0 25px 40px -15px rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            background: #e8e5e1;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
         }
-        .carousel-slide-area {
-            position: relative;
+        .photo-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            z-index: 5;
+        }
+        .photo-card img {
             width: 100%;
-            height: 550px;
-            overflow: hidden;
-            background: #000;
-        }
-        .carousel-track {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            will-change: transform;
-        }
-        .carousel-slide {
-            flex: 0 0 100%;
-            height: 100%;
-            position: relative;
-            transition: filter 0.4s ease;
-        }
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1), filter 0.4s ease;
             pointer-events: none;
         }
-        /* motion blur effect when sliding */
-        .carousel-track.blur-transition {
-            filter: blur(8px);
-            transition: filter 0.25s ease, transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        .photo-card:hover img {
+            transform: scale(1.04);
+            filter: brightness(0.9);
         }
-        /* navigation arrows */
-        .carousel-arrow {
+
+        .photo-overlay {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 56px;
-            height: 56px;
-            background: rgba(0,0,0,0.6);
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.65) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 24px 16px 14px;
+        }
+        .photo-card:hover .photo-overlay { opacity: 1; }
+        .photo-overlay .overlay-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
             backdrop-filter: blur(8px);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 20;
-            transition: all 0.2s;
-            border: 1px solid rgba(255,255,255,0.2);
             color: white;
-            font-size: 1.4rem;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.25s;
         }
-        .carousel-arrow:hover {
+        .photo-card:hover .overlay-icon {
             background: var(--accent);
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 0 15px var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.1);
         }
-        .arrow-left { left: 20px; }
-        .arrow-right { right: 20px; }
+        .photo-overlay .overlay-label {
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
 
-        /* ===== MORPHING DOTS (INFINITE GLOW + SHAPE MORPH) ===== */
-        .morphing-dots {
+        .photo-index {
             position: absolute;
-            bottom: 25px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 14px;
-            z-index: 25;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(6px);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 7px;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        .morph-dot {
-            width: 12px;
-            height: 12px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
-            position: relative;
-        }
-        .morph-dot.active {
-            width: 12px;
-            background: var(--accent);
-            box-shadow: 0 0 18px var(--accent), 0 0 8px rgb(255, 255, 255);
-            border-radius: 20px;
-            transform: scale(1.05);
-        }
-        /* infinite glow pulse for active dot */
-        .morph-dot.active::after {
-            content: '';
+        .photo-card:hover .photo-index { opacity: 1; }
+
+        .photo-card .shimmer {
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 10px;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.956) 0%, rgba(255, 255, 255, 0.94) 80%);
-            opacity: 0.2;
-            animation: pulseGlow 1.5s infinite;
-            pointer-events: none;
+            inset: 0;
+            background: linear-gradient(110deg, #e8e5e1 30%, #f5f3f0 50%, #e8e5e1 70%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            z-index: 1;
         }
-        @keyframes pulseGlow {
-            0% { opacity: 0.3; transform: scale(0.9);}
-            100% { opacity: 0.9; transform: scale(1.4);}
-        }
-        /* inactive dots style */
-        .morph-dot:not(.active):hover {
-            background: rgba(255,255,255,0.9);
-            transform: scale(1.2);
+        .photo-card .shimmer.hidden { display: none; }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
-        /* Image counter & folder label */
-        .slide-info {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            z-index: 20;
-            font-weight: 500;
-            border-left: 3px solid var(--accent);
-        }
-
-        /* Video section hidden by default, we show only carousel but we add video toggle? but requirement focus on picture slider */
-        .videos-section { display: none; }
-
-        /* Lightbox (zoom & fullscreen) but we already have slider, but optional extra click on slide */
+        /* ============ LIGHTBOX ============ */
         .modern-lightbox {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.96);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 13, 12, 0.97);
             z-index: 10001;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            flex-direction: column;
         }
         .modern-lightbox.active { display: flex; }
-        .lb-container { max-width: 92vw; max-height: 90vh; position: relative; }
-        .lb-image { max-width: 90vw; max-height: 85vh; object-fit: contain; cursor: zoom-in; transition: transform 0.2s; }
+
+        .lb-topbar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            z-index: 10;
+        }
+        .lb-counter {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .lb-counter span { color: white; }
+
         .lb-close {
-            position: absolute; top: -40px; right: 0; background: none; border: none;
-            color: white; font-size: 2rem; cursor: pointer;
+            position: relative;
+            top: auto; right: auto;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
         }
-        .lb-nav {
-            position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between;
-            transform: translateY(-50%); padding: 0 1rem;
-        }
-        .lb-nav button {
-            background: rgba(0,0,0,0.6); border: none; width: 48px; height: 48px;
-            border-radius: 60px; color: white; font-size: 1.4rem; cursor: pointer;
-        }
-        .lb-controls {
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.6); border-radius: 60px; padding: 8px 18px; display: flex; gap: 16px;
-        }
-        .ctrl-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
-        .zoom-level { color: white; font-size: 0.8rem; min-width: 45px; text-align: center; }
+        .lb-close:hover { background: rgba(255,255,255,0.15); }
 
-        footer {
-            text-align: center;
-            margin-top: 4rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            color: var(--text-dim);
-            font-size: 0.8rem;
+        .lb-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 92vw;
+            max-height: 85vh;
         }
 
+        .lb-nav-btn {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .lb-nav-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .lb-image-wrap {
+            position: relative;
+            max-width: 80vw;
+            max-height: 82vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lb-image {
+            max-width: 80vw;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transition: transform 0.25s ease;
+            cursor: grab;
+        }
+        .lb-image:active { cursor: grabbing; }
+
+        .lb-bottombar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
+            z-index: 10;
+        }
+        .lb-thumb-strip {
+            display: flex;
+            gap: 6px;
+            max-width: 600px;
+            overflow-x: auto;
+            padding: 6px 4px;
+            scrollbar-width: none;
+        }
+        .lb-thumb-strip::-webkit-scrollbar { display: none; }
+        .lb-thumb {
+            width: 52px;
+            height: 52px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.4;
+            transition: all 0.25s;
+        }
+        .lb-thumb.active {
+            border-color: var(--accent);
+            opacity: 1;
+        }
+        .lb-thumb:hover:not(.active) { opacity: 0.7; }
+        .lb-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 1024px) {
+            .photo-grid { columns: 3; }
+            .photo-grid.cols-3 { columns: 3; }
+        }
         @media (max-width: 768px) {
-            .carousel-slide-area { height: 380px; }
-            .carousel-arrow { width: 42px; height: 42px; font-size: 1rem; }
-            .morph-dot.active { width: 28px; }
+            .gallery-header h1 { font-size: 2rem; }
+            .photo-grid,
+            .photo-grid.cols-3 { columns: 2; }
+            :root { --gap: 10px; --radius: 10px; }
+            .lb-main { gap: 10px; }
+            .lb-nav-btn { width: 40px; height: 40px; font-size: 1rem; }
+            .lb-image { max-width: 88vw; max-height: 75vh; }
+            .lb-thumb { width: 44px; height: 44px; }
+        }
+        @media (max-width: 480px) {
+            .photo-grid.cols-2 { columns: 2; }
+            :root { --gap: 8px; --radius: 8px; }
+            .gallery-container { padding: 1.5rem 1rem 4rem; }
         }
     </style>
 </head>
 <body>
 <div class="encryption-bg"></div>
-<div id="toastMsg" class="toast-notification"><i class="fas fa-shield-haltered"></i> <span id="toastText">⛔ Screenshot blocked</span></div>
+<div id="toastMsg" class="toast-notification"><i class="fas fa-shield-halved"></i> <span id="toastText">⛔ Screenshot blocked</span></div>
 
 <div class="gallery-container">
     <div class="gallery-header">
-        <h1></i>Gallery</h1>
-    </div>
-<br></br>
-    <div class="folder-strip" id="folderStrip">
-        <div class="folder-btn" data-folder="followers"><i class="fas fa-calendar-alt"></i> Followers · 18</div>
-        <div class="folder-btn" data-folder="worship"><i class="fas fa-hands-praying"></i> Worship Team · 36</div>
-        <div class="folder-btn" data-folder="heritage"><i class="fas fa-landmark"></i> Heritage · 10</div>
-    
+        <h1>Gallery</h1>
+        <p>Browse through our collection of moments and memories</p>
     </div>
 
-    <!-- MAIN CAROUSEL SLIDER -->
-    <div class="carousel-section">
-        <div class="carousel-container">
-            <div class="carousel-slide-area" id="carouselArea">
-                <div class="carousel-track" id="carouselTrack">
-                    <!-- dynamic slides injected -->
-                </div>
-                <button class="carousel-arrow arrow-left" id="prevSlideBtn"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-arrow arrow-right" id="nextSlideBtn"><i class="fas fa-chevron-right"></i></button>
-                <div class="slide-info" id="slideInfo">1 / 20 · Followers</div>
-                <div class="morphing-dots" id="morphingDots"></div>
-            </div>
+    <div class="gallery-bar">
+        <div class="count">Showing <span id="photoCount">0</span> photos</div>
+        <div class="view-toggle">
+            <button class="view-btn" data-cols="4" title="4 columns"><i class="fas fa-th"></i></button>
+            <button class="view-btn active" data-cols="3" title="3 columns"><i class="fas fa-th-large"></i></button>
+            <button class="view-btn" data-cols="2" title="2 columns"><i class="fas fa-square"></i></button>
         </div>
     </div>
 
- 
+    <div class="photo-grid cols-3" id="photoGrid"></div>
 </div>
 
-<!-- Lightbox for optional fullscreen zoom -->
 <div class="modern-lightbox" id="imageLightbox">
-    <button class="lb-close" id="lbCloseBtn">&times;</button>
-    <div class="lb-container">
-        <div class="lb-nav">
-            <button id="lbPrev"><i class="fas fa-chevron-left"></i></button>
-            <button id="lbNext"><i class="fas fa-chevron-right"></i></button>
+    <div class="lb-topbar">
+        <div class="lb-counter"><span id="lbCurrent">1</span> / <span id="lbTotal">0</span></div>
+        <button class="lb-close" id="lbCloseBtn">&times;</button>
+    </div>
+    <div class="lb-main">
+        <button class="lb-nav-btn" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+        <div class="lb-image-wrap">
+            <img class="lb-image" id="lbImage" alt="Gallery lightbox">
         </div>
-        <img class="lb-image" id="lbImage" alt="full view">
-        <div class="lb-controls">
-            <button class="ctrl-btn" id="zoomInBtn"><i class="fas fa-search-plus"></i></button>
-            <button class="ctrl-btn" id="zoomOutBtn"><i class="fas fa-search-minus"></i></button>
-            <button class="ctrl-btn" id="resetZoomBtn"><i class="fas fa-undo-alt"></i></button>
-            <div class="zoom-level" id="zoomPercent">100%</div>
-        </div>
+        <button class="lb-nav-btn" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="lb-bottombar">
+        <div class="lb-thumb-strip" id="lbThumbStrip"></div>
     </div>
 </div>
 
 <script>
-    // ========== USER EXACT IMAGE PATHS ==========
-    const IMAGE_CONFIG = {
-        followers: [
-            "images/Followers/1.JPG","images/Followers/2.JPG","images/Followers/3.JPG","images/Followers/4.JPG","images/Followers/5.JPG",
-            "images/Followers/6.JPG","images/Followers/7.JPG","images/Followers/8.JPG","images/Followers/9.JPG","images/Followers/10.JPG",
-            "images/Followers/11.JPG","images/Followers/12.JPG","images/Followers/13.JPG","images/Followers/14.JPG","images/Followers/15.JPG",
-            "images/Followers/16.JPG","images/Followers/17.JPG","images/Followers/18.JPG"
-        ],
-        worship: [
-            "images/Worship Team/1.JPG","images/Worship Team/2.JPG","images/Worship Team/3.JPG","images/Worship Team/4.JPG","images/Worship Team/5.JPG",
-            "images/Worship Team/6.JPG","images/Worship Team/7.JPG","images/Worship Team/8.JPG","images/Worship Team/9.JPG","images/Worship Team/10.JPG",
-            "images/Worship Team/11.JPG","images/Worship Team/12.JPG","images/Worship Team/13.JPG","images/Worship Team/14.JPG","images/Worship Team/15.JPG",
-            "images/Worship Team/16.JPG","images/Worship Team/17.JPG","images/Worship Team/18.JPG","images/Worship Team/19.JPG","images/Worship Team/20.JPG",
-            "images/Worship Team/21.JPG","images/Worship Team/22.JPG","images/Worship Team/23.JPG","images/Worship Team/24.JPG","images/Worship Team/25.JPG",
-            "images/Worship Team/26.JPG","images/Worship Team/27.JPG","images/Worship Team/28.JPG","images/Worship Team/29.JPG","images/Worship Team/30.JPG",
-            "images/Worship Team/31.JPG","images/Worship Team/32.JPG","images/Worship Team/33.JPG","images/Worship Team/34.JPG","images/Worship Team/35.JPG","images/Worship Team/36.JPG"
-        ],
-        heritage: [
-            "images/Heritage Edition/1.JPG","images/Heritage Edition/2.JPG","images/Heritage Edition/3.JPG","images/Heritage Edition/4.JPG","images/Heritage Edition/5.JPG",
-            "images/Heritage Edition/6.JPG","images/Heritage Edition/7.JPG","images/Heritage Edition/8.JPG","images/Heritage Edition/9.JPG","images/Heritage Edition/10.JPG"
-        ],
-      
-    };
+    const ALL_IMAGES = [
+        "Banner1.JPG",
+        "Banner 1.JPG",
+        "Banner 2.JPG",
+        "Banner 3.JPG",
+        "Banner 4.JPG",
+        "Banner 6.JPG",
+        "Rendani.JPG",
+        "Sithole.JPG",
+        "Takalani.JPG",
+        "images/Followers/11.JPG",
+        "images/Followers/12.JPG",
+        "images/Followers/13.JPG",
+        "images/Followers/1.JPG","images/Followers/2.JPG","images/Followers/3.JPG","images/Followers/4.JPG","images/Followers/5.JPG",
+        "images/Followers/6.JPG","images/Followers/7.JPG","images/Followers/8.JPG","images/Followers/9.JPG","images/Followers/10.JPG",
+        "images/Followers/11.JPG","images/Followers/12.JPG","images/Followers/13.JPG","images/Followers/14.JPG","images/Followers/15.JPG",
+        "images/Followers/16.JPG","images/Followers/17.JPG","images/Followers/18.JPG",
+        "images/Worship Team/1.JPG","images/Worship Team/2.JPG","images/Worship Team/3.JPG","images/Worship Team/4.JPG","images/Worship Team/5.JPG",
+        "images/Worship Team/6.JPG","images/Worship Team/7.JPG","images/Worship Team/8.JPG","images/Worship Team/9.JPG","images/Worship Team/10.JPG",
+        "images/Worship Team/11.JPG","images/Worship Team/12.JPG","images/Worship Team/13.JPG","images/Worship Team/14.JPG","images/Worship Team/15.JPG",
+        "images/Worship Team/16.JPG","images/Worship Team/17.JPG","images/Worship Team/18.JPG","images/Worship Team/19.JPG","images/Worship Team/20.JPG",
+        "images/Worship Team/21.JPG","images/Worship Team/22.JPG","images/Worship Team/23.JPG","images/Worship Team/24.JPG","images/Worship Team/25.JPG",
+        "images/Worship Team/26.JPG","images/Worship Team/27.JPG","images/Worship Team/28.JPG","images/Worship Team/29.JPG","images/Worship Team/30.JPG",
+        "images/Worship Team/31.JPG","images/Worship Team/32.JPG","images/Worship Team/33.JPG","images/Worship Team/34.JPG","images/Worship Team/35.JPG","images/Worship Team/36.JPG",
+        "images/Heritage Edition/1.JPG","images/Heritage Edition/2.JPG","images/Heritage Edition/3.JPG","images/Heritage Edition/4.JPG","images/Heritage Edition/5.JPG",
+        "images/Heritage Edition/6.JPG","images/Heritage Edition/7.JPG","images/Heritage Edition/8.JPG","images/Heritage Edition/9.JPG","images/Heritage Edition/10.JPG"
+    ];
 
-    let currentFolder = "followers";
-    let currentImages = [...IMAGE_CONFIG.followers];
-    let currentIndex = 0;
-    let isTransitioning = false;
+    let lbIndex = 0;
+    const grid = document.getElementById("photoGrid");
+    const photoCountEl = document.getElementById("photoCount");
+    const lightbox = document.getElementById("imageLightbox");
 
-    // DOM elements
-    const track = document.getElementById("carouselTrack");
-    const dotsContainer = document.getElementById("morphingDots");
-    const slideInfoSpan = document.getElementById("slideInfo");
-    const prevBtn = document.getElementById("prevSlideBtn");
-    const nextBtn = document.getElementById("nextSlideBtn");
-
-    // Helper: Toast
     function showToast(msg) {
-        const toast = document.getElementById("toastMsg");
-        const span = document.getElementById("toastText");
-        span.innerText = msg || "⛔ Action blocked";
-        toast.classList.remove("show");
-        setTimeout(() => toast.classList.add("show"), 10);
-        setTimeout(() => toast.classList.remove("show"), 3200);
+        const t = document.getElementById("toastMsg");
+        document.getElementById("toastText").innerText = msg || "⛔ Action blocked";
+        t.classList.remove("show");
+        setTimeout(() => t.classList.add("show"), 10);
+        setTimeout(() => t.classList.remove("show"), 3200);
     }
 
-    // Advanced screenshot protection + block snipping tool
     function initProtection() {
-        window.addEventListener("contextmenu", (e) => { e.preventDefault(); showToast("🖱️ Right-click disabled"); return false; });
-        window.addEventListener("keydown", (e) => {
-            if (e.key === "PrintScreen" || e.code === "PrintScreen") { e.preventDefault(); showToast("📸 Screenshot blocked!"); return false; }
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "S") { e.preventDefault(); showToast("⛔ Snipping tool disabled"); return false; }
-            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) { e.preventDefault(); showToast("✖️ Copying media not allowed"); return false; }
-            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && (e.key === "I"))) { e.preventDefault(); showToast("🔒 DevTools restricted"); return false; }
+        window.addEventListener("contextmenu", e => { e.preventDefault(); showToast("🖱️ Right-click disabled"); });
+        window.addEventListener("keydown", e => {
+            if (e.key === "PrintScreen") { e.preventDefault(); showToast("📸 Screenshot blocked!"); }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === "S") { e.preventDefault(); showToast("⛔ Snipping tool disabled"); }
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) { e.preventDefault(); showToast("✖️ Copying media not allowed"); }
+            if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) { e.preventDefault(); showToast("🔒 DevTools restricted"); }
         });
         window.addEventListener("blur", () => showToast("⚠️ Screenshot attempt detected"));
-        setInterval(() => { document.querySelectorAll('img').forEach(i => i.setAttribute('draggable', 'false')); }, 300);
-        new MutationObserver(() => document.querySelectorAll('img').forEach(i => i.setAttribute('draggable', 'false')))
-            .observe(document.body, { childList: true, subtree: true });
+        setInterval(() => document.querySelectorAll('img').forEach(i => i.setAttribute('draggable', 'false')), 300);
     }
 
-    // Build slider (with motion blur effect)
-    function buildSlider() {
-        if (!track) return;
-        track.innerHTML = "";
-        currentImages.forEach((src, idx) => {
-            const slide = document.createElement("div");
-            slide.className = "carousel-slide";
-            const img = document.createElement("img");
-            img.src = src;
-            img.alt = `Slide ${idx+1}`;
-            img.onerror = function() { this.src = "https://placehold.co/800x600/1a1a2e/ff3b5c?text=Missing+Image"; };
-            slide.appendChild(img);
-            // click to open lightbox zoom
-            slide.addEventListener("click", (e) => { e.stopPropagation(); openLightboxForCurrent(); });
-            track.appendChild(slide);
-        });
-        updateSlideTransform(false);
-        updateDots();
-        updateInfo();
-    }
+    function buildGrid() {
+        grid.innerHTML = "";
+        photoCountEl.innerText = ALL_IMAGES.length;
 
-    function updateSlideTransform(applyBlur = false) {
-        if (!track) return;
-        if (applyBlur) {
-            track.classList.add("blur-transition");
-            setTimeout(() => { track.classList.remove("blur-transition"); }, 250);
-        }
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-
-    function morphDotsActive() {
-        const dots = document.querySelectorAll(".morph-dot");
-        dots.forEach((dot, i) => {
-            if (i === currentIndex) dot.classList.add("active");
-            else dot.classList.remove("active");
+        ALL_IMAGES.forEach((src, idx) => {
+            const card = document.createElement("div");
+            card.className = "photo-card";
+            card.innerHTML = `
+                <div class="shimmer"></div>
+                <img src="${src}" alt="Photo ${idx + 1}" loading="lazy"
+                     onload="this.previousElementSibling.classList.add('hidden')"
+                     onerror="this.src='https://placehold.co/600x800/e8e5e1/6b6560?text=Photo+${idx+1}';this.previousElementSibling.classList.add('hidden')">
+                <div class="photo-index">${idx + 1}</div>
+                <div class="photo-overlay">
+                    <div class="overlay-icon"><i class="fas fa-expand"></i></div>
+                    <div class="overlay-label">View</div>
+                </div>
+            `;
+            card.addEventListener("click", () => openLightbox(idx));
+            grid.appendChild(card);
         });
     }
 
-    function updateDots() {
-        dotsContainer.innerHTML = "";
-        currentImages.forEach((_, idx) => {
-            const dot = document.createElement("div");
-            dot.classList.add("morph-dot");
-            if (idx === currentIndex) dot.classList.add("active");
-            dot.addEventListener("click", () => {
-                if (isTransitioning) return;
-                if (idx !== currentIndex) {
-                    currentIndex = idx;
-                    updateSlideTransform(true);
-                    morphDotsActive();
-                    updateInfo();
-                    setTimeout(() => { isTransitioning = false; }, 300);
-                }
+    function animateGridIn() {
+        const cards = grid.querySelectorAll(".photo-card");
+        cards.forEach((card, i) => {
+            card.style.opacity = "0";
+            card.style.transform = "translateY(20px)";
+            card.style.transition = `opacity 0.4s ease ${i * 20}ms, transform 0.4s cubic-bezier(0.2,0.9,0.4,1) ${i * 20}ms`;
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    card.style.opacity = "1";
+                    card.style.transform = "translateY(0)";
+                });
             });
-            dotsContainer.appendChild(dot);
         });
     }
 
-    function updateInfo() {
-        const folderNice = currentFolder === "followers" ? "Followers" : currentFolder === "worship" ? "Worship Team" : currentFolder === "heritage" ? "Heritage Edition" : "Community";
-        slideInfoSpan.innerText = `${currentIndex+1} / ${currentImages.length} · ${folderNice}`;
-    }
-
-    // FIXED: Arrows properly wrap around (first -> last, last -> first)
-    // Using modulo arithmetic ensures smooth infinite loop navigation
-    function nextSlide() {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        // Move to next image with wrap-around: when at last, go to first
-        currentIndex = (currentIndex + 1) % currentImages.length;
-        updateSlideTransform(true);
-        morphDotsActive();
-        updateInfo();
-        setTimeout(() => { isTransitioning = false; }, 300);
-    }
-
-    function prevSlide() {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        // Move to previous image with wrap-around: when at first, go to last
-        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-        updateSlideTransform(true);
-        morphDotsActive();
-        updateInfo();
-        setTimeout(() => { isTransitioning = false; }, 300);
-    }
-
-    // Lightbox: opens current image in fullscreen with zoom + nav sync
-    let lightboxZoom = 1;
-    function openLightboxForCurrent() {
-        const lb = document.getElementById("imageLightbox");
-        const lbImg = document.getElementById("lbImage");
-        lbImg.src = currentImages[currentIndex];
-        lbImg.style.transform = "scale(1)";
-        lightboxZoom = 1;
-        document.getElementById("zoomPercent").innerText = "100%";
-        lb.classList.add("active");
+    function openLightbox(idx) {
+        lbIndex = idx;
+        lightbox.classList.add("active");
         document.body.style.overflow = "hidden";
-        // sync navigation in lightbox
-        window.currentLightboxIndex = currentIndex;
-        window.lightboxImages = currentImages;
+        updateLightbox();
+        buildThumbs();
     }
+
     function closeLightbox() {
-        document.getElementById("imageLightbox").classList.remove("active");
+        lightbox.classList.remove("active");
         document.body.style.overflow = "auto";
     }
-    function lightboxNavigate(delta) {
-        if (!window.lightboxImages) return;
-        let newIdx = (window.currentLightboxIndex + delta + window.lightboxImages.length) % window.lightboxImages.length;
-        window.currentLightboxIndex = newIdx;
-        const lbImg = document.getElementById("lbImage");
-        lbImg.src = window.lightboxImages[newIdx];
-        lightboxZoom = 1;
-        lbImg.style.transform = "scale(1)";
-        document.getElementById("zoomPercent").innerText = "100%";
-        // also sync main carousel index
-        if (currentImages === window.lightboxImages) {
-            if (currentIndex !== newIdx) {
-                currentIndex = newIdx;
-                updateSlideTransform(false);
-                morphDotsActive();
-                updateInfo();
-            }
-        }
-    }
-    function zoomLightbox(inc) {
-        let newZoom = lightboxZoom + inc;
-        if (newZoom >= 0.5 && newZoom <= 3) {
-            lightboxZoom = newZoom;
-            document.getElementById("lbImage").style.transform = `scale(${lightboxZoom})`;
-            document.getElementById("zoomPercent").innerText = `${Math.round(lightboxZoom*100)}%`;
-        }
-    }
-    function resetZoomLightbox() { lightboxZoom = 1; document.getElementById("lbImage").style.transform = "scale(1)"; document.getElementById("zoomPercent").innerText = "100%"; }
 
-    // switch folders
-    function switchFolder(folderKey) {
-        if (!IMAGE_CONFIG[folderKey]) return;
-        currentFolder = folderKey;
-        currentImages = [...IMAGE_CONFIG[folderKey]];
-        currentIndex = 0;
-        buildSlider();
-        // also set lightbox images reference
-        window.lightboxImages = currentImages;
-        window.currentLightboxIndex = 0;
-        isTransitioning = false;
+    function updateLightbox() {
+        const img = document.getElementById("lbImage");
+        img.src = ALL_IMAGES[lbIndex];
+        img.alt = `Photo ${lbIndex + 1}`;
+        img.style.transform = "scale(1)";
+        document.getElementById("lbCurrent").innerText = lbIndex + 1;
+        document.getElementById("lbTotal").innerText = ALL_IMAGES.length;
+        document.querySelectorAll(".lb-thumb").forEach((t, i) => {
+            t.classList.toggle("active", i === lbIndex);
+        });
+        const activeThumb = document.querySelector(".lb-thumb.active");
+        if (activeThumb) activeThumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
     }
 
-    function setupFolderEvents() {
-        document.querySelectorAll(".folder-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                document.querySelectorAll(".folder-btn").forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
-                const folder = btn.getAttribute("data-folder");
-                if (folder) switchFolder(folder);
-            });
+    function buildThumbs() {
+        const strip = document.getElementById("lbThumbStrip");
+        strip.innerHTML = "";
+        ALL_IMAGES.forEach((src, i) => {
+            const thumb = document.createElement("div");
+            thumb.className = "lb-thumb" + (i === lbIndex ? " active" : "");
+            thumb.innerHTML = `<img src="${src}" alt="thumb ${i+1}" onerror="this.src='https://placehold.co/80x80/e8e5e1/6b6560?text=${i+1}'">`;
+            thumb.addEventListener("click", () => { lbIndex = i; updateLightbox(); });
+            strip.appendChild(thumb);
         });
     }
 
-    // bind carousel arrows
-    function bindArrows() {
-        prevBtn.addEventListener("click", prevSlide);
-        nextBtn.addEventListener("click", nextSlide);
-        // keyboard arrows with proper wrap-around
-        window.addEventListener("keydown", (e) => {
-            if (document.getElementById("imageLightbox").classList.contains("active")) {
-                if (e.key === "ArrowLeft") { lightboxNavigate(-1); e.preventDefault(); }
-                else if (e.key === "ArrowRight") { lightboxNavigate(1); e.preventDefault(); }
+    function lbNav(delta) {
+        lbIndex = (lbIndex + delta + ALL_IMAGES.length) % ALL_IMAGES.length;
+        updateLightbox();
+    }
+
+    function setColumns(n) {
+        grid.classList.remove("cols-4", "cols-3", "cols-2");
+        if (n !== 4) grid.classList.add("cols-" + n);
+    }
+
+    function init() {
+        initProtection();
+
+        document.querySelectorAll(".view-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".view-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                setColumns(parseInt(btn.dataset.cols));
+            });
+        });
+
+        document.getElementById("lbCloseBtn").onclick = closeLightbox;
+        document.getElementById("lbPrev").onclick = () => lbNav(-1);
+        document.getElementById("lbNext").onclick = () => lbNav(1);
+        lightbox.addEventListener("click", e => {
+            if (e.target === lightbox || e.target.classList.contains("lb-image-wrap")) closeLightbox();
+        });
+
+        window.addEventListener("keydown", e => {
+            if (lightbox.classList.contains("active")) {
+                if (e.key === "ArrowLeft") { lbNav(-1); e.preventDefault(); }
+                else if (e.key === "ArrowRight") { lbNav(1); e.preventDefault(); }
                 else if (e.key === "Escape") closeLightbox();
                 return;
             }
-            if (e.key === "ArrowLeft") { prevSlide(); e.preventDefault(); }
-            if (e.key === "ArrowRight") { nextSlide(); e.preventDefault(); }
         });
-    }
 
-    function bindLightboxEvents() {
-        const lb = document.getElementById("imageLightbox");
-        document.getElementById("lbCloseBtn").onclick = closeLightbox;
-        document.getElementById("lbPrev").onclick = () => lightboxNavigate(-1);
-        document.getElementById("lbNext").onclick = () => lightboxNavigate(1);
-        document.getElementById("zoomInBtn").onclick = () => zoomLightbox(0.2);
-        document.getElementById("zoomOutBtn").onclick = () => zoomLightbox(-0.2);
-        document.getElementById("resetZoomBtn").onclick = resetZoomLightbox;
-        lb.addEventListener("click", (e) => { if (e.target === lb) closeLightbox(); });
-    }
+        let touchStartX = 0;
+        const lbImg = document.getElementById("lbImage");
+        lbImg.addEventListener("touchstart", e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+        lbImg.addEventListener("touchend", e => {
+            const diff = e.changedTouches[0].screenX - touchStartX;
+            if (Math.abs(diff) > 50) lbNav(diff > 0 ? -1 : 1);
+        }, { passive: true });
 
-    // Preload for smoother blur effect
-    function init() {
-        initProtection();
-        bindArrows();
-        bindLightboxEvents();
-        setupFolderEvents();
-        switchFolder("followers");
-        // set default active button
-        document.querySelector(".folder-btn[data-folder='followers']").classList.add("active");
-        window.lightboxImages = currentImages;
-        window.currentLightboxIndex = 0;
-        // additional image drag guard
-        setInterval(() => {
-            document.querySelectorAll('img').forEach(img => img.setAttribute('draggable', 'false'));
-        }, 500);
+        buildGrid();
+        animateGridIn();
     }
 
     init();

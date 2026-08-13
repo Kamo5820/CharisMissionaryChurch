@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Ignite Youth | Charis Missionary Church – Next Gen Faith in Action</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <meta name="description" content="Ignite Youth ministry at Charis Missionary Church empowers the next generation to put their faith in action through worship, fellowship, and service.">
+    <meta property="og:title" content="Ignite Youth | Charis Missionary Church – Next Gen Faith in Action">
+    <meta property="og:description" content="Ignite Youth ministry at Charis Missionary Church empowers the next generation to put their faith in action through worship, fellowship, and service.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,20 +22,20 @@
         }
 
         :root {
-            --primary: #0B1121;
-            --primary-dark: #020617;
-            --primary-soft: #2563EB;
-            --secondary: #F59E0B;
+            --primary: #226ad6;
+            --primary-dark: #1a4fa0;
+            --primary-soft: #4d6bff;
+            --secondary: #D97706;
             --accent: #EC4899;
-            --light: #FFFFFF;
-            --dark: #0F172A;
-            --gray: #475569;
-            --gray-light: #F8FAFC;
-            --gray-border: #E2E8F0;
+            --light: #f8f6f3;
+            --dark: #2c2a28;
+            --gray: #6b6560;
+            --gray-light: #f5f2ed;
+            --gray-border: #e5e0db;
             --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-md: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
-            --shadow-lg: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.06);
+            --shadow-md: 0 12px 24px -8px rgb(0 0 0 / 0.08);
+            --shadow-lg: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
             --radius-xl: 32px;
             --radius-2xl: 48px;
             --radius-full: 9999px;
@@ -36,7 +44,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--light);
+            background-color: #f8f6f3;
             color: var(--dark);
             line-height: 1.5;
             scroll-behavior: smooth;
@@ -50,7 +58,7 @@
 
         /* Hero Section - Youth Dynamic Energy */
         .hero-youth {
-            background: linear-gradient(125deg, rgba(2, 6, 23, 0.85), rgba(37, 99, 235, 0.78)), url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format');
+            background: linear-gradient(125deg, rgba(26, 39, 68, 0.88), rgba(37, 99, 235, 0.75)), url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format');
             background-size: cover;
             background-position: center 30%;
             padding: 160px 0 140px;
@@ -174,7 +182,7 @@
         }
         .event-img {
             height: 200px;
-            background: linear-gradient(135deg, #1E293B, #0F172A);
+            background: linear-gradient(135deg, #3a3733, #2c2a28);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -281,7 +289,7 @@
 
         /* Stats / Impact Section */
         .stats-section {
-            background: linear-gradient(110deg, #0F172A, #1E293B);
+            background: linear-gradient(110deg, #2c2a28, #3a3733);
             border-radius: 64px;
             padding: 70px 40px;
             margin: 60px 0;
@@ -322,7 +330,7 @@
         }
 
         footer {
-            background: var(--primary-dark);
+            background: #2c2a28;
             padding: 70px 0 40px;
             color: #D1D5DB;
         }
@@ -383,26 +391,23 @@
     </style>
 </head>
 <body>
+<header id="mainHeader" data-include="components/header.html"></header>
 
 <!-- Youth Ministry Hero Section -->
-<section class="hero-youth">
-    <div class="container" style="text-align: center;">
-        <span class="hero-subtitle"><i class="fas fa-fire-flame-curved"></i> IGNITE · WORSHIP · IMPACT</span>
-        <h1>Ignite Youth Ministry<br>Charis Missionary Church</h1>
-        <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto;">A movement of passionate young people chasing God's presence, breaking barriers, and shaping the future. Bold faith. Real community. Radical love.</p>
-        <div class="youth-verse">
-            <i class="fas fa-heart" style="margin-right: 10px; color: #F59E0B;"></i> 1 Timothy 4:12 — “Don’t let anyone look down on you because you are young, but set an example for the believers.”
-        </div>
-        <br><br>
-    </div>
-</section>
+<div data-include="components/hero-page.html"
+     data-bg-image="Banner 6.JPG"
+     data-subtitle="IGNITE · WORSHIP · IMPACT"
+     data-title="Ignite Youth Ministry Charis Missionary Church"
+     data-description="A movement of passionate young people chasing God's presence, breaking barriers, and shaping the future. Bold faith. Real community. Radical love."
+     data-verse="<i class='fas fa-heart' style='margin-right: 10px; color: #F59E0B;'></i> 1 Timothy 4:12 — “Don’t let anyone look down on you because you are young, but set an example for the believers.”">
+</div>
 
 <!-- Pillars of Youth Ministry -->
 <section style="padding: 40px 0 20px;">
     <div class="container">
-        <div class="section-title">
-            <h2>Our Movement's Core</h2>
-            <p>Living out faith with boldness, purpose, and passion.</p>
+        <div data-include="components/section-title.html"
+             data-title="Our Movement's Core"
+             data-subtitle="Living out faith with boldness, purpose, and passion.">
         </div>
         <div class="values-grid">
             <div class="value-card"><div class="value-icon"><i class="fas fa-fire"></i></div><h3>Radical Worship</h3><p>Unfiltered praise, live worship nights, and prophetic adoration.</p></div>
@@ -415,9 +420,9 @@
 
 <!-- Upcoming Youth Events Section (Modern, dynamic) -->
 <div class="container">
-    <div class="section-title">
-        <h2>🔥 What's Happening Now</h2>
-        <p>Experience the energy — events designed to ignite your spirit.</p>
+    <div data-include="components/section-title.html"
+         data-title="🔥 What's Happening Now"
+         data-subtitle="Experience the energy — events designed to ignite your spirit.">
     </div>
     <div class="events-grid">
         <div class="event-card">
@@ -436,14 +441,12 @@
 </div>
 <br><br>
 
-]
-
 <!-- What We Believe (Youth Edition) -->
 <section style="padding: 20px 0 50px;">
     <div class="container">
-        <div class="section-title">
-            <h2>Our Youth Declaration</h2>
-            <p>Confession of faith that fuels our movement.</p>
+        <div data-include="components/section-title.html"
+             data-title="Our Youth Declaration"
+             data-subtitle="Confession of faith that fuels our movement.">
         </div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 32px;">
             <div style="background: white; border-radius: 32px; padding: 28px; box-shadow: var(--shadow-sm);"><i class="fas fa-cross" style="font-size: 2rem; color: var(--primary-soft);"></i><h3 style="margin: 16px 0;">Jesus Over Everything</h3><p>We prioritize Christ in music, relationships, and decisions — no compromise.</p></div>
@@ -453,29 +456,7 @@
     </div>
 </section>
 
-<!-- Gallery (Modern mosaic feel) -->
-<div class="container" style="text-align: center; margin-top: 20px;">
-    <div class="section-title"><h2>Moments That Define Us</h2><p>Worship, outreach, fellowship in action.</p></div>
-    <div class="gallery-preview">
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=2070&auto=format');"></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1932&auto=format');"></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2070&auto=format');"></div>
-        <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?q=80&w=2070&auto=format');"></div>
-    </div>
-</div>
-<br><br>
 
-<!-- Footer with Youth references -->
-<footer>
-    <div class="container">
-        <div class="footer-modern">
-            <div><h4 style="color: white; font-size: 1.6rem; margin-bottom: 20px;">Ignite Youth</h4><p>Charis Missionary Church — Raising a burning generation for Jesus.</p><div class="social-links" style="margin-top: 24px;"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-tiktok"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
-            <div><h4 style="color: white; margin-bottom: 20px;">Quick Access</h4><ul style="list-style: none;"><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right" style="font-size: 0.7rem; margin-right: 8px;"></i> Ignite Nights</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Youth Camp 2025</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Discipleship Track</li><li style="margin-bottom: 12px;"><i class="fas fa-chevron-right"></i> Volunteer Signup</li></ul></div>
-            <div><h4 style="color: white; margin-bottom: 20px;">Connect</h4><p><i class="fas fa-phone-alt"></i> +27 (0)63 619 4901</p><p><i class="fas fa-envelope"></i> youth@charismissionary.org</p><p><i class="fas fa-map-marker-alt"></i> Danville Clinic Hall, Pretoria West</p><p><i class="fas fa-clock"></i> Youth Service: Sundays 12PM | Fridays 6PM</p></div>
-        </div>
-        <div class="copyright" style="text-align:center; margin-top: 64px; border-top: 1px solid rgba(255,255,200,0.15); padding-top: 36px;">&copy; 2025 Charis Missionary Church Youth Ministry — IGNITE THE GENERATION | All rights reserved.</div>
-    </div>
-</footer>
 <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
 
 <script>
@@ -585,5 +566,6 @@
         }
     });
 </script>
+<script src="assets/js/main.js" defer></script>
 </body>
 </html>

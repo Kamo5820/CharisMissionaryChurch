@@ -1,0 +1,46 @@
+<div class="glass-card">
+  <div class="card-header">
+    <i class="fas fa-praying-hands"></i>
+    <h2>{{cardTitle}}</h2>
+  </div>
+  <div class="form-group">
+    <label><i class="fas fa-user-astronaut"></i> Full name *</label>
+    <input type="text" id="prayerName" class="input-frost" placeholder="e.g., Amahle Ndlovu">
+  </div>
+  <div class="form-group">
+    <label><i class="fas fa-phone-alt"></i> Phone (optional)</label>
+    <input type="tel" id="prayerPhone" class="input-frost" placeholder="+27 ...">
+  </div>
+  <div class="form-group">
+    <label><i class="fas fa-envelope"></i> Email address *</label>
+    <input type="email" id="prayerEmail" class="input-frost" placeholder="hello@example.com">
+  </div>
+  <div class="form-group">
+    <label><i class="fas fa-tag"></i> Prayer category</label>
+    <select id="prayerCategory" class="input-frost">
+      <option value="Healing">🕊️ Healing & Health</option>
+      <option value="Family">🏠 Family & Relationships</option>
+      <option value="Financial Breakthrough">💰 Financial Breakthrough</option>
+      <option value="Spiritual Growth">🔥 Spiritual Growth</option>
+      <option value="Custom">✍️ Custom (write your own)</option>
+    </select>
+  </div>
+
+  <div id="customRequestContainer" style="display: none;">
+    <div class="custom-area" style="padding: 12px;">
+      <label><i class="fas fa-pen-fancy"></i> Your prayer request (max 50 words)</label>
+      <textarea id="customPrayerText" rows="3" class="input-frost" placeholder="Type your specific prayer request..."></textarea>
+      <div class="word-count-badge" id="wordCountDisplay">0 / 50 words</div>
+    </div>
+  </div>
+
+  <button class="btn-primary" id="submitPrayerBtn"><i class="fas fa-paper-plane"></i> Send prayer request →</button>
+  <div id="prayerFeedback" class="feedback-msg" style="display: none;"></div>
+
+  <div class="stats-row">
+    <div class="stat-block"><span style="font-weight:800;font-size:1.4rem;" id="fakeCounter">372</span><br>Prayers today</div>
+    <div class="stat-block"><span style="font-weight:800;font-size:1.4rem;">24/7</span><br>Intercession</div>
+    <div class="stat-block"><span style="font-weight:800;font-size:1.4rem;">SA+</span><br>Nationwide</div>
+  </div>
+  <div class="small-footer" style="margin-top: 16px;"><i class="fas fa-shield-alt"></i> Encrypted & confidential · Email confirmation sent</div>
+</div>

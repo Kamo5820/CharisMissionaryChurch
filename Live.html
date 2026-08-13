@@ -4,9 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Charis Missionary Church | Live Stream & Worship</title>
+  <link rel="icon" href="logo.jpg" type="image/jpeg">
+  <meta name="description" content="Join Charis Missionary Church live stream and worship services online. Experience powerful worship and inspiring messages.">
+  <meta property="og:title" content="Charis Missionary Church | Live Stream & Worship">
+  <meta property="og:description" content="Join Charis Missionary Church live stream and worship services online. Experience powerful worship and inspiring messages.">
+  <meta property="og:image" content="logo.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
   <!-- Google Fonts + Font Awesome -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <style>
     * {
       margin: 0;
@@ -29,8 +37,8 @@
 
     /* modern section background */
     .welcome-section {
-      padding: 90px 0 100px;
-      background: linear-gradient(135deg, #fafcff 0%, #f0f4fa 100%);
+      padding: 150px 0 100px;
+      background: linear-gradient(135deg, #f8f6f3 0%, #f0ece7 100%);
       position: relative;
       overflow: hidden;
     }
@@ -224,9 +232,9 @@
     /* CHANNEL LINKS SECTION - Professional Design */
     .channel-section {
       padding: 80px 0;
-      background: #f8fafd;
-      border-top: 1px solid #e9edf2;
-      border-bottom: 1px solid #e9edf2;
+      background: #f5f2ed;
+      border-top: 1px solid #e5e0db;
+      border-bottom: 1px solid #e5e0db;
     }
 
     .section-header {
@@ -237,12 +245,12 @@
     .section-header h2 {
       font-size: 2.3rem;
       font-weight: 800;
-      color: #0a2540;
+      color: #2c2a28;
       margin-bottom: 12px;
     }
 
     .section-header p {
-      color: #4a5b6e;
+      color: #6b6560;
       font-size: 1.1rem;
     }
 
@@ -442,6 +450,7 @@
   </style>
 </head>
 <body>
+<header id="mainHeader" data-include="components/header.html"></header>
 
   <div id="reminderToast" class="toast-msg">🔔 Reminder set</div>
 
@@ -459,18 +468,18 @@
             <div class="stat-item"><div class="stat-number">8</div><div>Ministries</div></div>
           </div>
         </div>
-        <div class="live-card">
-          <div class="live-header">
-            <div class="pulse-dot"></div>
-            <span style="font-weight:700;">LIVE IN</span>
-            <strong id="liveInBadge" style="background:#226ad610; padding:2px 10px; border-radius:40px;">2 HOURS</strong>
+        <div class="live-card" style="padding: 0; overflow: hidden; background: #000;">
+          <div style="position: relative; width: 100%; aspect-ratio: 16/9;">
+            <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/profile.php?id=100070020013721&show_text=false&width=734&height=413&appId"
+                    width="100%" height="100%" style="border:none;overflow:hidden;position:absolute;top:0;left:0;"
+                    scrolling="no" frameborder="0" allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
           </div>
-          <h3>Next Sunday Service:</h3>
-          <div class="countdown-timer" id="countdownTimer">-- : -- : --</div>
-          <br></br>
-          <p style="margin-top: 8px; font-size: 0.85rem; background: #eef3ff; padding: 6px 12px; border-radius: 40px; display: inline-block;"><i class="fas fa-clock"></i> Every Sunday 14:30 SAST</p>
-             <br></br>
-          <button id="remindMeBtn" class="modern-btn"><i class="far fa-bell"></i> Set Reminder</button>
+          <div style="padding: 20px; text-align: center;">
+            <a href="https://www.facebook.com/profile.php?id=100070020013721" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#1877F2;color:#fff;padding:10px 24px;border-radius:40px;text-decoration:none;font-weight:600;">
+              <i class="fab fa-facebook-f"></i> Watch on Facebook
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -701,10 +710,7 @@
       console.log("Countdown configured to Sundays 14:30 SAST | Channels ready");
     })();
   </script>
-  <div style="background: #f8fafd; text-align: center; padding: 28px 20px; border-top: 1px solid #e2e8f0;">
-    <div class="container">
-      <p style="color: #5a6e88; font-size: 0.85rem;">© 2026 Charis Missionary Church. All rights reserved.</p>
-    </div>
-  </div>
+
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>

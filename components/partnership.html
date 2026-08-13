@@ -1,0 +1,725 @@
+<style>
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+.pship-fade-up { animation: fadeInUp 0.7s ease-out forwards; }
+.pship-fade-left { animation: fadeInLeft 0.6s ease-out forwards; }
+.pship-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.pship-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.pship-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.pship-delay-4 { animation-delay: 0.4s; opacity: 0; }
+.pship-delay-5 { animation-delay: 0.5s; opacity: 0; }
+.pship-float { animation: gentleFloat 4s ease-in-out infinite; }
+
+.pship-gold-shimmer {
+    background: linear-gradient(90deg, #d4a017, #fde047, #d4a017, #facc15, #d4a017);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+}
+
+.pship-cloth {
+    background:
+        repeating-linear-gradient(
+            0deg, transparent, transparent 2px,
+            rgba(200, 150, 62, 0.03) 2px, rgba(200, 150, 62, 0.03) 4px
+        ),
+        linear-gradient(135deg, #f8f6f3 0%, #fff 30%, #f8f6f3 60%, #fff 100%);
+}
+
+.pship-banner-overlay {
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.92) 0%,
+        rgba(255, 255, 255, 0.75) 40%,
+        rgba(255, 255, 255, 0.4) 70%,
+        rgba(255, 255, 255, 0.15) 100%
+    );
+}
+
+.pship-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.pship-divider::before,
+.pship-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(212, 160, 23, 0.4), transparent);
+}
+
+/* Sidebar */
+.pship-sidebar-link {
+    transition: all 0.2s ease;
+}
+.pship-sidebar-link:hover {
+    background: rgba(212, 160, 23, 0.08);
+    padding-left: 1.25rem;
+}
+.pship-sidebar-link.active {
+    background: rgba(212, 160, 23, 0.12);
+    border-right: 3px solid #d4a017;
+}
+
+.pship-overlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+.pship-overlay.active { opacity: 1; pointer-events: auto; }
+
+#pship-payment-modal .pship-modal__card label,
+#pship-payment-modal .pship-modal__card input[type="number"],
+#pship-payment-modal .pship-modal__card button.pship-amount-btn { color: var(--dark) !important; }
+#pship-payment-modal .pship-modal__card input[type="number"] { background: var(--light) !important; border-color: var(--gray-border) !important; }
+#pship-payment-modal .pship-method-option { background: var(--light) !important; border-color: var(--gray-border) !important; }
+#pship-payment-modal .pship-method-option > div > div:first-child { color: var(--dark) !important; }
+#pship-payment-modal .pship-method-option > div > div:last-child { color: var(--gray) !important; }
+.pship-modal__card h3 { color: var(--dark) !important; }
+.pship-modal__card p { color: var(--gray) !important; }
+
+.pship-tiers__grid > div { background: var(--light) !important; border-color: var(--gray-border) !important; }
+.pship-tiers__grid h4 { color: var(--dark) !important; }
+.pship-tiers__grid p { color: var(--gray) !important; }
+
+.pship-modal__close {
+    background: var(--light);
+    border: 1px solid var(--gray-border);
+    color: var(--gray);
+}
+.pship-modal__close:hover { background: var(--gray-border); color: var(--dark); }
+.pship-modal__header { border-bottom: 1px solid var(--gray-border); }
+.pship-modal__header h3 { color: var(--dark) !important; }
+.pship-modal__header p { color: var(--gray) !important; }
+.pship-modal__field { background: var(--light); }
+.pship-modal__field-label { color: var(--gray); }
+.pship-modal__field-value { color: var(--dark); }
+.pship-modal__steps h4 { color: var(--gray); }
+.pship-modal__step { background: var(--light); }
+.pship-modal__step p { color: var(--gray); }
+.pship-modal__footer-label { color: var(--gray); }
+
+/* Inline bank details (shown when Bank Transfer is tapped) */
+#pship-bank-inline .pship-modal__field { background: var(--light); border: 1px solid var(--gray-border); border-radius: 12px; }
+#pship-bank-inline .pship-modal__field-label { color: rgba(0, 0, 0, 0.55); }
+#pship-bank-inline .pship-modal__field-value { color: #d4a017; font-weight: 700; }
+#pship-bank-inline .pship-modal__field-value--account { color: #d4a017; }
+
+.pship-drawer {
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pship-drawer.active { transform: translateX(0); }
+
+.pship-section {
+    position: relative;
+    isolation: isolate;
+    font-family: 'Inter', sans-serif;
+    color: var(--dark);
+    background: #fff;
+}
+.pship-section ::selection { background: #f3e8ff; color: #581c87; }
+
+/* Modal */
+.pship-modal {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem; opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.pship-modal.open { opacity: 1; visibility: visible; }
+.pship-modal__overlay {
+    position: absolute; inset: 0;
+    background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+}
+.pship-modal__card {
+    position: relative; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+    background: #fff;
+    border: 1px solid var(--gray-border);
+    border-radius: 24px; padding: 2rem;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.12);
+    transform: scale(0.92) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+}
+.pship-modal.open .pship-modal__card { transform: scale(1) translateY(0); }
+.pship-modal__close {
+    position: absolute; top: 16px; right: 16px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.4);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s; font-size: 0.85rem;
+}
+.pship-modal__close:hover { background: rgba(255, 255, 255, 0.1); color: #ffffff; }
+.pship-modal__header { text-align: center; margin-bottom: 1.5rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.pship-modal__header-icon {
+    width: 56px; height: 56px; border-radius: 16px;
+    background: rgba(212, 160, 23, 0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; color: #d4a017; margin: 0 auto 12px;
+}
+.pship-modal__header h3 { font-size: 1.25rem; font-weight: 700; color: #ffffff; margin: 0 0 4px; }
+.pship-modal__header p { font-size: 0.82rem; color: rgba(255, 255, 255, 0.4); margin: 0; }
+.pship-modal__details { display: grid; gap: 10px; margin-bottom: 1.5rem; }
+.pship-modal__field {
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 12px 16px;
+}
+.pship-modal__field-label {
+    font-size: 0.75rem; color: rgba(255, 255, 255, 0.35);
+    font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.pship-modal__field-value { font-size: 0.85rem; font-weight: 600; color: #ffffff; }
+.pship-modal__field-value--account {
+    font-family: 'Courier New', monospace; letter-spacing: 2px;
+    color: #d4a017; font-size: 0.95rem;
+}
+.pship-modal__steps { margin-bottom: 1.5rem; }
+.pship-modal__steps h4 {
+    font-size: 0.82rem; font-weight: 700; color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 12px; text-transform: uppercase; letter-spacing: 1px;
+}
+.pship-modal__step {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255, 255, 255, 0.03); border-radius: 12px;
+    padding: 12px 16px; margin-bottom: 8px;
+}
+.pship-modal__step-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(212, 160, 23, 0.15); color: #d4a017;
+    font-size: 0.75rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.pship-modal__step p { font-size: 0.8rem; color: rgba(255, 255, 255, 0.55); margin: 0; line-height: 1.4; }
+.pship-modal__footer {
+    background: rgba(212, 160, 23, 0.06);
+    border: 1px solid rgba(212, 160, 23, 0.12);
+    border-radius: 14px; padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+}
+.pship-modal__footer i { color: #d4a017; font-size: 1rem; }
+.pship-modal__footer div { display: flex; flex-direction: column; gap: 2px; }
+.pship-modal__footer-label { font-size: 0.68rem; color: rgba(255, 255, 255, 0.3); text-transform: uppercase; letter-spacing: 0.5px; }
+.pship-modal__footer-value { font-size: 0.82rem; font-weight: 600; color: #d4a017; text-decoration: none; }
+.pship-modal__footer-value:hover { text-decoration: underline; }
+
+/* Proof of Payment Form */
+.pship-proof {
+    margin-top: 14px;
+}
+.pship-proof__title {
+    font-size: 0.75rem; font-weight: 700; color: var(--gray);
+    text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px;
+}
+.pship-proof__form { display: grid; gap: 10px; }
+.pship-proof__row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pship-proof input[type="text"],
+.pship-proof input[type="email"],
+.pship-proof input[type="number"],
+.pship-proof input[type="file"] {
+    width: 100%; padding: 11px 14px;
+    background: var(--light);
+    border: 1px solid var(--gray-border);
+    border-radius: 10px; color: var(--dark);
+    font-size: 0.82rem; font-family: inherit; outline: none;
+    box-sizing: border-box;
+}
+.pship-proof input::placeholder { color: rgba(0, 0, 0, 0.3); }
+.pship-proof input:focus { border-color: #d4a017; }
+.pship-proof input[type="file"] { padding: 8px 14px; cursor: pointer; }
+.pship-proof__submit {
+    width: 100%; padding: 13px;
+    background: #d4a017; color: #0f0518;
+    font-size: 0.88rem; font-weight: 700;
+    border: none; border-radius: 12px; cursor: pointer;
+    font-family: inherit; transition: opacity 0.2s;
+}
+.pship-proof__submit:hover { opacity: 0.9; }
+.pship-proof__submit:disabled { opacity: 0.6; cursor: not-allowed; }
+.pship-proof__status {
+    font-size: 0.78rem; text-align: center; border-radius: 10px;
+    padding: 10px 12px; display: none; line-height: 1.4;
+}
+.pship-proof__status.show { display: block; }
+.pship-proof__status.success { background: rgba(16, 185, 129, 0.15); color: #059669; }
+.pship-proof__status.error { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+/* Share Proof of Payment */
+.pship-share__file { display: none; }
+.pship-share__attach {
+    width: 100%; padding: 14px;
+    background: #d4a017; color: #0f0518;
+    font-size: 0.9rem; font-weight: 700;
+    border: none; border-radius: 12px; cursor: pointer;
+    font-family: inherit; transition: opacity 0.2s;
+}
+.pship-share__attach:hover { opacity: 0.9; }
+.pship-share__preview {
+    background: var(--light); border: 1px dashed var(--gray-border);
+    border-radius: 12px; padding: 12px 14px;
+    font-size: 0.8rem; color: var(--dark);
+    margin-bottom: 10px; text-align: center; display: none;
+    word-break: break-all;
+}
+.pship-share__preview.show { display: block; }
+.pship-share__preview i { color: #d4a017; margin-right: 6px; }
+.pship-share__options { display: none; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 14px; }
+.pship-share__options.show { display: grid; }
+.pship-share__btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 8px; background: var(--light); border: 1px solid var(--gray-border);
+    border-radius: 12px; cursor: pointer; font-family: inherit;
+    font-size: 0.78rem; font-weight: 600; color: var(--dark); text-decoration: none; text-align: center;
+    transition: border-color 0.2s;
+}
+.pship-share__btn i { font-size: 1.2rem; color: #d4a017; }
+.pship-share__btn:hover { border-color: #d4a017; }
+
+@media (max-width: 480px) {
+    .pship-proof__row { grid-template-columns: 1fr; }
+    .pship-share__options { grid-template-columns: 1fr; }
+}
+
+.pship-mobile-top { display: none !important; }
+.pship-main { padding-top: 130px; }
+
+@media (min-width: 1024px) {
+    .pship-mobile-top { display: none !important; }
+    .pship-drawer { transform: translateX(0) !important; }
+    .pship-main { margin-left: 16rem; }
+}
+@media (max-width: 1023px) {
+    .pship-main { padding-top: 130px; }
+}
+@media (max-width: 768px) {
+    .pship-welcome__grid { grid-template-columns: 1fr !important; }
+    .pship-tiers__grid { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<section class="pship-section">
+
+    <!-- Mobile top bar -->
+    <div class="pship-mobile-top" style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--gray-border);height:56px;display:flex;align-items:center;padding:0 16px;">
+        <button onclick="var s=document.getElementById('pship-sidebar');var o=document.getElementById('pship-overlay');if(s)s.classList.add('active');if(o){o.classList.add('active');o.style.display='block';}document.body.style.overflow='hidden';" style="padding:6px;color:#d4a017;background:none;border:none;cursor:pointer;">
+            <i class="fas fa-bars" style="font-size:1.25rem;"></i>
+        </button>
+        <div style="flex:1;text-align:center;">
+            <span style="font-family:'Playfair Display',Georgia,serif;font-weight:600;color:#d4a017;font-size:1rem;letter-spacing:0.5px;">Covenant Partnership</span>
+        </div>
+        <div style="width:40px;"></div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="pship-overlay" class="pship-overlay" onclick="var s=document.getElementById('pship-sidebar');var o=document.getElementById('pship-overlay');if(s)s.classList.remove('active');if(o){o.classList.remove('active');o.style.display='none';}document.body.style.overflow='';" style="position:fixed;inset:0;z-index:50;background:rgba(0,0,0,0.6);display:none;"></div>
+
+    <!-- Main Content -->
+    <main class="pship-main" style="min-height:100vh;">
+
+        <!-- Hero Banner -->
+        <section style="position:relative;height:520px;overflow:hidden;">
+            <img src="https://picsum.photos/seed/covenant-church-light/1600/900.jpg" alt="Covenant Partnership"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+            <div class="pship-banner-overlay" style="position:absolute;inset:0;"></div>
+
+            <div style="position:relative;z-index:10;height:100%;display:flex;align-items:center;padding:0 24px;">
+                <div style="max-width:560px;" class="pship-fade-up">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+                        <div style="width:40px;height:2px;background:#d4a017;"></div>
+                        <span style="color:#d4a017;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:3px;">Kingdom Mandate</span>
+                    </div>
+
+                    <h1 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--dark);line-height:1.15;margin:0 0 24px;">
+                        Mandate Partnership<br>
+                        <span class="pship-gold-shimmer">With Apostle R. Khorommbi</span><br>
+                    </h1>
+
+                    <p style="color:var(--gray);font-size:0.88rem;line-height:1.7;margin:0 0 32px;max-width:480px;">
+                        Join us in this divine partnership as we advance the Kingdom of God and fulfill the mandate upon this ministry.
+                    </p>
+
+                    <!-- Contact -->
+                    <div style="display:flex;flex-wrap:wrap;gap:16px 32px;margin-bottom:32px;">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:36px;height:36px;border-radius:8px;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);display:flex;align-items:center;justify-content:center;">
+                                <i class="fas fa-envelope" style="color:#d4a017;font-size:0.85rem;"></i>
+                            </div>
+                            <div>
+                                <p style="font-size:10px;color:rgba(167,139,250,0.5);text-transform:uppercase;letter-spacing:1px;margin:0;">Email</p>
+                                <a href="mailto:{{partnershipEmail}}" style="font-size:0.88rem;color:var(--dark);text-decoration:none;font-weight:500;">{{partnershipEmail}}</a>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:36px;height:36px;border-radius:8px;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);display:flex;align-items:center;justify-content:center;">
+                                <i class="fas fa-phone" style="color:#d4a017;font-size:0.85rem;"></i>
+                            </div>
+                            <div>
+                                <p style="font-size:10px;color:rgba(167,139,250,0.5);text-transform:uppercase;letter-spacing:1px;margin:0;">Phone</p>
+                                <a href="tel:{{partnershipPhone}}" style="font-size:0.88rem;color:var(--dark);text-decoration:none;font-weight:500;">{{partnershipPhone}}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div style="display:flex;flex-wrap:wrap;gap:12px;">
+                        <button onclick="var m=document.getElementById('pship-payment-modal');if(m)m.classList.add('open');document.body.style.overflow='hidden';" style="display:inline-flex;align-items:center;gap:8px;background:#d4a017;color:#0f0518;font-size:0.88rem;font-weight:600;padding:12px 24px;border-radius:12px;border:none;font-family:inherit;cursor:pointer;box-shadow:0 8px 20px rgba(212,160,23,0.25);">
+                            <i class="fas fa-handshake"></i>
+                            Become a Partner
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Welcome Section -->
+        <section style="background:#fff;padding:64px 24px;">
+            <div style="max-width:896px;margin:0 auto;">
+                <div class="pship-fade-up pship-delay-1">
+                    <div class="pship-divider" style="margin-bottom:24px;">
+                        <i class="fas fa-star" style="color:rgba(212,160,23,0.5);font-size:0.85rem;"></i>
+                    </div>
+                    <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.5rem,3vw,2.25rem);font-weight:600;color:var(--dark);letter-spacing:-0.02em;margin:0 0 16px;">
+                        Welcome to <span class="pship-gold-shimmer">Mandate Partnership</span>
+                    </h2>
+                </div>
+
+                <div class="pship-welcome__grid" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:32px;">
+                    <div class="pship-fade-up pship-delay-2">
+                        <p style="color:var(--gray);font-size:0.9rem;line-height:1.8;margin:0 0 16px;">
+                            Mandate Partnership is a divine invitation to partake in the grace and mandate upon the life of Apostle R. Khorommbi. It is not merely a financial commitment but a spiritual alignment with the vision God has given for this season.
+                        </p>
+                        <p style="color:var(--gray);font-size:0.9rem;line-height:1.8;margin:0;">
+                            As we step into {{currentYear}} we believe that God is raising a people who will support the revival to see the glory of the latter house surpass the former.
+                        </p>
+                    </div>
+                    <div class="pship-fade-up pship-delay-3">
+                        <p style="color:var(--gray);font-size:0.9rem;line-height:1.8;margin:0 0 16px;">
+                            Your partnership enables us to take the gospel to the nations, host impactful gatherings, support those in need, and build a platform where the supernatural becomes a natural experience for every believer.
+                        </p>
+                        <p style="color:rgba(196,181,253,0.7);font-size:0.9rem;line-height:1.8;margin:0;">
+                            We invite you to prayerfully consider becoming a mandate partner. Together, we can fulfil the Great Commission and see the Kingdom of God established on earth (YOU) as it is in heaven.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Scripture -->
+                <div class="pship-fade-up pship-delay-4" style="margin-top:48px;background:var(--light);border:1px solid var(--gray-border);border-radius:16px;padding:32px 40px;">
+                    <div style="display:flex;gap:16px;">
+                        <div style="width:40px;height:40px;border-radius:10px;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;">
+                            <i class="fas fa-book-open" style="color:#d4a017;font-size:1rem;"></i>
+                        </div>
+                        <div>
+                            <p style="font-family:'Playfair Display',Georgia,serif;font-size:1.05rem;color:var(--dark);font-style:italic;line-height:1.6;margin:0 0 12px;">
+                                &ldquo;And it shall come to pass in the last days, that the mountain of the Lord&rsquo;s house shall be established in the top of the mountains, and shall be exalted above the hills; and all nations shall flow unto it.&rdquo;
+                            </p>
+                            <p style="color:#d4a017;font-size:0.88rem;font-weight:600;margin:0;">— Isaiah 2:2 (KJV)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tiers -->
+                <div class="pship-fade-up pship-delay-5" style="margin-top:56px;">
+                    <h3 style="font-family:'Playfair Display',Georgia,serif;font-size:1.25rem;font-weight:600;color:var(--dark);margin:0 0 24px;">Ways to Partner</h3>
+                    <div class="pship-tiers__grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+                        <div style="background:rgba(26,10,46,0.5);border:1px solid rgba(109,40,217,0.3);border-radius:16px;padding:24px;transition:all 0.3s;text-align:center;">
+                            <div style="width:44px;height:44px;border-radius:10px;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                                <i class="fas fa-hand-holding-heart" style="color:#d4a017;font-size:1rem;"></i>
+                            </div>
+                            <h4 style="font-weight:600;color:#ffffff;font-size:0.88rem;margin:0 0 8px;">Monthly Giving</h4>
+                            <p style="color:rgba(167,139,250,0.5);font-size:0.8rem;line-height:1.5;margin:0;">Commit to a monthly seed that sustains the work of the ministry.</p>
+                        </div>
+                        <div style="background:rgba(26,10,46,0.5);border:1px solid rgba(109,40,217,0.3);border-radius:16px;padding:24px;transition:all 0.3s;text-align:center;">
+                            <div style="width:44px;height:44px;border-radius:10px;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                                <i class="fas fa-gift" style="color:#d4a017;font-size:1rem;"></i>
+                            </div>
+                            <h4 style="font-weight:600;color:#ffffff;font-size:0.88rem;margin:0 0 8px;">One-Time Seed</h4>
+                            <p style="color:rgba(167,139,250,0.5);font-size:0.8rem;line-height:1.5;margin:0;">Sow a special seed into specific projects and kingdom initiatives.</p>
+                        </div>
+                        <div style="background:rgba(26,10,46,0.5);border:1px solid rgba(109,40,217,0.3);border-radius:16px;padding:24px;transition:all 0.3s;text-align:center;">
+                            <div style="width:44px;height:44px;border-radius:10px;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+                                <i class="fas fa-users" style="color:#d4a017;font-size:1rem;"></i>
+                            </div>
+                            <h4 style="font-weight:600;color:#ffffff;font-size:0.88rem;margin:0 0 8px;">Prayer Partner</h4>
+                            <p style="color:rgba(167,139,250,0.5);font-size:0.8rem;line-height:1.5;margin:0;">Commit to covering the ministry and the Bondservant in fervent prayer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Payment Method Selection Modal -->
+    <div class="pship-modal" id="pship-payment-modal">
+        <div class="pship-modal__overlay" onclick="closePaymentModal()"></div>
+        <div class="pship-modal__card">
+            <button class="pship-modal__close" onclick="closePaymentModal()" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="pship-modal__header">
+                <div class="pship-modal__header-icon"><i class="fas fa-handshake"></i></div>
+                <h3>Become a Partner</h3>
+                <p>Select your partnership amount, then tap Bank Transfer to view the account details</p>
+            </div>
+
+            <!-- Amount Selection -->
+            <div style="margin-bottom:1.5rem;">
+                <label style="font-size:0.75rem;color:rgba(255,255,255,0.4);font-weight:500;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;display:block;">Partnership Amount (ZAR)</label>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;">
+                    <button class="pship-amount-btn" data-amount="100" style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;">R100</button>
+                    <button class="pship-amount-btn" data-amount="200" style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;">R200</button>
+                    <button class="pship-amount-btn" data-amount="500" style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;">R500</button>
+                    <button class="pship-amount-btn" data-amount="1000" style="padding:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;">R1000</button>
+                </div>
+                <input type="number" id="pship-custom-amount" placeholder="Custom amount" min="10" step="0.01" style="width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:0.85rem;font-family:inherit;outline:none;">
+            </div>
+
+            <!-- Payment Method -->
+            <div style="display:grid;gap:10px;margin-bottom:1.5rem;">
+
+                <div class="pship-method-option" id="pship-bank-option" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;cursor:pointer;transition:all 0.2s;">
+                    <div style="width:36px;height:36px;border-radius:8px;background:rgba(212,160,23,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <i class="fas fa-university" style="color:#d4a017;font-size:0.85rem;"></i>
+                    </div>
+                    <div style="flex:1;">
+                        <div style="font-size:0.85rem;font-weight:600;color:#fff;">Bank Transfer</div>
+                        <div style="font-size:0.72rem;color:rgba(255,255,255,0.35);">ABSA EFT / Direct Deposit (free)</div>
+                    </div>
+                    <i class="fas fa-chevron-down" id="pship-bank-chevron" style="color:rgba(255,255,255,0.35);font-size:0.8rem;transition:transform 0.2s;"></i>
+                </div>
+
+                <div id="pship-bank-inline" style="display:none;background:rgba(212,160,23,0.06);border:1px solid rgba(212,160,23,0.15);border-radius:14px;padding:16px;gap:10px;">
+                    <div class="pship-modal__field">
+                        <span class="pship-modal__field-label">Bank</span>
+                        <span class="pship-modal__field-value">ABSA</span>
+                    </div>
+                    <div class="pship-modal__field">
+                        <span class="pship-modal__field-label">Account Name</span>
+                        <span class="pship-modal__field-value">Charis Missionary Church</span>
+                    </div>
+                    <div class="pship-modal__field">
+                        <span class="pship-modal__field-label">Account Number</span>
+                        <span class="pship-modal__field-value pship-modal__field-value--account">{{absaAccount}}</span>
+                    </div>
+                    <div class="pship-modal__field">
+                        <span class="pship-modal__field-label">Branch Code</span>
+                        <span class="pship-modal__field-value">{{absaBranch}}</span>
+                    </div>
+                    <div class="pship-modal__field">
+                        <span class="pship-modal__field-label">SWIFT Code</span>
+                        <span class="pship-modal__field-value pship-modal__field-value--account">ABSAZAJJ</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Proceed Button -->
+            <button id="pship-proceed-btn" style="width:100%;padding:14px;background:#d4a017;color:#0f0518;font-size:0.9rem;font-weight:700;border:none;border-radius:12px;cursor:pointer;font-family:inherit;transition:opacity 0.2s;">Share Proof of Payment</button>
+        </div>
+    </div>
+
+    <!-- Share Proof of Payment Modal -->
+    <div class="pship-modal" id="pship-bank-modal">
+        <div class="pship-modal__overlay" onclick="var m=document.getElementById('pship-bank-modal');if(m)m.classList.remove('open');document.body.style.overflow='';"></div>
+        <div class="pship-modal__card">
+            <button class="pship-modal__close" onclick="var m=document.getElementById('pship-bank-modal');if(m)m.classList.remove('open');document.body.style.overflow='';" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="pship-modal__header">
+                <div class="pship-modal__header-icon"><i class="fas fa-paper-plane"></i></div>
+                <h3>Share Proof of Payment</h3>
+                <p>Attach your EFT proof and share it with us</p>
+            </div>
+
+            <div class="pship-proof">
+                <input type="file" id="pship-proof-file" class="pship-share__file" accept="image/*,.pdf">
+                <button class="pship-share__attach" id="pship-proof-attach">
+                    <i class="fas fa-paperclip"></i> Attach Proof of Payment
+                </button>
+                <div class="pship-share__preview" id="pship-proof-preview">
+                    <i class="fas fa-file"></i><span id="pship-proof-filename"></span>
+                </div>
+
+                <div class="pship-share__options" id="pship-share-options">
+                    <a class="pship-share__btn" id="pship-share-email" href="#" target="_blank">
+                        <i class="fas fa-envelope"></i> Email
+                    </a>
+                    <a class="pship-share__btn" id="pship-share-whatsapp" href="#" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <button class="pship-share__btn" id="pship-share-native">
+                        <i class="fas fa-share-alt"></i> More Apps
+                    </button>
+                </div>
+
+                <div class="pship-proof__status" id="pship-proof-status"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function() {
+    var observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.style.animationPlayState = 'running';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.pship-fade-up, .pship-fade-left').forEach(function(el) {
+        if (el.closest('[style*="height:520px"]')) return;
+        el.style.animationPlayState = 'paused';
+        observer.observe(el);
+    });
+
+    var cloth = document.querySelector('.pship-float');
+    if (cloth && window.innerWidth >= 768) cloth.style.display = 'block';
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) {
+            var s = document.getElementById('pship-sidebar');
+            var o = document.getElementById('pship-overlay');
+            if (s) s.classList.remove('active');
+            if (o) { o.classList.remove('active'); o.style.display = 'none'; }
+            document.body.style.overflow = '';
+        }
+        if (cloth) {
+            cloth.style.display = window.innerWidth >= 768 ? 'block' : 'none';
+        }
+    });
+
+    // Bank Transfer account details toggle
+    var bankOption = document.getElementById('pship-bank-option');
+    var bankInline = document.getElementById('pship-bank-inline');
+    var bankChevron = document.getElementById('pship-bank-chevron');
+    if (bankOption && bankInline && bankChevron) {
+        bankOption.addEventListener('click', function() {
+            var open = bankInline.style.display !== 'none';
+            bankInline.style.display = open ? 'none' : 'grid';
+            bankChevron.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+        });
+    }
+
+    // Share Proof of Payment
+    var proofFile = document.getElementById('pship-proof-file');
+    var proofAttach = document.getElementById('pship-proof-attach');
+    var proofPreview = document.getElementById('pship-proof-preview');
+    var proofFilename = document.getElementById('pship-proof-filename');
+    var shareOptions = document.getElementById('pship-share-options');
+    var shareEmail = document.getElementById('pship-share-email');
+    var shareWhatsapp = document.getElementById('pship-share-whatsapp');
+    var shareNative = document.getElementById('pship-share-native');
+    var proofStatus = document.getElementById('pship-proof-status');
+
+    var includeEl = document.querySelector('[data-include="components/partnership.html"]');
+    var proofEmail = includeEl ? includeEl.dataset.proofEmail : '';
+    var partnershipPhone = includeEl ? includeEl.dataset.partnershipPhone : '';
+
+    function showProofStatus(msg, type) {
+        if (!proofStatus) return;
+        proofStatus.textContent = msg;
+        proofStatus.className = 'pship-proof__status show ' + type;
+    }
+
+    function setProofFile(file) {
+        if (!file) return;
+        if (file.size > 25 * 1024 * 1024) {
+            showProofStatus('File is too large. Max size is 25MB.', 'error');
+            proofFile.value = '';
+            return;
+        }
+        if (proofPreview) proofPreview.classList.add('show');
+        if (proofFilename) proofFilename.textContent = file.name;
+        if (shareOptions) shareOptions.classList.add('show');
+        showProofStatus('Proof attached. Choose how to share it.', 'success');
+    }
+
+    if (proofFile && proofAttach) {
+        proofAttach.addEventListener('click', function() {
+            proofFile.click();
+        });
+        proofFile.addEventListener('change', function() {
+            setProofFile(this.files && this.files[0]);
+        });
+    }
+
+    var shareText = function() {
+        var subject = 'Proof of Payment - Charis Missionary Church Partnership';
+        var body = 'I have made my partnership payment. Please find attached my proof of payment.' + (proofEmail ? ' Thank you!' : '');
+        return { subject: subject, body: body };
+    };
+
+    if (shareEmail) {
+        shareEmail.addEventListener('click', function(e) {
+            var t = shareText();
+            var file = proofFile && proofFile.files && proofFile.files[0];
+            if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+                e.preventDefault();
+                navigator.share({ files: [file], title: t.subject, text: t.body })
+                    .then(function() { showProofStatus('Shared successfully. Thank you!', 'success'); })
+                    .catch(function() {});
+            } else {
+                this.href = 'mailto:' + proofEmail +
+                    '?subject=' + encodeURIComponent(t.subject) +
+                    '&body=' + encodeURIComponent(t.body);
+            }
+        });
+    }
+
+    if (shareWhatsapp) {
+        shareWhatsapp.addEventListener('click', function(e) {
+            var file = proofFile && proofFile.files && proofFile.files[0];
+            var text = shareText().body + (proofEmail ? ' (' + proofEmail + ')' : '');
+            this.href = 'https://wa.me/' + (partnershipPhone ? partnershipPhone.replace(/[^0-9]/g, '') : '') +
+                '?text=' + encodeURIComponent(text);
+            if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+                e.preventDefault();
+                navigator.share({ files: [file], title: shareText().subject, text: text })
+                    .then(function() { showProofStatus('Shared successfully. Thank you!', 'success'); })
+                    .catch(function() {});
+            }
+        });
+    }
+
+    if (shareNative) {
+        shareNative.addEventListener('click', function(e) {
+            var file = proofFile && proofFile.files && proofFile.files[0];
+            var t = shareText();
+            if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({ files: [file], title: t.subject, text: t.body })
+                    .then(function() { showProofStatus('Shared successfully. Thank you!', 'success'); })
+                    .catch(function() {});
+            } else if (navigator.share) {
+                navigator.share({ title: t.subject, text: t.body })
+                    .catch(function() {});
+            } else {
+                showProofStatus('Sharing is not supported on this device. Please email the proof to ' + (proofEmail || 'the church') + '.', 'error');
+            }
+        });
+    }
+})();
+
+</script>

@@ -1,0 +1,157 @@
+<style>
+    .our-calling {
+        background: #fff;
+        position: relative;
+        overflow: hidden;
+        padding: clamp(130px, 8vw, 160px) 0;
+    }
+
+    .our-calling-header {
+        text-align: center;
+        margin-bottom: clamp(40px, 5vw, 60px);
+        position: relative;
+        z-index: 2;
+    }
+    .our-calling-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold-light);
+        margin-bottom: 16px;
+    }
+    .our-calling-label::before,
+    .our-calling-label::after {
+        content: '';
+        width: 28px;
+        height: 2px;
+        background: var(--gold-light);
+        border-radius: 2px;
+        opacity: 0.7;
+    }
+    .our-calling-header h2 {
+        font-size: clamp(2rem, 3.5vw, 3rem);
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 12px;
+        letter-spacing: -0.02em;
+    }
+    .our-calling-header p {
+        color: var(--gray);
+        font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+        max-width: 640px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .our-calling-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(20px, 2.5vw, 32px);
+        position: relative;
+        z-index: 2;
+    }
+    .our-calling-card {
+        background: var(--light);
+        border: 1px solid var(--gray-border);
+        border-radius: var(--radius-lg);
+        padding: clamp(32px, 3.5vw, 48px) clamp(28px, 3vw, 44px);
+        transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                    background 0.35s ease,
+                    border-color 0.35s ease,
+                    box-shadow 0.35s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    .our-calling-card:hover {
+        background: #fff;
+        border-color: var(--gold-light);
+        transform: translateY(-6px);
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.15);
+    }
+
+    .our-calling-badge {
+        display: inline-flex;
+        align-self: flex-start;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding: 6px 18px;
+        background: rgba(200, 150, 62, 0.1);
+        border-radius: 60px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(200, 150, 62, 0.08);
+    }
+    .our-calling-card h3 {
+        font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+    }
+    .our-calling-card p {
+        color: var(--gray);
+        font-size: clamp(0.88rem, 1vw, 0.95rem);
+        line-height: 1.75;
+        margin-bottom: 10px;
+    }
+    .our-calling-card ol {
+        color: var(--gray);
+        font-size: clamp(0.88rem, 1vw, 0.95rem);
+        line-height: 1.85;
+        padding-left: 22px;
+        margin-top: 6px;
+    }
+    .our-calling-card ol li {
+        margin-bottom: 5px;
+        padding-left: 4px;
+    }
+    .our-calling-card ol li::marker {
+        color: var(--gold);
+        font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+        .our-calling-grid {
+            grid-template-columns: 1fr;
+        }
+        .our-calling-card:hover {
+            transform: translateY(-4px);
+        }
+    }
+</style>
+
+<section class="our-calling" aria-labelledby="our-calling-title">
+    <div class="container">
+        <header class="our-calling-header">
+            <span class="our-calling-label">{{label}}</span>
+            <h2 id="our-calling-title">{{title}}</h2>
+            <p>{{subtitle}}</p>
+        </header>
+        <div class="our-calling-grid">
+            <div class="our-calling-card">
+                <span class="our-calling-badge">Mission Statement</span>
+                <h3>{{missionHeading}}</h3>
+                <p>{{missionText}}</p>
+                <p>{{missionText2}}</p>
+            </div>
+            <div class="our-calling-card">
+                <span class="our-calling-badge">Vision Statement</span>
+                <h3>{{visionHeading}}</h3>
+                <p>{{visionIntro}}</p>
+                <ol>
+                    <li>{{pillar1}}</li>
+                    <li>{{pillar2}}</li>
+                    <li>{{pillar3}}</li>
+                    <li>{{pillar4}}</li>
+                    <li>{{pillar5}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>

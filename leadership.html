@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Leadership | Charis Missionary Church</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <meta name="description" content="Meet the leadership team of Charis Missionary Church. Learn about our pastors, elders, and ministry leaders.">
+    <meta property="og:title" content="Leadership | Charis Missionary Church">
+    <meta property="og:description" content="Meet the leadership team of Charis Missionary Church. Learn about our pastors, elders, and ministry leaders.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #226ad6;
+            --primary-dark: #1a4fa0;
+            --primary-soft: #4d6bff;
+            --secondary: #2c2a28;
+            --secondary-dark: #D97706;
+            --accent: #EC4899;
+            --light: #f8f6f3;
+            --dark: #2c2a28;
+            --gray: #6b6560;
+            --gray-light: #f5f2ed;
+            --gray-border: #e5e0db;
+            --gold: #c8923e;
+            --gold-light: #d4a454;
+            --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.06);
+            --shadow-md: 0 12px 24px -8px rgb(0 0 0 / 0.08);
+            --shadow-lg: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --radius-2xl: 48px;
+            --radius-full: 9999px;
+            --font-display: 'Inter', 'Poppins', sans-serif;
+            --transition: all 0.3s ease;
+            --bg: var(--light);
+            --card: #ffffff;
+            --border: var(--gray-border);
+            --text-muted: var(--gray);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 64px;
+            padding-top: 140px;
+        }
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+        }
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 68px;
+            margin-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        .leader-card {
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-radius: 16px;
+        }
+
+        .leader-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 30px -12px rgba(25, 0, 255, 0.492), 0 8px 15px -8px rgba(2, 135, 224, 0.486);
+            outline-color: var(--primary);
+            border-radius: 16px;
+        }
+
+        .leader-img {
+            height: 580px;
+            overflow: hidden;
+        }
+
+        .leader-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .leader-card:hover .leader-img img {
+            transform: scale(1.05);
+        }
+
+        .leader-info {
+            padding: 28px 24px;
+            text-align: center;
+        }
+
+        .leader-info h3 {
+            font-size: 1.7rem;
+            margin-bottom: 6px;
+        }
+
+        .leader-title {
+            color: var(--primary-soft);
+            font-weight: 600;
+            margin-bottom: 14px;
+            letter-spacing: -0.2px;
+        }
+
+        .leader-bio {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.2s;
+            background: #fef9e6;
+            border-radius: 24px;
+            margin-top: 0;
+            padding: 0 12px;
+        }
+
+        .leader-card.active-bio .leader-bio {
+            max-height: 330px;
+            opacity: 1;
+            margin-top: 18px;
+            padding: 14px 16px;
+        }
+
+        .bio-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-soft);
+            font-weight: 600;
+            margin-top: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+
+        .bio-toggle:hover {
+            color: var(--secondary-dark);
+            gap: 12px;
+        }
+
+        .small-footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .leader-img { height: 400px; }
+            .section-title h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<header id="mainHeader" data-include="components/header.html"></header>
+
+<div class="container" id="leadership">
+    <div data-include="components/section-title.html"
+         data-title="Shepherds & Leadership Team"
+         data-subtitle="Guided by the Holy Spirit, serving with integrity and love.">
+    </div>
+    <div class="leadership-grid">
+        <div class="leader-card" id="leaderApostle">
+            <div class="leader-img"><img src="images/Followers/11.JPG" alt="Pastor Telekisa"></div>
+            <div class="leader-info">
+                <h3>Pastor Telekisa</h3>
+                <div class="leader-title">Associate Pastor · Under Apostle Khorommbi</div>
+                <button class="bio-toggle" data-target="leaderApostle"><i class="fas fa-chevron-circle-down"></i> Read Bio</button>
+                <div class="leader-bio">Pastor Telekisa serves under the covering of Apostle Rendani Khorommbi with dedication and humility. He assists in shepherding the congregation, leading worship sessions, and guiding new believers in their faith journey. His heart for discipleship and his commitment to the vision of Charis Missionary Church make him a vital part of the pastoral team.</div>
+            </div>
+        </div>
+
+        <div class="leader-card" id="leaderPst">
+            <div class="leader-img"><img src="images/Followers/12.JPG" alt="Pastor Khase Takalani"></div>
+            <div class="leader-info">
+                <h3>Pastor Khase Takalani</h3>
+                <div class="leader-title">Associate Pastor · Under Apostle Khorommbi</div>
+                <button class="bio-toggle" data-target="leaderPst"><i class="fas fa-chevron-circle-down"></i> Read Bio</button>
+                <div class="leader-bio">Pastor Khase Takalani serves under the covering of Apostle Rendani Khorommbi with dedication and humility. He assists in shepherding the congregation, leading worship sessions, and guiding new believers in their faith journey. His heart for discipleship and his commitment to the vision of Charis Missionary Church make him a vital part of the pastoral team.</div>
+            </div>
+        </div>
+
+        <div class="leader-card" id="leaderDeac">
+            <div class="leader-img"><img src="images/Followers/13.JPG" alt="Elder Ntate Sithole"></div>
+            <div class="leader-info">
+                <h3>Pastor Ntate Sithole</h3>
+                <div class="leader-title">Associate Pastor · Under Apostle Khorommbi</div>
+                <button class="bio-toggle" data-target="leaderDeac"><i class="fas fa-chevron-circle-down"></i> Read Bio</button>
+                <div class="leader-bio">Pastor Ntate Sithole serves as a respected elder of Charis Missionary Church Pretoria West. He provides spiritual counsel, maintains church governance alongside Apostle Khorommbi, and oversees all community outreach initiatives. With a heart for the poor and marginalized, he coordinates food distribution, skills development programs, and local missions that demonstrate God's love in practical ways.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="small-footer"><i class="fas fa-cross"></i> Charis Missionary Church · Shepherds & Leadership Team</div>
+
+
+<script src="assets/js/main.js" defer></script>
+<script>
+    const toggleBtns = document.querySelectorAll('.bio-toggle');
+    toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const targetId = this.getAttribute('data-target');
+            const card = document.getElementById(targetId);
+            if(card) {
+                card.classList.toggle('active-bio');
+                const icon = this.querySelector('i');
+                if(card.classList.contains('active-bio')) {
+                    icon.classList.remove('fa-chevron-circle-down');
+                    icon.classList.add('fa-chevron-circle-up');
+                    this.innerHTML = '<i class="fas fa-chevron-circle-up"></i> Show less';
+                } else {
+                    icon.classList.remove('fa-chevron-circle-up');
+                    icon.classList.add('fa-chevron-circle-down');
+                    this.innerHTML = '<i class="fas fa-chevron-circle-down"></i> Read Bio';
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

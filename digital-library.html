@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Digital Library | Charis Missionary Church</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <meta name="description" content="Explore the digital library of Charis Missionary Church featuring sermons, teachings, and spiritual resources.">
+    <meta property="og:title" content="Digital Library | Charis Missionary Church">
+    <meta property="og:description" content="Explore the digital library of Charis Missionary Church featuring sermons, teachings, and spiritual resources.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #226ad6;
+            --primary-dark: #1a4fa0;
+            --light: #f8f6f3;
+            --dark: #2c2a28;
+            --gray: #6b6560;
+            --gray-light: #f5f2ed;
+            --gray-border: #e5e0db;
+            --gold: #c8923e;
+            --gold-light: #d4a454;
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.06);
+            --shadow-md: 0 12px 24px -8px rgb(0 0 0 / 0.08);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .page-hero {
+            padding: 150px 20px 80px;
+            text-align: center;
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: var(--gold);
+            filter: blur(150px);
+            opacity: 0.05;
+            top: -200px; right: -100px;
+            pointer-events: none;
+        }
+        .page-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .page-hero p {
+            color: rgba(255,255,255,0.5);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .library-section {
+            padding: 80px 0;
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .library-card {
+            background: var(--light);
+            border: 1px solid var(--gray-border);
+            border-radius: var(--radius-md);
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+        }
+        .library-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold-light);
+        }
+
+        .library-card .icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(200, 150, 62, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .library-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .library-card p {
+            color: var(--gray);
+            font-size: 0.88rem;
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .library-card .item-count {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .library-card .item-list {
+            list-style: none;
+            margin-top: 14px;
+            border-top: 1px solid var(--gray-border);
+            padding-top: 14px;
+        }
+
+        .library-card .item-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            color: var(--gray);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .library-card .item-list li:last-child { border-bottom: none; }
+        .library-card .item-list li:hover { color: var(--dark); }
+        .library-card .item-list li i {
+            width: 16px;
+            font-size: 0.75rem;
+            color: var(--gold);
+        }
+
+        .small-footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .page-hero h1 { font-size: 2rem; }
+            .library-section { padding: 50px 0; }
+            .library-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<header id="mainHeader" data-include="components/header.html"></header>
+
+<div class="page-hero">
+    <h1>Digital Library</h1>
+    <p>Browse our collection of sermons, studies, devotionals and teaching resources.</p>
+</div>
+
+<section class="library-section">
+    <div class="container">
+        <div class="library-grid">
+
+            <div class="library-card">
+                <div class="icon"><i class="fas fa-microphone"></i></div>
+                <h3>Sermons</h3>
+                <p>Audio and video recordings from our weekly services and special events.</p>
+                <span class="item-count">Coming Soon</span>
+            </div>
+
+            <div class="library-card">
+                <div class="icon"><i class="fas fa-book-bible"></i></div>
+                <h3>Bible Studies</h3>
+                <p>Study guides and notes to deepen your understanding of Scripture.</p>
+                <span class="item-count">Coming Soon</span>
+            </div>
+
+            <div class="library-card">
+                <div class="icon"><i class="fas fa-sun"></i></div>
+                <h3>Devotionals</h3>
+                <p>Daily devotionals and reflections to strengthen your walk with God.</p>
+                <span class="item-count">Coming Soon</span>
+            </div>
+
+            <div class="library-card">
+                <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3>Teaching Series</h3>
+                <p>Full teaching series covering foundational doctrines and topical studies.</p>
+                <span class="item-count">Coming Soon</span>
+            </div>
+
+            <div class="library-card">
+                <div class="icon"><i class="fas fa-file-pdf"></i></div>
+                <h3>E-Books &amp; PDFs</h3>
+                <p>Downloadable books, guides, and ministry resources.</p>
+                <span class="item-count">Coming Soon</span>
+            </div>
+
+            <div class="library-card">
+                <div class="icon"><i class="fas fa-music"></i></div>
+                <h3>Worship Resources</h3>
+                <p>Song lyrics, chords, and worship guides for personal and corporate worship.</p>
+                <span class="item-count">Coming Soon</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="small-footer"><i class="fas fa-cross"></i> Charis Missionary Church · Digital Library</div>
+
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

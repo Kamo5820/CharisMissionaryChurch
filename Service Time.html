@@ -4,30 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charis Missionary Church - Service Calendar & Reminders</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <meta name="description" content="View service times and the church calendar for Charis Missionary Church. Set reminders and never miss a service.">
+    <meta property="og:title" content="Charis Missionary Church - Service Calendar & Reminders">
+    <meta property="og:description" content="View service times and the church calendar for Charis Missionary Church. Set reminders and never miss a service.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #000000;
-            --primary-dark: #000000;
-            --primary-light: #9d4edd;
-            --secondary: #ff9e00;
-            --secondary-dark: #ff8500;
-            --accent: #ef476f;
-            --light: #fffafa;
-            --dark: #0d0d0d;
-            --gray: #6c757d;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
+            --primary: #226ad6;
+            --primary-dark: #1a4fa0;
+            --primary-light: #4d6bff;
+            --secondary: #D97706;
+            --secondary-dark: #c06900;
+            --accent: #EC4899;
+            --light: #f8f6f3;
+            --dark: #2c2a28;
+            --gray: #6b6560;
+            --light-gray: #f5f2ed;
+            --medium-gray: #e5e0db;
             --success: #06d6a0;
             --warning: #ffd166;
             --danger: #ef476f;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.15);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.1);
             --radius: 16px;
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(44, 42, 40, 0.04);
+            --glass-border: rgba(44, 42, 40, 0.08);
         }
         
         * {
@@ -44,7 +52,7 @@
             font-family: 'Source Sans Pro', sans-serif;
             line-height: 1.6;
             color: var(--dark);
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            background: linear-gradient(135deg, #f8f6f3 0%, #f0ece7 100%);
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -222,7 +230,7 @@
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(26, 0, 48, 0.85), rgba(26, 0, 48, 0.9));
+            background: linear-gradient(rgba(26, 39, 68, 0.88), rgba(26, 39, 68, 0.95));
             background-size: cover;
             color: white;
             padding: 120px 20px;
@@ -1181,6 +1189,7 @@
     </style>
 </head>
 <body>
+<header id="mainHeader" data-include="components/header.html"></header>
     <!-- Side Navigation Toggle -->
     <div class="side-nav-toggle" id="sideNavToggle">
         <i class="fas fa-bars"></i>
@@ -1201,8 +1210,8 @@
             <li><a href="#services"><i class="fas fa-church"></i> Services</a></li>
             <li><a href="#events"><i class="fas fa-star"></i> Events</a></li>
             <li><a href="#reminders"><i class="fas fa-bell"></i> Reminders</a></li>
-            <li><a href="About Us.html"><i class="fas fa-info-circle"></i> About</a></li>
-            <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="index.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="Contact Us.html"><i class="fas fa-envelope"></i> Contact</a></li>
         </ul>
         
         <div class="side-nav-footer">
@@ -1216,14 +1225,12 @@
 
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Church Service Calendar</h1>
-            <span class="hero-subtitle">Never Miss a Service Again</span>
-            <p>Set reminders for upcoming church services, Bible studies, and special events. Get notified before each service starts.</p>
-        </div>
-    </section>
+    <div data-include="components/hero-page.html"
+         data-bg-image="Banner 6.JPG"
+         data-subtitle="Never Miss a Service Again"
+         data-title="Church Service Calendar"
+         data-description="Set reminders for upcoming church services, Bible studies, and special events. Get notified before each service starts.">
+    </div>
 
     <!-- Main Content -->
     <div class="container">
@@ -1399,36 +1406,9 @@
     <!-- Notification Container -->
     <div class="notification-container" id="notificationContainer"></div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-links">
-                    <h4 class="footer-heading">Quick Links</h4>
-                    <ul>
-                        <li><a href="#calendar">Service Calendar</a></li>
-                        <li><a href="#services">Service Times</a></li>
-                        <li><a href="#events">Special Events</a></li>
-                        <li><a href="#reminders">Set Reminders</a></li>
-                        <li><a href="#">About Our Church</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-contact">
-                    <h4 class="footer-heading">Contact Info</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Danville Clinic, Philip Nel Park, Pretoria West</p>
-                    <p><i class="fas fa-phone"></i> +27 (0)63 619 4901</p>
-                    <p><i class="fas fa-envelope"></i> pretoriawest@charismissionary.org</p>
-                    <p><i class="fas fa-clock"></i> Church Service Time: 12AM-5PM</p>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2024 Charis Missionary Church Pretoria West. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
+
+
+    <script src="assets/js/main.js" defer></script>
 
     <script>
         // ==============================================

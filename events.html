@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Events | Charis Missionary Church</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <meta name="description" content="Stay updated with upcoming events at Charis Missionary Church. Join us for worship, fellowship, and community gatherings.">
+    <meta property="og:title" content="Events | Charis Missionary Church">
+    <meta property="og:description" content="Stay updated with upcoming events at Charis Missionary Church. Join us for worship, fellowship, and community gatherings.">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #226ad6;
+            --primary-dark: #1a4fa0;
+            --light: #f8f6f3;
+            --dark: #2c2a28;
+            --gray: #6b6560;
+            --gray-light: #f5f2ed;
+            --gray-border: #e5e0db;
+            --gold: #c8923e;
+            --gold-light: #d4a454;
+            --shadow-sm: 0 4px 6px -1px rgb(0 0 0 / 0.06);
+            --shadow-md: 0 12px 24px -8px rgb(0 0 0 / 0.08);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .events-section {
+            padding: 140px 0 80px;
+        }
+
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            display: flex;
+            gap: 24px;
+            background: var(--light);
+            border: 1px solid var(--gray-border);
+            border-radius: var(--radius-md);
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold-light);
+        }
+
+        .event-date {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            background: var(--dark);
+            border-radius: var(--radius-sm);
+            padding: 12px 8px;
+            color: #fff;
+        }
+        .event-date .day {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .event-date .month {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 4px;
+            color: var(--gold-light);
+        }
+
+        .event-info {
+            flex: 1;
+        }
+        .event-info h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .event-info .meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.82rem;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+        .event-info .meta i {
+            width: 14px;
+            color: var(--gold);
+        }
+        .event-info p {
+            font-size: 0.88rem;
+            color: var(--gray);
+            line-height: 1.65;
+        }
+
+        .event-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+        .tag-sunday { background: rgba(200,150,62,0.12); color: var(--gold); }
+        .tag-special { background: rgba(34,106,214,0.1); color: var(--primary); }
+        .tag-outreach { background: rgba(45,180,120,0.1); color: #2db478; }
+
+        .event-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .event-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            font-family: inherit;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .event-btn--primary {
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            color: #1c1306;
+            box-shadow: 0 10px 24px -10px rgba(245, 158, 11, 0.55);
+        }
+        .event-btn--primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px -10px rgba(245, 158, 11, 0.7);
+        }
+        .event-btn--ghost {
+            background: transparent;
+            color: var(--primary);
+            border: 1.5px solid var(--primary);
+        }
+        .event-btn--ghost:hover {
+            background: rgba(34, 106, 214, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .small-footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--gray);
+            margin-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .event-card { flex-direction: column; gap: 14px; }
+            .event-date { flex-direction: row; gap: 8px; min-width: auto; padding: 8px 16px; }
+            .event-date .day { font-size: 1.2rem; }
+            .page-hero h1 { font-size: 2rem; }
+            .events-section { padding: 50px 0; }
+        }
+    </style>
+</head>
+<body>
+<header id="mainHeader" data-include="components/header.html"></header>
+
+
+<section class="events-section">
+    <div class="container">
+        <div class="events-list">
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">Sun</span>
+                    <span class="month">Weekly</span>
+                </div>
+                <div class="event-info">
+                    <span class="event-tag tag-sunday">Sunday Service</span>
+                    <h3>Sunday Worship Service</h3>
+                    <div class="meta">
+                        <span><i class="fas fa-clock"></i> 13:00 – 17:00</span>
+                        <span><i class="fas fa-location-dot"></i> 1 Transoranje Rd, Philip Nel Park, Hall (near Danville Clinic)</span>
+                    </div>
+                    <p>Join us every Sunday for a time of worship, prayer, and the Word as we gather in the presence of God.</p>
+                    <div class="event-actions">
+                        <a href="Service Time.html" class="event-btn event-btn--primary">
+                            <i class="fas fa-hand-holding-heart"></i> Join Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">TWT</span>
+                    <span class="month">Weekly</span>
+                </div>
+                <div class="event-info">
+                    <span class="event-tag tag-special">Night Watch</span>
+                    <h3>Midnight Prayer</h3>
+                    <div class="meta">
+                        <span><i class="fas fa-clock"></i> 00:00 – 01:00</span>
+                        <span><i class="fas fa-calendar-days"></i> Tue, Wed, Thu, Fri</span>
+                        <span><i class="fas fa-video"></i> Livestream</span>
+                    </div>
+                    <p>Join us for midnight intercession — warring in the spirit, pulling down strongholds, and standing in the gap.</p>
+                    <div class="event-actions">
+                        <a href="Live.html" class="event-btn event-btn--ghost">
+                            <i class="fas fa-video"></i> Watch Live
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">01</span>
+                    <span class="month">Nov</span>
+                </div>
+                <div class="event-info">
+                    <span class="event-tag tag-special">Consecration</span>
+                    <h3>November Prayer &amp; Fasting</h3>
+                    <div class="meta">
+                        <span><i class="fas fa-clock"></i> 06:00 – 12:00</span>
+                        <span><i class="fas fa-location-dot"></i> 1 Transoranje Rd, Philip Nel Park, Hall (near Danville Clinic)</span>
+                    </div>
+                    <p>21 days of consecration, prayer, and fasting as we seek God for a fresh encounter.</p>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">TBD</span>
+                    <span class="month"></span>
+                </div>
+                <div class="event-info">
+                    <span class="event-tag tag-outreach">Outreach</span>
+                    <h3>Community Outreach</h3>
+                    <div class="meta">
+                        <span><i class="fas fa-location-dot"></i> Pretoria West</span>
+                    </div>
+                    <p>Food distribution, visitation, and sharing God's love with our community. Date to be announced.</p>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="day">TBD</span>
+                    <span class="month"></span>
+                </div>
+                <div class="event-info">
+                    <span class="event-tag tag-special">Youth</span>
+                    <h3>Youth Event</h3>
+                    <div class="meta">
+                        <span><i class="fas fa-location-dot"></i> TBD</span>
+                    </div>
+                    <p>A gathering for the youth — worship, games, and the Word. Date to be announced.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="small-footer"><i class="fas fa-cross"></i> Charis Missionary Church · Events</div>
+
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
