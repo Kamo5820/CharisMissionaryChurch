@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Charis Prayer Wall | Sacred Portal (ZAR)</title>
-  <link rel="icon" href="logo.jpg" type="image/jpeg">
+  <link rel="icon" href="../logo.jpg" type="image/jpeg">
   <meta name="description" content="Submit your prayer requests to the Charis Missionary Church prayer wall. Join our community in faith-filled prayer.">
   <meta property="og:title" content="Charis Prayer Wall | Sacred Portal (ZAR)">
   <meta property="og:description" content="Submit your prayer requests to the Charis Missionary Church prayer wall. Join our community in faith-filled prayer.">
-  <meta property="og:image" content="logo.jpg">
+  <meta property="og:image" content="../logo.jpg">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <!-- Google Fonts + Font Awesome 6 -->
@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
@@ -361,7 +361,7 @@
   </style>
 </head>
 <body>
-<header id="mainHeader" data-include="components/header.html"></header>
+<header id="mainHeader" data-include="../components/header.html" data-asset="../" data-page=""></header>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
@@ -374,10 +374,10 @@
 
   <div class="dashboard-grid">
     <!-- LEFT CARD: PRAYER REQUEST -->
-    <div data-include="components/prayer-form.html" data-card-title="Submit Prayer Request"></div>
+    <div data-include="../components/prayer-form.html" data-card-title="Submit Prayer Request"></div>
 
     <!-- RIGHT CARD: OFFERING & TIME SLOTS -->
-    <div data-include="components/offering-form.html" data-card-title="Offering & Prayer Vigil " data-card-badge='<span style="font-size:0.7rem; background:rgba(34,106,214,0.12); padding:4px 12px; border-radius:40px;">ZAR Currency</span>'></div>
+    <div data-include="../components/offering-form.html" data-card-title="Offering & Prayer Vigil " data-card-badge='<span style="font-size:0.7rem; background:rgba(34,106,214,0.12); padding:4px 12px; border-radius:40px;">ZAR Currency</span>'></div>
   </div>
   <div class="small-footer"><i class="fas fa-globe-africa"></i> Charis South Africa · All transactions & prayers are handled with integrity. Powered by intercessors.</div>
 </div>
@@ -614,6 +614,6 @@ function initPrayerForms() {
 document.addEventListener('includesLoaded', initPrayerForms);
 </script>
 
-<script src="assets/js/main.js" defer></script>
+<script src="../assets/js/main.js" defer></script>
 </body>
 </html>

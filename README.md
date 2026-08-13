@@ -13,23 +13,23 @@ A static, mobile-friendly website built with plain HTML, CSS, and JavaScript. No
 | Page | Description |
 | --- | --- |
 | `index.html` | Home page |
-| `Live.html` | Live stream |
-| `events.html` | Upcoming events |
-| `Our Journey.html` | Church history and journey |
-| `Youth.html` | Youth ministry |
-| `prayer-ministry.html` | Prayer ministry |
-| `Contact Us.html` | Contact information |
-| `online-giving.html` | Online giving / tithes & offerings |
-| `Partnership.html` | Partnership program |
-| `Prayer request.html` | Submit a prayer request |
-| `counselling.html` | Counselling services |
-| `Service Time.html` | Service schedules |
-| `our-mission.html` | Mission, vision and values |
-| `leadership.html` | Church leadership |
-| `apostle.html` | Apostle profile |
-| `digital-library.html` | Digital library of resources |
-| `Game.html` | Interactive game |
-| `admin.html` | Admin (not indexed by search engines) |
+| `pages/Live.html` | Live stream |
+| `pages/events.html` | Upcoming events |
+| `pages/Our Journey.html` | Church history and journey |
+| `pages/Youth.html` | Youth ministry |
+| `pages/prayer-ministry.html` | Prayer ministry |
+| `pages/Contact Us.html` | Contact information |
+| `pages/online-giving.html` | Online giving / tithes & offerings |
+| `pages/Partnership.html` | Partnership program |
+| `pages/Prayer request.html` | Submit a prayer request |
+| `pages/counselling.html` | Counselling services |
+| `pages/Service Time.html` | Service schedules |
+| `pages/our-mission.html` | Mission, vision and values |
+| `pages/leadership.html` | Church leadership |
+| `pages/apostle.html` | Apostle profile |
+| `pages/digital-library.html` | Digital library of resources |
+| `pages/Game.html` | Interactive game |
+| `pages/admin.html` | Admin (not indexed by search engines) |
 
 ## Project structure
 
@@ -40,8 +40,9 @@ A static, mobile-friendly website built with plain HTML, CSS, and JavaScript. No
 │   └── js/main.js      # Global scripts
 ├── components/          # Reusable HTML snippets (header, footer, forms, etc.)
 ├── images/              # Page images
-├── index.html           # Home page
-└── *.html               # Individual pages (see table above)
+├── pages/               # All pages except the home page
+├── index.html           # Home page (site entry point)
+└── README.md
 ```
 
 ## Run locally
@@ -60,11 +61,14 @@ Option B — VS Code Live Server extension, or just double-click `index.html`.
 
 This is a static site, so it can be hosted on any static host (GitHub Pages, Netlify, Vercel, or a traditional web host). The production domain is `charismissionary.org` and SEO files are already in place:
 
-- `robots.txt` — blocks indexing of `admin.html`, points to the sitemap
+- `robots.txt` — blocks indexing of `pages/admin.html`, points to the sitemap
 - `sitemap.xml` — lists all public pages for search engines
 
 ## Editing
 
-- Most pages are self-contained HTML files. Some share components in `components/` (header, footer, forms) — if you change a component, update each page that embeds it.
+- Most pages live in `pages/` and are self-contained HTML files. They share components in `components/` (header, footer, forms) — if you change a component, update each page that embeds it.
+- Pages in `pages/` link to assets with a `../` prefix (e.g. `../assets/css/style.css`) and to each other by file name (e.g. `events.html`). The shared header/footer use `{{asset}}` and `{{page}}` template placeholders set via `data-asset` / `data-page` on the include element:
+  - `index.html`: `data-asset="" data-page="pages/"`
+  - pages in `pages/`: `data-asset="../" data-page=""`
 - Add a new page by copying an existing one, updating the `<title>` and meta description, and adding it to `sitemap.xml` and the navigation.
-- Image assets are served relative to the project root (e.g. `logo.jpg`).
+- Image assets live in `images/` (referenced as `../images/...` from pages).

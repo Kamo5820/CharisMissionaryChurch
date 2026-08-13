@@ -12,7 +12,7 @@
         </svg>
         YouTube
     </a>
-  <a href="Live.html" class="ch-top-live">
+  <a href="{{page}}Live.html" class="ch-top-live">
     <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true">
       <path d="M3 2l5 3-5 3V2z" />
     </svg>
@@ -22,22 +22,22 @@
 
 <div class="container header-content">
     <div class="logo">
-        <img src="logo.jpg" class="logo-image" alt="Charis Missionary Church Logo">
+        <img src="{{asset}}logo.jpg" class="logo-image" alt="Charis Missionary Church Logo">
     </div>
     <button class="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
     </button>
     <nav class="navbar">
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="{{asset}}index.html">Home</a></li>
             <li class="menu-item-has-children" id="aboutUsDropdownItem">
                 <a href="#" class="ministries-toggle" id="aboutUsToggle" aria-expanded="false">
                     About <i class="fas fa-chevron-down"></i>
                 </a>
                 <ul class="dropdown-menu" id="aboutUsDropdown">
-                    <li><a href="apostle.html">Apostle Khorommbi</a></li>
-                    <li><a href="leadership.html">Leadership</a></li>
-                    <li><a href="our-mission.html">Our Mission</a></li>
+                    <li><a href="{{page}}apostle.html">Apostle Khorommbi</a></li>
+                    <li><a href="{{page}}leadership.html">Leadership</a></li>
+                    <li><a href="{{page}}our-mission.html">Our Mission</a></li>
                 </ul>
             </li>
             <li class="menu-item-has-children" id="resourcesDropdownItem">
@@ -45,8 +45,8 @@
                     Resources <i class="fas fa-chevron-down"></i>
                 </a>
                 <ul class="dropdown-menu" id="resourcesDropdown">
-                    <li><a href="Our%20Journey.html">Gallery</a></li>
-                    <li><a href="digital-library.html">Digital Library</a></li>
+                    <li><a href="{{page}}Our%20Journey.html">Gallery</a></li>
+                    <li><a href="{{page}}digital-library.html">Digital Library</a></li>
                 </ul>
             </li>
             <li class="menu-item-has-children" id="ministriesDropdownItem">
@@ -54,22 +54,22 @@
                     Ministries <i class="fas fa-chevron-down"></i>
                 </a>
                 <ul class="dropdown-menu" id="ministriesDropdown">
-                    <li><a href="Youth.html">Youth Ministry</a></li>
-                    <li><a href="prayer-ministry.html">Prayer Ministry</a></li>
-                    <li><a href="counselling.html">Counselling Ministry</a></li>
+                    <li><a href="{{page}}Youth.html">Youth Ministry</a></li>
+                    <li><a href="{{page}}prayer-ministry.html">Prayer Ministry</a></li>
+                    <li><a href="{{page}}counselling.html">Counselling Ministry</a></li>
                 </ul>
             </li>
-            <li><a href="events.html">Events</a></li>
+            <li><a href="{{page}}events.html">Events</a></li>
             <li class="menu-item-has-children" id="giveDropdownItem">
                 <a href="#" class="ministries-toggle" id="giveToggle" aria-expanded="false">
                     Give <i class="fas fa-chevron-down"></i>
                 </a>
                 <ul class="dropdown-menu" id="giveDropdown">
-                    <li><a href="online-giving.html">Seed and Offering</a></li>
-                    <li><a href="Partnership.html">Partnership</a></li>
+                    <li><a href="{{page}}online-giving.html">Seed and Offering</a></li>
+                    <li><a href="{{page}}Partnership.html">Partnership</a></li>
                 </ul>
             </li>
-            <li><a href="Contact Us.html">Contact Us</a></li>
+            <li><a href="{{page}}Contact Us.html">Contact Us</a></li>
         </ul>
     </nav>
 </div>

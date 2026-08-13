@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Counselling | Charis Missionary Church</title>
-    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <link rel="icon" href="../logo.jpg" type="image/jpeg">
     <meta name="description" content="Biblical counselling and support services offered by Charis Missionary Church to help you navigate life's challenges.">
     <meta property="og:title" content="Counselling | Charis Missionary Church">
     <meta property="og:description" content="Biblical counselling and support services offered by Charis Missionary Church to help you navigate life's challenges.">
-    <meta property="og:image" content="logo.jpg">
+    <meta property="og:image" content="../logo.jpg">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
@@ -109,9 +109,9 @@
     </style>
 </head>
 <body>
-<header id="mainHeader" data-include="components/header.html"></header>
+<header id="mainHeader" data-include="../components/header.html" data-asset="../" data-page=""></header>
 
-<div data-include="components/counselling.html"></div>
+<div data-include="../components/counselling.html"></div>
 
 <div class="small-footer"><i class="fas fa-heart"></i> Charis Missionary Church · We are here for you</div>
 
@@ -122,6 +122,6 @@ const COUNSEL_EMAILJS_SERVICE_ID = "service_d8wpw29";
 const COUNSEL_EMAILJS_TEMPLATE_ID = "template_sk17a3p";
 emailjs.init({ publicKey: COUNSEL_EMAILJS_PUBLIC_KEY });
 </script>
-<script src="assets/js/main.js" defer></script>
+<script src="../assets/js/main.js" defer></script>
 </body>
 </html>

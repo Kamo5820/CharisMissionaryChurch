@@ -725,7 +725,7 @@
     setTimeout(function() { toastEl.classList.remove('show'); }, 3500);
   }
 
-  var includeEl = document.querySelector('[data-include="components/contact-us.html"]');
+  var includeEl = document.querySelector('[data-include$="components/contact-us.html"]');
   var serviceId = includeEl ? includeEl.dataset.emailjsServiceId : '';
   var templateId = includeEl ? includeEl.dataset.emailjsTemplateId : '';
   var publicKey = includeEl ? includeEl.dataset.emailjsPublicKey : '';

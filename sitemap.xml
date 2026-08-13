@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://charismissionary.org/index.html</loc><priority>1.0</priority></url>
-  <url><loc>https://charismissionary.org/Live.html</loc><priority>0.8</priority></url>
-  <url><loc>https://charismissionary.org/events.html</loc><priority>0.8</priority></url>
-  <url><loc>https://charismissionary.org/Our Journey.html</loc><priority>0.8</priority></url>
-  <url><loc>https://charismissionary.org/Youth.html</loc><priority>0.7</priority></url>
-  <url><loc>https://charismissionary.org/prayer-ministry.html</loc><priority>0.7</priority></url>
-  <url><loc>https://charismissionary.org/Contact Us.html</loc><priority>0.7</priority></url>
-  <url><loc>https://charismissionary.org/online-giving.html</loc><priority>0.7</priority></url>
-  <url><loc>https://charismissionary.org/Partnership.html</loc><priority>0.7</priority></url>
-  <url><loc>https://charismissionary.org/Prayer request.html</loc><priority>0.7</priority></url>
-  <url><loc>https://charismissionary.org/counselling.html</loc><priority>0.7</priority></url>
-  <url><loc>https://charismissionary.org/Service Time.html</loc><priority>0.6</priority></url>
-  <url><loc>https://charismissionary.org/our-mission.html</loc><priority>0.6</priority></url>
-  <url><loc>https://charismissionary.org/leadership.html</loc><priority>0.6</priority></url>
-  <url><loc>https://charismissionary.org/apostle.html</loc><priority>0.6</priority></url>
-  <url><loc>https://charismissionary.org/digital-library.html</loc><priority>0.5</priority></url>
+  <url><loc>https://charismissionary.org/</loc><priority>1.0</priority></url>
+  <url><loc>https://charismissionary.org/pages/Live.html</loc><priority>0.8</priority></url>
+  <url><loc>https://charismissionary.org/pages/events.html</loc><priority>0.8</priority></url>
+  <url><loc>https://charismissionary.org/pages/Our Journey.html</loc><priority>0.8</priority></url>
+  <url><loc>https://charismissionary.org/pages/Youth.html</loc><priority>0.7</priority></url>
+  <url><loc>https://charismissionary.org/pages/prayer-ministry.html</loc><priority>0.7</priority></url>
+  <url><loc>https://charismissionary.org/pages/Contact Us.html</loc><priority>0.7</priority></url>
+  <url><loc>https://charismissionary.org/pages/online-giving.html</loc><priority>0.7</priority></url>
+  <url><loc>https://charismissionary.org/pages/Partnership.html</loc><priority>0.7</priority></url>
+  <url><loc>https://charismissionary.org/pages/Prayer request.html</loc><priority>0.7</priority></url>
+  <url><loc>https://charismissionary.org/pages/counselling.html</loc><priority>0.7</priority></url>
+  <url><loc>https://charismissionary.org/pages/Service Time.html</loc><priority>0.6</priority></url>
+  <url><loc>https://charismissionary.org/pages/our-mission.html</loc><priority>0.6</priority></url>
+  <url><loc>https://charismissionary.org/pages/leadership.html</loc><priority>0.6</priority></url>
+  <url><loc>https://charismissionary.org/pages/apostle.html</loc><priority>0.6</priority></url>
+  <url><loc>https://charismissionary.org/pages/digital-library.html</loc><priority>0.5</priority></url>
 </urlset>
