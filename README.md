@@ -2,8 +2,6 @@
 
 Official website for Charis Missionary Church (Pretoria, South Africa) — a family of believers dedicated to spreading the Gospel, strengthening lives, and transforming communities through God's grace.
 
-Live site: https://charismissionary.org
-
 ## Overview
 
 A static, mobile-friendly website built with plain HTML, CSS, and JavaScript. No build step, no framework, no dependencies to install — just open the pages or serve the folder with any static file server.
