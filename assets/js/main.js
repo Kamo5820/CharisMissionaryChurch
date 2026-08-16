@@ -128,11 +128,17 @@ function initHeader() {
   }).filter(Boolean);
   let openDropdown = null;
   const closeTimeouts = new Map();
-  let lastScroll = 0;
+  let lastScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
   let ticking = false;
+  let pageSettled = false;
 
   const setHeaderScrollState = () => {
     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    if (!pageSettled) {
+      lastScroll = currentScroll;
+      ticking = false;
+      return;
+    }
     if (currentScroll > lastScroll && currentScroll > 100) {
       header.classList.add('header-hidden');
     } else {
@@ -147,12 +153,25 @@ function initHeader() {
     ticking = false;
   };
 
+  const resetScrollBaseline = () => {
+    lastScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+  };
+
   window.addEventListener('scroll', () => {
     if (!ticking) {
       window.requestAnimationFrame(setHeaderScrollState);
       ticking = true;
     }
   });
+
+  window.addEventListener('load', () => {
+    resetScrollBaseline();
+    setTimeout(() => {
+      resetScrollBaseline();
+      pageSettled = true;
+    }, 600);
+  });
+  window.addEventListener('pageshow', resetScrollBaseline);
 
   if (hamburger && navUl) {
     hamburger.addEventListener('click', () => {

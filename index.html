@@ -792,11 +792,41 @@
             <p>Whether you're just beginning your faith journey or looking for a church family, you'll find grace, love and a place to belong at Charis Missionary Church Pretoria.</p>
         </div>
         <div class="welcome-band__cards">
-            <div class="welcome-band__card"><i class="fas fa-clock"></i><div><strong>Sundays</strong><span>13:00 &amp; 17:00</span></div></div>
+            <div class="welcome-band__card"><i class="fas fa-clock"></i><div><strong>Sundays</strong><span data-church-times>13:00 &amp; 17:00</span></div></div>
             <div class="welcome-band__card"><a href="pages/Contact Us.html#contactMap"><i class="fas fa-map-marker-alt"></i><div><strong>Danville Clinic</strong><span>1 Transoranje Rd, Danville</span></div></a></div>
             <div class="welcome-band__card"><a href="https://wa.me/27636194901"><i class="fa-brands fa-whatsapp" style="color:#25D366; font-size:1.4rem;"></i><div><strong>+27 63 619 4901</strong><span>Chat with us on WhatsApp</span></div></a></div>
         </div>
         <a href="pages/Contact Us.html" class="welcome-band__cta">Plan Your Visit <i class="fas fa-arrow-right"></i></a>
+    </div>
+</section>
+
+<!-- When We Are Here -->
+<section style="padding: 80px 0;">
+    <div class="container">
+        <div class="section-title">
+            <h2>When We Are Here</h2>
+            <p>Come and worship with us. Here is when you can join us at Charis Missionary Church Pretoria.</p>
+        </div>
+        <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin-top:40px;">
+            <iframe width="351" height="625" src="https://www.youtube.com/embed/qypxt04oiBM" title="🔥Charis Missionary Church Pretoria 🔥Danville Clinic,Cnr Transoranje &amp; WF Nkomo Pretoria West 13:00" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%; aspect-ratio:351/625; height:auto;"></iframe>
+            <iframe width="351" height="625" src="https://www.youtube.com/embed/umnxGnQbY38" title="✨ He Chose You ✨The things of God require#patience #perseverance #prayer #jesuschrist #holyspirit" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%; aspect-ratio:351/625; height:auto;"></iframe>
+            <iframe width="351" height="625" src="https://www.youtube.com/embed/y19_dejcWGw" title="🔥TESTIMONY🔥All Glory belongs to Jesus #testimony #goodnews #jesusisking #jesuschrist #holyspirit" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="max-width:100%; aspect-ratio:351/625; height:auto;"></iframe>
+        </div>
+        <div data-include="components/section-title.html"
+             data-title="Join Us This Week"
+             data-subtitle="Gather with us in worship and prayer. Everyone is welcome.">
+        </div>
+        <div class="svc-grid" id="homeServiceGrid" style="margin-top:40px;">
+            <div class="svc-card svc-card--blue">
+                <div class="svc-day">Sunday</div>
+                <h3>Worship Service</h3>
+                <div class="svc-time">13:00 &ndash; 17:00</div>
+                <div class="svc-note">Main worship service with praise, worship &amp; teaching</div>
+                <a href="pages/events.html" class="svc-btn svc-btn--primary">
+                    <i class="fas fa-hand-holding-heart"></i> Join Us
+                </a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -812,36 +842,6 @@
             <div class="value-card"><div class="value-icon"><i class="fas fa-praying-hands"></i></div><h3>Intimate Worship</h3><p>Seeking God's presence with passion, prayer and praise.</p></div>
             <div class="value-card"><div class="value-icon"><i class="fas fa-hands-helping"></i></div><h3>Compassionate Outreach</h3><p>Feeding the hungry, clothing the poor, loving the forgotten.</p></div>
             <div class="value-card"><div class="value-icon"><i class="fas fa-chalkboard-user"></i></div><h3>Generational Discipleship</h3><p>Equipping youth, adults, and families for Kingdom impact.</p></div>
-        </div>
-    </div>
-</section>
-
-<!-- Join Us This Week -->
-<section style="padding: 20px 0 60px;">
-    <div class="container">
-        <div data-include="components/section-title.html"
-             data-title="Join Us This Week"
-             data-subtitle="Gather with us in worship and prayer. Everyone is welcome.">
-        </div>
-        <div class="svc-grid">
-            <div class="svc-card svc-card--blue">
-                <div class="svc-day">Sunday</div>
-                <h3>Worship Service</h3>
-                <div class="svc-time">13:00 &ndash; 17:00</div>
-                <div class="svc-note">Main worship service with praise, worship &amp; teaching</div>
-                <a href="pages/events.html" class="svc-btn svc-btn--primary">
-                    <i class="fas fa-hand-holding-heart"></i> Join Us
-                </a>
-            </div>
-            <div class="svc-card svc-card--rose">
-                <div class="svc-day">Tuesday &ndash; Friday</div>
-                <h3>Midnight Prayer Meeting</h3>
-                <div class="svc-time">00:00 &ndash; 01:00</div>
-                <div class="svc-note">Night vigil prayer &amp; intercession</div>
-                <a href="pages/Live.html" class="svc-btn svc-btn--ghost">
-                    <i class="fas fa-video"></i> Watch Live
-                </a>
-            </div>
         </div>
     </div>
 </section>
@@ -954,6 +954,21 @@
             verseToggle.setAttribute('aria-expanded', isOpen);
         });
     }
+</script>
+
+<script src="assets/js/church-data.js"></script>
+<script>
+    // Render services/events from shared church data (managed via Admin Panel)
+    (function () {
+        var data = window.ChurchData && ChurchData.load();
+        if (data) {
+            ChurchData.renderServiceCards(
+                document.getElementById('homeServiceGrid'),
+                data,
+                { ctaHref: 'pages/events.html', liveHref: 'pages/Live.html' }
+            );
+        }
+    })();
 </script>
 
 <script src="assets/js/main.js" defer></script>

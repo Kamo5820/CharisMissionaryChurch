@@ -918,7 +918,7 @@
             <p>
                 You are warmly invited to worship with us at our meeting place:<br>
                 Danville Clinic, Philip Nel Park, Pretoria West, 0183.<br><br>
-                Join us Sunday Services from 13:00 PM to 5:00 PM.<br><br>
+                Join us Sunday Services from <span data-church-sunday-start>13:00 PM</span> to <span data-church-sunday-end>5:00 PM</span>.<br><br>
                 "A day in Your courts is better than a thousand"
             </p>
             <a href="#" class="btn">Visit Us</a>
@@ -951,11 +951,7 @@
 <section class="events-section">
     <div class="container">
         <div class="section-header"><h2>Upcoming Gatherings</h2><p>Don't miss out — join us this week</p></div>
-        <div class="events-flex">
-            <div class="event-card"><div class="event-date"><span class="day">13</span><span>Apr</span></div><div class="event-info"><h4>Family Harvest Sunday</h4><div class="event-loc"><i class="fas fa-map-marker-alt"></i> Main Sanctuary | 10:00 AM</div></div></div>
-            <div class="event-card"><div class="event-date"><span class="day">20</span><span>Apr</span></div><div class="event-info"><h4>Leadership Conference</h4><div class="event-loc"><i class="fas fa-video"></i> Online & In-Person</div></div></div>
-            <div class="event-card"><div class="event-date"><span class="day">27</span><span>Apr</span></div><div class="event-info"><h4>Night of Worship</h4><div class="event-loc"><i class="fas fa-music"></i> 6:00 PM @ Church Hall</div></div></div>
-        </div>
+        <div class="events-flex" id="homeEventsList"></div>
     </div>
 </section>
 
@@ -976,7 +972,7 @@
                 <p style="color: #ffffffdd; margin-bottom: 12px;"><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> 1 Transoranje Rd, Philip Nel Park, Hall (near Danville Clinic)</p>
                 <p style="color: #ffffffdd; margin-bottom: 12px;"><i class="fas fa-phone" style="margin-right: 10px;"></i> +27 63 619 4901</p>
                 <p style="color: #ffffffdd; margin-bottom: 12px;"><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@charismissionary.org</p>
-                <p style="color: #ffffffdd; margin-bottom: 12px;"><i class="fas fa-clock" style="margin-right: 10px;"></i> Sunday Services: 13:00 PM & 17:00 PM</p>
+                <p style="color: #ffffffdd; margin-bottom: 12px;"><i class="fas fa-clock" style="margin-right: 10px;"></i> Sunday Services: <span data-church-times>13:00 PM & 17:00 PM</span></p>
             </div>
             <div class="footer-column" style="flex: 1; min-width: 250px; margin-bottom: 40px; padding-right: 30px;">
                 <h3 style="font-family: 'Montserrat', sans-serif; font-size: 1.6rem; margin-bottom: 25px; color: #f7f0e8; padding-bottom: 12px;">Quick Links</h3>
@@ -995,18 +991,34 @@
 </footer>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="../assets/js/church-data.js"></script>
+<script>
+    // Render gatherings from shared church data (managed via Admin Panel)
+    (function () {
+        var data = window.ChurchData && ChurchData.load();
+        if (data) {
+            ChurchData.renderHomeEvents(document.getElementById('homeEventsList'), data);
+        }
+    })();
+</script>
 <script src="../assets/js/main.js" defer></script>
 <script>
     (function() {
         // SMART HEADER (hide on scroll down, show on up)
         const header = document.getElementById('mainHeader');
-        let lastScroll = 0;
+        let lastScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
         let ticking = false;
+        let pageSettled = false;
 
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 requestAnimationFrame(() => {
                     const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+                    if (!pageSettled) {
+                        lastScroll = currentScroll;
+                        ticking = false;
+                        return;
+                    }
                     if (currentScroll > lastScroll && currentScroll > 100) {
                         header.classList.add('header-hidden');
                     } else {
@@ -1023,6 +1035,19 @@
                 ticking = true;
             }
         });
+
+        const resetScrollBaseline = () => {
+            lastScroll = window.pageYOffset || document.documentElement.scrollTop || 0;
+        };
+
+        window.addEventListener('load', () => {
+            resetScrollBaseline();
+            setTimeout(() => {
+                resetScrollBaseline();
+                pageSettled = true;
+            }, 600);
+        });
+        window.addEventListener('pageshow', resetScrollBaseline);
 
         // Mobile hamburger menu
         const hamburger = document.querySelector('.hamburger');
