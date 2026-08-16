@@ -57,7 +57,8 @@ body {
 .ch-top {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   padding: 6px 20px;
   color: rgba(255, 255, 255, 0.8);
   background: rgba(26, 39, 68, 0.95);
@@ -206,6 +207,13 @@ nav ul li a:hover::after {
   opacity: 1;
   visibility: visible;
   transform: scale(1) translateY(0);
+}
+
+#giveDropdownItem > .dropdown-menu,
+#ministriesDropdownItem > .dropdown-menu {
+  left: auto;
+  right: 0;
+  transform-origin: top right;
 }
 
 .dropdown-menu li {
@@ -1025,7 +1033,12 @@ footer {
 }
 
 @media (max-width: 768px) {
-  nav ul {
+  .ch-top {
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+
+  nav > ul {
     display: none;
     position: fixed;
     top: 0;
@@ -1041,16 +1054,16 @@ footer {
     backdrop-filter: blur(16px);
   }
 
-  nav ul.active {
+  nav > ul.active {
     display: flex;
   }
 
-  nav ul li {
+  nav > ul > li {
     margin: 15px 0;
     width: 100%;
   }
 
-  nav ul li a {
+  nav > ul > li > a {
     display: block;
     padding: 15px;
     font-size: 1.15rem;
@@ -1066,9 +1079,11 @@ footer {
     backdrop-filter: blur(12px);
     margin-top: 10px;
     width: 100%;
+    min-width: 0;
     transform-origin: top;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    text-align: center;
   }
 }
 
@@ -1082,7 +1097,7 @@ footer {
   border-radius: 24px;
   padding: 1.25rem;
   color: #2c2a28;
-  min-width: 320px;
+  min-width: min(320px, 100%);
 }
 
 .card-header {
@@ -1210,6 +1225,7 @@ select.input-frost {
 
 .stats-row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   gap: 8px;
   margin-top: 14px;

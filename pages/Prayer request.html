@@ -110,7 +110,7 @@
     /* card grid layout - totally revamped */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 2.5rem;
     }
 
@@ -340,7 +340,7 @@
     }
     @media (max-width: 900px) {
       .dashboard-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 1.5rem;
       }
       .glow-header h1 { font-size: 2rem; }
